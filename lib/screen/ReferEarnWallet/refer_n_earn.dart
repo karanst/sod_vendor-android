@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:fixerking/api/api_path.dart';
+import 'package:fixerking/new%20model/refferal_list_model.dart';
 import 'package:fixerking/new%20model/wallet_transactions_model.dart';
 import 'package:fixerking/screen/ReferEarnWallet/wallet.dart';
 import 'package:fixerking/screen/profile/edit_profile.dart';
@@ -59,6 +60,32 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
     }
   }
 
+  Future getRefferal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString(TokenString.userid);
+
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('${Apipath.getWalletHistory}'));
+    request.fields.addAll({
+      'user_id': '6',
+      //'${userId.toString()}',
+      'type': selectedLevel.toString()
+      // '${userId.toString()}'
+    });
+    print("this is request !! ${request.fields}");
+
+    http.StreamedResponse response = await request.send();
+    print("this is request !! 11111${response}");
+    if (response.statusCode == 200) {
+      print("this response @@ ${response.statusCode}");
+      final str = await response.stream.bytesToString();
+      // var datas = RefferalListModel.fromJson(json.decode(str));
+      return RefferalListModel.fromJson(json.decode(str));
+    } else {
+      return null;
+    }
+  }
+
   void checkingLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -69,9 +96,12 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
     });
     print("this id uid ${uid.toString()} aand ${type}");
   }
+
+  @override
   void initState() {
     super.initState();
     checkingLogin();
+    getRefferal();
     // Future.delayed(Duration(milliseconds: 500), () {
     //   return getprofile();
     // });
@@ -79,6 +109,8 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
 
   GetProfileModel? profileModel;
   int _selectedIndex = 0;
+  String selectedLevel = "level 1";
+
   Future<void> share() async {
     await FlutterShare.share(
         title: 'Referral Code',
@@ -87,6 +119,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor().colorPrimary(),
@@ -225,7 +258,9 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                   onTap: () async{
                                     setState(() {
                                       _selectedIndex = 0;
+                                       selectedLevel = "level 1";
                                     });
+                                    getRefferal();
                                     // if(type =="1"){
                                     //   await  getFoodOrders();
                                     // }
@@ -271,7 +306,10 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                   onTap: () async{
                                     setState(() {
                                       _selectedIndex = 1;
+                                      selectedLevel = "level 2";
                                     });
+                                    getRefferal();
+
                                     // if(type =="1"){
                                     //   await  getFoodOrders();
                                     // }
@@ -312,17 +350,17 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                             ],
                           ),
                         ),
-                        // FutureBuilder(
-                        //     future: getCustomerReviews(),
-                        //     builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        //       CustomerReviewsModel? model = snapshot.data;
-                        //       // print("this is moddel ==========>>>>> ${model!.products![0].productPrice.toString()}");
-                        //       if (snapshot.hasData) {
-                        //         return model!.status == "0"
-                        //             ? Container(
-                        //           decoration: BoxDecoration(
-                        //               borderRadius: BorderRadius.circular(20)),
-                        //           child:
+                        FutureBuilder(
+                            future: getRefferal(),
+                            builder: (BuildContext context, AsyncSnapshot snapshot) {
+                              RefferalListModel? model = snapshot.data;
+                              // print("this is moddel ==========>>>>> ${model!.products![0].productPrice.toString()}");
+                              if (snapshot.hasData) {
+                                return model!.responseCode == "1"
+                                    ? Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child:
                                   ListView.builder(
                                       shrinkWrap: true,
                                       physics: ScrollPhysics(),
@@ -415,8 +453,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                                             MainAxisAlignment
                                                                 .center,
                                                             children: [
-                                                              Text("Anuj Bhagora",
-                                                                //"${model.products![index].username.toString()}",
+                                                              Text("${model.data![index].uname.toString()}",
                                                                 style:
                                                                 TextStyle(
                                                                   color: Colors
@@ -432,8 +469,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                                               Container(
                                                                 width: 140,
                                                                 child: Text(
-                                                                  "05 Jan 2023",
-                                                                  // "${model.products![index].productName.toString()}",
+                                                                  "${model.data![index].updatedAt.toString()}",
                                                                   maxLines: 3,
                                                                   style: TextStyle(
                                                                     fontSize: 14,
@@ -446,8 +482,8 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                                               Container(
                                                                 width: 140,
                                                                 child: Text(
-                                                                  "",
-                                                                  // "${model.products![index].revText.toString()}",
+                                                                  "₹ ${model.data![index].amount.toString()}",
+
                                                                   maxLines: 3,
                                                                   style: TextStyle(
                                                                     fontSize: 12,
@@ -564,26 +600,26 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                         );
                                         //cardWidget(model, i
                                       }),
-                            //     )
-                            //         : Container(
-                            //       height:
-                            //       MediaQuery.of(context).size.height / 1.5,
-                            //       child: Center(
-                            //           child: Text("No Reviews Found!!")),
-                            //     );
-                            //   } else if (snapshot.hasError) {
-                            //     return Icon(Icons.error_outline);
-                            //   } else {
-                            //     return Container(
-                            //         height: 30,
-                            //         width: 30,
-                            //         // MediaQuery.of(context).size.height / 1.5,
-                            //         child: Center(
-                            //             child: CircularProgressIndicator(
-                            //               color: AppColor.PrimaryDark,
-                            //             )));
-                            //   }
-                            // })
+                                )
+                                    : Container(
+                                  height:
+                                  MediaQuery.of(context).size.height / 1.5,
+                                  child: Center(
+                                      child: Text("No Referral Found!!")),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Icon(Icons.error_outline);
+                              } else {
+                                return Container(
+                                    height: 30,
+                                    width: 30,
+                                    // MediaQuery.of(context).size.height / 1.5,
+                                    child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: AppColor.PrimaryDark,
+                                        )));
+                              }
+                            })
 
                       ],
                     )

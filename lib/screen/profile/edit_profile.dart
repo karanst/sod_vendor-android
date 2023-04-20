@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:fixerking/RideFlow/utils/Session.dart';
 import 'package:fixerking/new%20model/GetProfileModel.dart';
 import 'package:fixerking/new%20model/categories_model.dart';
@@ -778,15 +779,87 @@ class _EditNewProfileState extends State<EditNewProfile> {
   }
 
   void requestPermission(BuildContext context,int i) async{
-    var status = await Permission.storage.request();
+    return await showDialog<void>(
+      context: context,
+      // barrierDismissible: barrierDismissible, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(6))),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              // enableCloseButton == true
+              //     ? GestureDetector(
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //   },
+              //   child: Align(
+              //       alignment: Alignment.topRight,
+              //       child: closeIcon ??
+              //           Icon(
+              //             Icons.close,
+              //             size: 14,
+              //           )),
+              // )
+              //     : Container(),
+              InkWell(
+                onTap: () async {
+                  getFromGallery(i);
+                },
+                child: Container(
+                  child: ListTile(
+                      title:  Text("Gallery"),
+                      leading: Icon(
+                        Icons.image,
+                        color: colors.primary,
+                      )),
+                ),
+              ),
+              Container(
+                width: 200,
+                height: 1,
+                color: Colors.black12,
+              ),
+              InkWell(
+                onTap: () async {
+                  getImage(ImgSource.Camera, context, i);
+                  //   ImagePicker()
+                  //       .getImage(
+                  //       source: ImageSource.camera,
+                  //       maxWidth: maxWidth,
+                  //       maxHeight: maxHeight)
+                  //       .then((image) {
+                  //     Navigator.pop(context, image);
+                  //   });
+                },
+                child: Container(
+                  child: ListTile(
+                      title:  Text("Camera"),
+                      leading: Icon(
+                        Icons.camera,
+                        color: colors.primary,
+                      )),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+    // var status = await Permission.storage.request();
     // final status = await Permission.photos.status;
-    if(status.isGranted){
-      getImage(ImgSource.Both, context,i);
-    }
-    else if(status.isPermanentlyDenied){
-      openAppSettings();
-    }
-//     if (await Permission.camera.isPermanentlyDenied||await Permission.storage.isPermanentlyDenied) {
+    // // final storage = await Permission.accessMediaLocation.status;
+    // if(status.isGranted){
+    //     getImage(ImgSource.Both, i);
+    // }
+    // else if(status.isPermanentlyDenied){
+    //   openAppSettings();
+    // }
+
+    ///
+//     if (await Permission.camera.isRestricted || await Permission.storage.isRestricted) {
 //       openAppSettings();
 //     }
 //     else{
@@ -801,10 +874,6 @@ class _EditNewProfileState extends State<EditNewProfile> {
 //
 //       }else{
 //         if (await Permission.camera.isDenied||await Permission.storage.isDenied) {
-//
-//           // The user opted to never again see the permission request dialog for this
-//           // app. The only way to change the permission's status now is to let the
-//           // user manually enable it in the system settings.
 //           openAppSettings();
 //         }else{
 //           setSnackbar("Oops you just denied the permission", context);
@@ -812,6 +881,53 @@ class _EditNewProfileState extends State<EditNewProfile> {
 //       }
 //     }
 
+  }
+
+  Future<void> getFromGallery(int i) async {
+    var result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: false,
+    );
+    if (result != null) {
+      setState(() {
+        if(i==1){
+          aadharImage = File(result.files.single.path.toString());
+        }else  if(i==2){
+          panImage = File(result.files.single.path.toString());
+        }else  if(i==3){
+          rcImage = File(result.files.single.path.toString());
+        }else if(i==4){
+          drivingImage = File(result.files.single.path.toString());
+        } else if(i==5){
+          profileImage = File(result.files.single.path.toString());
+        }
+        // else if(i==5){
+        //   aadharImageBack = File(result.files.single.path.toString());
+        // }
+        // else if(i==6){
+        //   rcImageBack = File(result.files.single.path.toString());
+        // }
+        // else if(i==7){
+        //   drivingImageBack = File(result.files.single.path.toString());
+        // }
+        // else if(i==8){
+        //   fssaiImage = File(result.files.single.path.toString());
+        // }
+        // else if(i==9){
+        //   gstImage = File(result.files.single.path.toString());
+        // }
+      });
+      Navigator.pop(context);
+      // setState(() {
+      //   isImages = true;
+      //   // servicePic = File(result.files.single.path.toString());
+      // });
+      // imagePathList = result.paths.toList();
+      // imagePathList.add(result.paths.toString()).toList();
+      // print("SERVICE PIC === ${imagePathList.length}");
+    } else {
+      // User canceled the picker
+    }
   }
   Future getImage(ImgSource source, BuildContext context,int i) async {
     var image = await ImagePickerGC.pickImage(
@@ -849,7 +965,6 @@ class _EditNewProfileState extends State<EditNewProfile> {
         drivingImage = File(croppedFile!.path);
       } else if(i==5){
         profileImage = File(croppedFile!.path);
-
       }
       // else if(i==6){
       //   insuranceImage = File(croppedFile!.path);

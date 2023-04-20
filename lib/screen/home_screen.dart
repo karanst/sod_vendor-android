@@ -260,12 +260,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _getBanners() async {
     var uri = Uri.parse('${Apipath.getBanners}');
-    var request = new http.MultipartRequest("GET", uri);
+    var request = new http.MultipartRequest("POST", uri);
     Map<String, String> headers = {
       "Accept": "application/json",
     };
     request.headers.addAll(headers);
-    // request.fields['type_id'] = type.toString();
+     request.fields['type_id'] = type.toString();
     print("this is request banner ====>>> ${request.fields.toString()}");
     var response = await request.send();
     print(response.statusCode);
@@ -313,12 +313,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _buyVendorProduct() async {
-    var uri = Uri.parse('${Apipath.buyVendorProductUrl}');
-    var request = new http.MultipartRequest("POST", uri);
-    // Map<String, String> headers = {
-    //   "Accept": "application/json",
+    // var uri = Uri.parse('${Apipath.buyVendorProductUrl}');
+    //
+    // var headers = {
+    //   'Cookie': 'ci_session=3ab2e0bfe4c2535c351d13c7ca58f780dce6aa8f'
     // };
-    request.headers.addAll({'type': "$type"});
+    var request =
+    http.MultipartRequest('POST', Uri.parse('${Apipath.buyVendorProductUrl}'));
+    request.fields.addAll({
+      'type': '${type.toString()}'
+      //'$uid'
+    });
+
+    print("this is vendor products request ${request.fields.toString()}");
     // request.fields['vendor_id'] = userID;
     var response = await request.send();
     print(response.statusCode);

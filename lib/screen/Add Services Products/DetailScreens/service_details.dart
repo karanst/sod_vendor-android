@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fixerking/new model/vendor_services_model.dart';
 
+import 'image_preview.dart';
+
 
 class ServiceDetails extends StatefulWidget {
   final Products? model;
@@ -22,15 +24,22 @@ class _ServiceDetailsState extends State<ServiceDetails> {
         gridDelegate:
         SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
-          return Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15))
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-                child: Image.network(widget.model!.servicesImage![index].toString(),
-                    fit: BoxFit.cover),
-              ));
+          return InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> FullScreenImage(
+                imageUrl: widget.model!.servicesImage![index].toString(),
+              )));
+            },
+            child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15))
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  child: Image.network(widget.model!.servicesImage![index].toString(),
+                      fit: BoxFit.cover),
+                )),
+          );
         },
       ),
     );
@@ -83,22 +92,29 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Card(
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25)),
-                          child: Container(
-                            // padding: const EdgeInsets.all(10),
-                            // only(left: 85, right: 20),
-                            height: 190,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
+                        InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> FullScreenImage(
+                              imageUrl: widget.model!.servicesImage![0].toString(),
+                            )));
+                          },
+                          child: Card(
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25)),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
-                              child: Image.network(
-                                "${widget.model!.servicesImage![0].toString()}",
-                                fit: BoxFit.cover,
+                            child: Container(
+                              // padding: const EdgeInsets.all(10),
+                              // only(left: 85, right: 20),
+                              height: 190,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25)),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.all(Radius.circular(15)),
+                                child: Image.network(
+                                  "${widget.model!.servicesImage![0].toString()}",
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),
