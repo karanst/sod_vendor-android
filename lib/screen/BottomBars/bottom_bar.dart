@@ -2,12 +2,15 @@
 import 'dart:convert';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fixerking/screen/Add%20Services%20Products/products_services_screen.dart';
 import 'package:fixerking/screen/auth_view/verify_otp.dart';
 import 'package:fixerking/screen/home_screen.dart';
 import 'package:fixerking/screen/manage_Service.dart';
 import 'package:fixerking/screen/profile/profile.dart';
 import 'package:fixerking/screen/profile_screen.dart';
+import 'package:fixerking/screen/push_notification_service.dart';
 import 'package:fixerking/screen/verify_otp.dart';
 import 'package:fixerking/token/token_string.dart';
 import 'package:fixerking/utils/colors.dart';
@@ -29,11 +32,21 @@ class _BottomBarState extends State<BottomBar> {
   var _selBottom = 0;
   String? bookID;
 
+  notificationServices() async{
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+
+    // FirebaseMessaging.onMessageOpenedApp(myForgroundMessageHandler);
+    FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
+  }
 
   @override
   void initState() {
     // getUserDataFromPrefs();
     super.initState();
+    PushNotificationService notificationService =  PushNotificationService(context: context);
+    notificationService.initialise();
+    notificationServices();
     getUserDataFromPrefs();
 
   }

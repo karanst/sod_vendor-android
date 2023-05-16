@@ -86,7 +86,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   changeStatusBarColor(AppColor().colorPrimary());
-  // FirebaseMessaging.onMessageOpenedApp(myForgroundMessageHandler);
+   // FirebaseMessaging.onMessageOpenedApp(myForgroundMessageHandler);
   FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

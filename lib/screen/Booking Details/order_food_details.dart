@@ -548,7 +548,7 @@ class _OrderFoodDetailsState extends State<OrderFoodDetails> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Platform Chaarges',
+                  Text('Platform Charges',
                       style: TextStyle(
                         color: AppColor().colorPrimary(),
                         fontWeight: FontWeight.normal,

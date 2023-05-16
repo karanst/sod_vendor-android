@@ -102,6 +102,7 @@
 
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fixerking/screen/BottomBars/bottom_bar_delivery.dart';
 import 'package:fixerking/screen/auth_view/login.dart';
@@ -136,7 +137,14 @@ class _FastsplashState extends State<Fastsplash> {
     checkingLogin();
     PushNotificationService notificationService =  PushNotificationService(context: context);
     notificationService.initialise();
+    notificationServices();
+  }
 
+  notificationServices() async{
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    // FirebaseMessaging.onMessageOpenedApp(myForgroundMessageHandler);
+    FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
   }
 
   getToken() async {

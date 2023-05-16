@@ -314,6 +314,7 @@ class _LoginState extends State<Login> {
                         color: AppColor().colorBg1(),
                       ),
                     ),
+                    Text("Login to see "),
                     const SizedBox(
                       height: 30,
                     ),

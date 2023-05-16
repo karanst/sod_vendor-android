@@ -989,6 +989,7 @@ class _VendorRegisterationState extends State<VendorRegisteration> {
       },
     );
   }
+
   void requestPermission(BuildContext context,int i) async{
     return await showDialog<void>(
       context: context,
@@ -1001,20 +1002,6 @@ class _VendorRegisterationState extends State<VendorRegisteration> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              // enableCloseButton == true
-              //     ? GestureDetector(
-              //   onTap: () {
-              //     Navigator.pop(context);
-              //   },
-              //   child: Align(
-              //       alignment: Alignment.topRight,
-              //       child: closeIcon ??
-              //           Icon(
-              //             Icons.close,
-              //             size: 14,
-              //           )),
-              // )
-              //     : Container(),
               InkWell(
                 onTap: () async {
                   getFromGallery(i);
@@ -1036,14 +1023,6 @@ class _VendorRegisterationState extends State<VendorRegisteration> {
               InkWell(
                 onTap: () async {
                   getImage(ImgSource.Camera, context, i);
-                  //   ImagePicker()
-                  //       .getImage(
-                  //       source: ImageSource.camera,
-                  //       maxWidth: maxWidth,
-                  //       maxHeight: maxHeight)
-                  //       .then((image) {
-                  //     Navigator.pop(context, image);
-                  //   });
                 },
                 child: Container(
                   child: ListTile(
@@ -1059,38 +1038,6 @@ class _VendorRegisterationState extends State<VendorRegisteration> {
         );
       },
     );
-    // var status = await Permission.storage.request();
-    // final status = await Permission.photos.status;
-    // // final storage = await Permission.accessMediaLocation.status;
-    // if(status.isGranted){
-    //     getImage(ImgSource.Both, i);
-    // }
-    // else if(status.isPermanentlyDenied){
-    //   openAppSettings();
-    // }
-
-    ///
-//     if (await Permission.camera.isRestricted || await Permission.storage.isRestricted) {
-//       openAppSettings();
-//     }
-//     else{
-//       Map<Permission, PermissionStatus> statuses = await [
-//         Permission.camera,
-//         Permission.storage,
-//       ].request();
-// // You can request multiple permissions at once.
-//
-//       if(statuses[Permission.camera]==PermissionStatus.granted&&statuses[Permission.storage]==PermissionStatus.granted){
-//         getImage(ImgSource.Both, context,i);
-//
-//       }else{
-//         if (await Permission.camera.isDenied||await Permission.storage.isDenied) {
-//           openAppSettings();
-//         }else{
-//           setSnackbar("Oops you just denied the permission", context);
-//         }
-//       }
-//     }
 
   }
 
@@ -1139,7 +1086,75 @@ class _VendorRegisterationState extends State<VendorRegisteration> {
       // User canceled the picker
     }
   }
-//   void requestPermission(BuildContext context, int i) async {
+
+
+  Future getImage(ImgSource source, BuildContext context, int i) async {
+    var image = await ImagePickerGC.pickImage(
+      context: context,
+      source: source,
+      cameraIcon: Icon(
+        Icons.add,
+        color: Colors.red,
+      ), //cameraIcon and galleryIcon can change. If no icon provided default icon will be present
+    );
+    getCropImage(context, i, image);
+  }
+
+  void getCropImage(BuildContext context, int i, var image) async {
+    CroppedFile? croppedFile = await ImageCropper.platform.cropImage(
+      sourcePath: image.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
+      // androidUiSettings: AndroidUiSettings(
+      //     toolbarTitle: 'Cropper',
+      //     toolbarColor: Colors.lightBlueAccent,
+      //     toolbarWidgetColor: Colors.white,
+      //     initAspectRatio: CropAspectRatioPreset.original,
+      //     lockAspectRatio: false),
+      // iosUiSettings: IOSUiSettings(
+      //   minimumAspectRatio: 1.0,
+      // )
+    );
+    setState(() {
+      if (i == 1) {
+        aadharImage = File(croppedFile!.path);
+      } else if (i == 2) {
+        panImage = File(croppedFile!.path);
+      } else if (i == 4) {
+        drivingImage = File(croppedFile!.path);
+      } else if (i == 3) {
+        rcImage = File(croppedFile!.path);
+      } else if (i == 5) {
+        aadharImageBack = File(croppedFile!.path);
+      } else if (i == 6) {
+        rcImageBack = File(croppedFile!.path);
+      } else if (i == 7) {
+        drivingImageBack = File(croppedFile!.path);
+      } else if (i == 8) {
+        fssaiImage = File(croppedFile!.path);
+      } else if (i == 9) {
+        gstImage = File(croppedFile!.path);
+      }
+      // else if(i==6){
+      //   insuranceImage = File(croppedFile!.path);
+      // }
+      // else if(i==7){
+      //   bankImage = File(croppedFile!.path);
+      // }
+      // else{
+      //   _finalImage = File(croppedFile!.path);
+      // }
+    });
+    //Navigator.pop(context);
+  }
+
+
+  //   void requestPermission(BuildContext context, int i) async {
 //     // return await showDialog<void>(
 //     //   context: context,
 //     //   // barrierDismissible: barrierDismissible, // user must tap button!
@@ -1286,71 +1301,6 @@ class _VendorRegisterationState extends State<VendorRegisteration> {
   //   }
   // }
   // File? _image,_finalImage,panImage,vehicleImage,adharImage,insuranceImage,bankImage;
-
-  Future getImage(ImgSource source, BuildContext context, int i) async {
-    var image = await ImagePickerGC.pickImage(
-      context: context,
-      source: source,
-      cameraIcon: Icon(
-        Icons.add,
-        color: Colors.red,
-      ), //cameraIcon and galleryIcon can change. If no icon provided default icon will be present
-    );
-    getCropImage(context, i, image);
-  }
-
-  void getCropImage(BuildContext context, int i, var image) async {
-    CroppedFile? croppedFile = await ImageCropper.platform.cropImage(
-      sourcePath: image.path,
-      aspectRatioPresets: [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9
-      ],
-      // androidUiSettings: AndroidUiSettings(
-      //     toolbarTitle: 'Cropper',
-      //     toolbarColor: Colors.lightBlueAccent,
-      //     toolbarWidgetColor: Colors.white,
-      //     initAspectRatio: CropAspectRatioPreset.original,
-      //     lockAspectRatio: false),
-      // iosUiSettings: IOSUiSettings(
-      //   minimumAspectRatio: 1.0,
-      // )
-    );
-    setState(() {
-      if (i == 1) {
-        aadharImage = File(croppedFile!.path);
-      } else if (i == 2) {
-        panImage = File(croppedFile!.path);
-      } else if (i == 4) {
-        drivingImage = File(croppedFile!.path);
-      } else if (i == 3) {
-        rcImage = File(croppedFile!.path);
-      } else if (i == 5) {
-        aadharImageBack = File(croppedFile!.path);
-      } else if (i == 6) {
-        rcImageBack = File(croppedFile!.path);
-      } else if (i == 7) {
-        drivingImageBack = File(croppedFile!.path);
-      } else if (i == 8) {
-        fssaiImage = File(croppedFile!.path);
-      } else if (i == 9) {
-        gstImage = File(croppedFile!.path);
-      }
-      // else if(i==6){
-      //   insuranceImage = File(croppedFile!.path);
-      // }
-      // else if(i==7){
-      //   bankImage = File(croppedFile!.path);
-      // }
-      // else{
-      //   _finalImage = File(croppedFile!.path);
-      // }
-    });
-    //Navigator.pop(context);
-  }
 
   manageRole() {
     if (widget.role == "Restaurants / Hotels / Cafes") {

@@ -2618,7 +2618,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _banner(BuildContext context) {
-    return bannerModal == null
+    return bannerModal != null?
+      bannerModal == null
         ? Center(
             child: Container(
             height: 30,
@@ -2627,7 +2628,8 @@ class _HomeScreenState extends State<HomeScreen> {
               color: colors.primary,
             ),
           ))
-        : ClipRRect(
+        : bannerModal!.banners!.isNotEmpty ?
+      ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: Column(
               children: [
@@ -2748,7 +2750,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     }).toList()),
               ],
             ),
-          );
+          )
+      : SizedBox.shrink()
+    : SizedBox.shrink();
   }
 
   // Widget _banner(BuildContext context) {
@@ -3730,7 +3734,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           //     }).toList(),
                           //   ),
                           // ),
+
+                          // bannerModal!.banners!.isNotEmpty ?
                           _banner(context),
+                          // : SizedBox.shrink(),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
@@ -3789,13 +3796,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 height: 120,
                                                 width: MediaQuery.of(context)
                                                         .size
-                                                        .width /
-                                                    1.1,
+                                                        .width ,
                                                 // decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
                                                 child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                  // mainAxisAlignment:
+                                                  //     MainAxisAlignment
+                                                  //         .spaceBetween,
                                                   children: [
                                                     Row(
                                                       children: [
@@ -3880,7 +3886,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             SizedBox(height: 5),
                                                             // Text("${ProductModel!.products![index].productPrice}"),
                                                             Container(
-                                                              width: 200,
+                                                              width: 150,
                                                               child: Text(
                                                                 productModel!
                                                                     .products![

@@ -7,6 +7,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1012882793086:android:19cb8f7f6a6163ce2f6e2f",
+        "android_client_info": {
+          "package_name": "com.soduser.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012882793086-vkcvs14ae8on4klrcuo0rfgs06quvmja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0SoY48OUXIZIFeN_nDm35pY6NFf-Sags"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1012882793086-vkcvs14ae8on4klrcuo0rfgs06quvmja.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1012882793086-4onu6gerpivokjaenpkt7qnklmu1ra52.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sod.vendor"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1012882793086:android:b23268841e3730e52f6e2f",
         "android_client_info": {
           "package_name": "com.vendor.sod"
@@ -37,6 +73,13 @@
             {
               "client_id": "1012882793086-vkcvs14ae8on4klrcuo0rfgs06quvmja.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1012882793086-4onu6gerpivokjaenpkt7qnklmu1ra52.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sod.vendor"
+              }
             }
           ]
         }
