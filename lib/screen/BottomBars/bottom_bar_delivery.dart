@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:fixerking/RideFlow/utils/PushNotificationService.dart';
 import 'package:fixerking/screen/Add%20Services%20Products/products_services_screen.dart';
 import 'package:fixerking/screen/auth_view/verify_otp.dart';
 import 'package:fixerking/screen/home_screen.dart';
@@ -47,7 +48,9 @@ class _BottomBarDeliveryState extends State<BottomBarDelivery> {
     super.initState();
     getUserDataFromPrefs();
     notificationServices();
-
+    final pushNotificationService = PushNotificationService(
+        context: context, onResult: (value) {  },);
+    pushNotificationService.initialise();
   }
   String? type;
 

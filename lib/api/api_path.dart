@@ -1,8 +1,8 @@
 class Apipath {
 
   static const String BASH_URL =
-      //"https://sodindia.com/api/";
-      "https://sodindia.com/api/";
+      'https://alphawizzserver.com/sod_india/api/';
+      // "https://sodindia.com/api/";
       //"https://developmentalphawizz.com/new_ondemand/api/";
       //"https://alphawizztest.tk/ondemand/api/";
       static const String imagePath =

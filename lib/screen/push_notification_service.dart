@@ -355,8 +355,8 @@ FirebaseMessaging messaging = FirebaseMessaging.instance;
 
 Future<void> backgroundMessage(RemoteMessage message) async {
   print(message);
-
 }
+
 String fcmToken = "";
 
 class PushNotificationService {
@@ -372,6 +372,7 @@ class PushNotificationService {
       fcmToken = token.toString();
       print("fcmToken---"+fcmToken);
     });
+
     const AndroidInitializationSettings initializationSettingsAndroid =
     AndroidInitializationSettings('@mipmap/ic_launcher');
     final IOSInitializationSettings initializationSettingsIOS =
@@ -385,23 +386,23 @@ class PushNotificationService {
         macOS: initializationSettingsMacOS);
 
 
-
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       // App.localStorage.setBool("notStatus", true);
       // notificationStatus = App.localStorage.getBool("notStatus")!;
       print("0k" + message.toString());
+
       var data = message.notification!;
+      print("this is notification darta $data");
       var title = data.title.toString();
+      print("this is notification title $title");
       var body = data.body.toString();
+      print("this is body $body");
       var test = message.data;
-       notiType  = test['type'];
-      print('this is booking ID =====> ${test['Booking_id']}');
-      String bookingId = test['Booking_id'];
-      var notiData =  {
-        'bookingId': bookingId,
-        'type' : notiType
-      };
-        onResult!(notiData);
+      print("this is booking type ${test['type']}");
+       // notiType  = test['type'];
+
+
+
       // }
       /* if(bookingId==""){
         bookingId = test['Booking_id'];
@@ -422,18 +423,32 @@ class PushNotificationService {
           onResult(bookingId);
         }
       }*/
-      print(test);
-      var image = message.data['image'] ?? '';
-      print(image);
+      // print(test);
+      // var image = message.data['image'] ?? '';
+      // print(image);
       var type = message.data['type'] ?? '';
-      var id = '';
-      id = message.data['type_id'] ?? '';
-      if (image != null && image != 'null' && image != '') {
-        generateImageNotication(title, body, image, type, bookingId);
-      } else {
+      print("this is type -------->>>>$type");
+      // id = message.data['type_id'] ?? '';
+      if(type == "3" || type == "2" || type == "4"){
+        print('this is booking ID =====> ${test['Booking_id']}');
+        String bookingId = test['Booking_id'];
+        // var notiData =  {
+        //   'bookingId': bookingId,
+        //   'type' : notiType
+        // };
         generateSimpleNotication(title, body, type, bookingId);
-        // createSimpleNotication(title, body, type, id, test);
+        onResult!(bookingId);
+      }else{
+        generateSimpleNotication(title, body, type, '');
       }
+
+      // generateImageNotication(title, body, image, type, '');
+      // if (image != null && image != 'null' && image != '') {
+      //   generateImageNotication(title, body, image, type, bookingId);
+      // } else {
+      //   generateSimpleNotication(title, body, type, bookingId);
+      //   // createSimpleNotication(title, body, type, id, test);
+      // }
     });
     // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     //
@@ -506,6 +521,30 @@ class PushNotificationService {
     });
   }
 
+   static Future showNotification(RemoteMessage message) async {
+     AndroidNotificationDetails androidDetails =AndroidNotificationDetails(
+       "111",
+       "channel",
+       enableLights: true,
+       enableVibration: true,
+       priority: Priority.high,
+       importance: Importance.max,
+       //largeIcon: DrawableResourceAndroidBitmap("ic_launcher"),
+       styleInformation: MediaStyleInformation(
+         htmlFormatContent: true,
+         htmlFormatTitle: true,
+       ),
+       playSound: true,
+     );
+
+     await flutterLocalNotificationsPlugin.show(
+         message.data.hashCode,
+         message.data['title'],
+         message.data['body'],
+         NotificationDetails(
+           android: androidDetails,
+         ));
+   }
   void iOSPermission() async {
     await messaging.setForegroundNotificationPresentationOptions(
       alert: true,
@@ -519,38 +558,38 @@ Future<dynamic> myForgroundMessageHandler(RemoteMessage message) async {
   return Future<void>.value();
 }
 
-Future<String> _downloadAndSaveImage(String url, String fileName) async {
-  var directory = await getApplicationDocumentsDirectory();
-  var filePath = '${directory.path}/$fileName';
-  var response = await http.get(Uri.parse(url));
+// Future<String> _downloadAndSaveImage(String url, String fileName) async {
+//   var directory = await getApplicationDocumentsDirectory();
+//   var filePath = '${directory.path}/$fileName';
+//   var response = await http.get(Uri.parse(url));
+//
+//   var file = File(filePath);
+//   await file.writeAsBytes(response.bodyBytes);
+//   return filePath;
+// }
 
-  var file = File(filePath);
-  await file.writeAsBytes(response.bodyBytes);
-  return filePath;
-}
-
-Future<void> generateImageNotication(
-    String title, String msg, String image, String type, String id) async {
-  var largeIconPath = await _downloadAndSaveImage(image, 'largeIcon');
-  var bigPicturePath = await _downloadAndSaveImage(image, 'bigPicture');
-  var bigPictureStyleInformation = BigPictureStyleInformation(
-      FilePathAndroidBitmap(bigPicturePath),
-      hideExpandedLargeIcon: true,
-      contentTitle: title,
-      htmlFormatContentTitle: true,
-      summaryText: msg,
-      htmlFormatSummaryText: true);
-  var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'high_importance_channel', 'big text channel name',
-      channelDescription: 'big text channel description',
-      icon: '@mipmap/ic_launcher',
-      largeIcon: FilePathAndroidBitmap(largeIconPath),
-      styleInformation: bigPictureStyleInformation);
-  var platformChannelSpecifics =
-  NotificationDetails(android: androidPlatformChannelSpecifics);
-  await flutterLocalNotificationsPlugin
-      .show(0, title, msg, platformChannelSpecifics, payload: type + "," + id);
-}
+// Future<void> generateImageNotication(
+//     String title, String msg, String image, String type, String id) async {
+//   // var largeIconPath = await _downloadAndSaveImage(image, 'largeIcon');
+//   // var bigPicturePath = await _downloadAndSaveImage(image, 'bigPicture');
+//   var bigPictureStyleInformation = BigPictureStyleInformation(
+//       FilePathAndroidBitmap(bigPicturePath),
+//       hideExpandedLargeIcon: true,
+//       contentTitle: title,
+//       htmlFormatContentTitle: true,
+//       summaryText: msg,
+//       htmlFormatSummaryText: true);
+//   var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+//       'high_importance_channel', 'big text channel name',
+//       channelDescription: 'big text channel description',
+//       icon: '@mipmap/ic_launcher',
+//       largeIcon: FilePathAndroidBitmap(largeIconPath),
+//       styleInformation: bigPictureStyleInformation);
+//   var platformChannelSpecifics =
+//   NotificationDetails(android: androidPlatformChannelSpecifics);
+//   await flutterLocalNotificationsPlugin
+//       .show(0, title, msg, platformChannelSpecifics, payload: type + "," + id);
+// }
 
 Future<void> generateSimpleNotication(
     String title, String msg, String type, String id) async {

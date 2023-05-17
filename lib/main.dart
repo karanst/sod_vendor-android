@@ -69,6 +69,7 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:fixerking/RideFlow/utils/PushNotificationService.dart';
 import 'package:fixerking/fast_splash.dart';
 import 'package:fixerking/screen/push_notification_service.dart';
 import 'package:fixerking/utils/colors.dart';
@@ -77,7 +78,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
+
+
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await Firebase.initializeApp();
+//   print('Handling a background message ${message.messageId}');
+//   print('Notification Message: ${message.data}');
+//   PushNotificationService.showNotification(message);
+// }
 
 Future<void> main() async {
   if(Platform.isAndroid) {
@@ -86,8 +96,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   changeStatusBarColor(AppColor().colorPrimary());
-   // FirebaseMessaging.onMessageOpenedApp(myForgroundMessageHandler);
-  FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
+    FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     systemNavigationBarColor: Colors.transparent, // navigation bar color

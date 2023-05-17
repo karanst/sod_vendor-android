@@ -104,6 +104,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:fixerking/RideFlow/utils/PushNotificationService.dart';
 import 'package:fixerking/screen/BottomBars/bottom_bar_delivery.dart';
 import 'package:fixerking/screen/auth_view/login.dart';
 import 'package:fixerking/screen/BottomBars/bottom_bar.dart';
@@ -113,6 +114,7 @@ import 'package:fixerking/screen/get_started.dart';
 import 'package:fixerking/token/app_token_data.dart';
 import 'package:fixerking/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
@@ -130,22 +132,30 @@ class _FastsplashState extends State<Fastsplash> {
   String? uid;
   String? type;
 
+  notificationPermission() async{
+    PermissionStatus status = await Permission.notification.request();
+    if (status.isGranted) {
+      PushNotificationService notificationService =  PushNotificationService(context: context, onResult: (value) {  });
+      notificationService.initialise();
+      FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
+    }
+    else {
+      openAppSettings();
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    notificationPermission();
     getToken();
     checkingLogin();
-    PushNotificationService notificationService =  PushNotificationService(context: context);
+    PushNotificationService notificationService =  PushNotificationService(context: context, onResult: (value) {  });
     notificationService.initialise();
-    notificationServices();
-  }
-
-  notificationServices() async{
-    WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
-    // FirebaseMessaging.onMessageOpenedApp(myForgroundMessageHandler);
     FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
   }
+
+
 
   getToken() async {
     var fcmToken = await FirebaseMessaging.instance.getToken();

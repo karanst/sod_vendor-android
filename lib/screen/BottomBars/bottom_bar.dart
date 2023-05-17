@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:fixerking/RideFlow/utils/PushNotificationService.dart';
 import 'package:fixerking/screen/Add%20Services%20Products/products_services_screen.dart';
 import 'package:fixerking/screen/auth_view/verify_otp.dart';
 import 'package:fixerking/screen/home_screen.dart';
@@ -16,6 +17,7 @@ import 'package:fixerking/token/token_string.dart';
 import 'package:fixerking/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BottomBar extends StatefulWidget {
@@ -32,21 +34,24 @@ class _BottomBarState extends State<BottomBar> {
   var _selBottom = 0;
   String? bookID;
 
-  notificationServices() async{
-    WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
 
-    // FirebaseMessaging.onMessageOpenedApp(myForgroundMessageHandler);
+notificationPermission() async{
+  PermissionStatus status = await Permission.notification.request();
+  if (status.isGranted) {
+    PushNotificationService notificationService =  PushNotificationService(context: context, onResult: (value) {  });
+    notificationService.initialise();
     FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
   }
-
+  else {
+    openAppSettings();
+  }
+}
   @override
   void initState() {
+
     // getUserDataFromPrefs();
     super.initState();
-    PushNotificationService notificationService =  PushNotificationService(context: context);
-    notificationService.initialise();
-    notificationServices();
+
     getUserDataFromPrefs();
 
   }

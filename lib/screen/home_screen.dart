@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fixerking/RideFlow/DrawerPages/Rides/ride_info_page.dart';
+import 'package:fixerking/RideFlow/utils/PushNotificationService.dart';
 import 'package:fixerking/api/api_path.dart';
 import 'package:fixerking/modal/response/notification_response.dart';
 import 'package:fixerking/new%20model/GetProfileModel.dart';
@@ -2634,11 +2635,11 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 Container(
-                  height: 120,
-                  width: double.infinity,
+                  height: 150,
+                  width: MediaQuery.of(context).size.width,
                   child: CarouselSlider(
                     options: CarouselOptions(
-                      viewportFraction: 0.8,
+                      viewportFraction: 1,
                       initialPage: 0,
                       enableInfiniteScroll: true,
                       reverse: false,
