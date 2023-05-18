@@ -199,6 +199,26 @@ class _ProfileState extends State<Profile> {
                                                 SizedBox(
                                                   height: 50,
                                                 ),
+                                               type =="2" || type == "3" || type == "4" ?  Column(
+                                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text("Driving License:",
+                                                      style: TextStyle(
+                                                          fontWeight: FontWeight.w600
+                                                      ),),
+                                                    SizedBox(
+                                                      height: 50,
+                                                    ),
+                                                    Text("RC Card:",
+                                                      style: TextStyle(
+                                                          fontWeight: FontWeight.w600
+                                                      ),),
+                                                    SizedBox(
+                                                      height: 50,
+                                                    ),
+                                                  ],
+                                                )
+                                                : SizedBox.shrink(),
                                                 Text("Pan Card:",
                                                   style: TextStyle(
                                                       fontWeight: FontWeight.w600
@@ -291,7 +311,7 @@ class _ProfileState extends State<Profile> {
                                                 : SizedBox.shrink(),
 
                                                 Container(
-                                                    width: 170,
+                                                    width: 200,
                                                     child: Text(
                                                       "${profileModel!.data![0].address}",
                                                       maxLines: 3,
@@ -307,11 +327,37 @@ class _ProfileState extends State<Profile> {
                                                 SizedBox(
                                                   height: 15,
                                                 ),
-                                                profileModel!.data![0]
-                                                    .adharCard ==
-                                                    null ||
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
                                                     profileModel!.data![0]
                                                         .adharCard ==
+                                                        null ||
+                                                        profileModel!.data![0]
+                                                            .adharCard ==
+                                                            ""
+                                                        ? SizedBox.shrink()
+                                                        : Container(
+                                                        height: 50,
+                                                        width: 80,
+                                                        child: ClipRRect(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                6),
+                                                            child:
+                                                            Image.network(
+                                                              "${profileModel!.data![0].adharCard.toString()}",
+                                                              fit:
+                                                              BoxFit.fill,
+                                                            ))),
+
+                                                const SizedBox(width: 10,),
+                                                profileModel!.data![0]
+                                                    .adharBack ==
+                                                    null ||
+                                                    profileModel!.data![0]
+                                                        .adharBack ==
                                                         ""
                                                     ? SizedBox.shrink()
                                                     : Container(
@@ -322,13 +368,123 @@ class _ProfileState extends State<Profile> {
                                                         BorderRadius
                                                             .circular(
                                                             6),
-                                                        child:
-                                                        Image.network(
-                                                          "${profileModel!.data![0].adharCard.toString()}",
+                                                        child: Image.network(
+                                                          "${profileModel!.data![0].adharBack.toString()}",
                                                           fit:
                                                           BoxFit.fill,
                                                         ))),
+                                                  ],
+                                                ),
 
+                                                SizedBox(
+                                                  height: 15,
+                                                ),
+
+                                                type =="2" || type == "3" || type == "4" ?  Column(
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        profileModel!.data![0]
+                                                            .drivingLicense ==
+                                                            null ||
+                                                            profileModel!.data![0]
+                                                                .drivingLicense ==
+                                                                ""
+                                                            ? SizedBox.shrink()
+                                                            : Container(
+                                                            height: 50,
+                                                            width: 80,
+                                                            child: ClipRRect(
+                                                                borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                    6),
+                                                                child:
+                                                                Image.network(
+                                                                  "${profileModel!.data![0].drivingLicense.toString()}",
+                                                                  fit:
+                                                                  BoxFit.fill,
+                                                                ))),
+
+                                                        const SizedBox(width: 10,),
+                                                        profileModel!.data![0]
+                                                            .drivingLicenseBack ==
+                                                            null ||
+                                                            profileModel!.data![0]
+                                                                .drivingLicenseBack ==
+                                                                ""
+                                                            ? SizedBox.shrink()
+                                                            : Container(
+                                                            height: 50,
+                                                            width: 80,
+                                                            child: ClipRRect(
+                                                                borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                    6),
+                                                                child: Image.network(
+                                                                  "${profileModel!.data![0].drivingLicenseBack.toString()}",
+                                                                  fit:
+                                                                  BoxFit.fill,
+                                                                ))),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 15,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        profileModel!.data![0]
+                                                            .rcBook ==
+                                                            null ||
+                                                            profileModel!.data![0]
+                                                                .rcBook ==
+                                                                ""
+                                                            ? SizedBox.shrink()
+                                                            : Container(
+                                                            height: 50,
+                                                            width: 80,
+                                                            child: ClipRRect(
+                                                                borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                    6),
+                                                                child:
+                                                                Image.network(
+                                                                  "${profileModel!.data![0].rcBook.toString()}",
+                                                                  fit:
+                                                                  BoxFit.fill,
+                                                                ))),
+
+                                                        const SizedBox(width: 10,),
+                                                        profileModel!.data![0]
+                                                            .rcBookBack ==
+                                                            null ||
+                                                            profileModel!.data![0]
+                                                                .rcBookBack ==
+                                                                ""
+                                                            ? SizedBox.shrink()
+                                                            : Container(
+                                                            height: 50,
+                                                            width: 80,
+                                                            child: ClipRRect(
+                                                                borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                    6),
+                                                                child: Image.network(
+                                                                  "${profileModel!.data![0].rcBookBack.toString()}",
+                                                                  fit:
+                                                                  BoxFit.fill,
+                                                                ))),
+                                                      ],
+                                                    )
+
+                                                  ],
+                                                )
+                                                    : SizedBox.shrink(),
                                                 SizedBox(
                                                   height: 15,
                                                 ),
@@ -510,15 +666,15 @@ class _ProfileState extends State<Profile> {
                         width: 100,
                         child: profileModel == null
                             ? Center(
-                                child: Icon(Icons.person),
-                              )
+                          child: Icon(Icons.person),
+                        )
                             : ClipRRect(
-                                borderRadius: BorderRadius.circular(6),
-                                child: Image.network(
-                                  "${profileModel!.data![0].profileImage}",
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
+                          borderRadius: BorderRadius.circular(6),
+                          child: Image.network(
+                            "${profileModel!.data![0].profileImage}",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
                         // ClipRRect(
                         //   borderRadius: BorderRadius.circular(200),
                         //   child: Image.network("${getProfilenew![0].profileImage}"),
@@ -526,7 +682,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                   ),
-                ),
+                )
               ],
             ),
           ],

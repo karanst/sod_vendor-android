@@ -42,9 +42,12 @@ class _EditNewProfileState extends State<EditNewProfile> {
   String? bankValue;
 
   File? rcImage;
+  File? rcImageBack;
   File? aadharImage;
+  File? aadharImageBack;
   File? panImage;
   File? drivingImage;
+  File? drivingImageBack;
   File? profileImage;
 
   String? type;
@@ -85,281 +88,6 @@ class _EditNewProfileState extends State<EditNewProfile> {
   TextEditingController bankNameController = TextEditingController();
   TextEditingController storeDescriptionController = TextEditingController();
 
-  void containerForSheet<T>({BuildContext? context, Widget? child}) {
-    showCupertinoModalPopup<T>(
-      context: context!,
-      builder: (BuildContext context) => child!,
-    ).then<void>((T? value) {});
-  }
-
-  uploadRCFromCamOrGallary(BuildContext context) {
-    containerForSheet<String>(
-      context: context,
-      child: CupertinoActionSheet(
-        actions: <Widget>[
-          CupertinoActionSheetAction(
-            child: Text(
-              "Camera",
-              style: TextStyle(color: Colors.black, fontSize: 15),
-            ),
-            onPressed: () {
-              getRCFromCamera();
-              Navigator.of(context, rootNavigator: true).pop("Discard");
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: Text(
-              "Photo & Video Library",
-              style: TextStyle(color: Colors.black, fontSize: 15),
-            ),
-            onPressed: () {
-              getRCFromGallery();
-              Navigator.of(context, rootNavigator: true).pop("Discard");
-            },
-          ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          child: Text(
-            "Cancel",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-          isDefaultAction: true,
-          onPressed: () {
-            // Navigator.pop(context, 'Cancel');
-            Navigator.of(context, rootNavigator: true).pop("Discard");
-          },
-        ),
-      ),
-    );
-  }
-
-  Future<void> getRCFromCamera() async {
-    PickedFile? pickedFile = await ImagePicker().getImage(
-      source: ImageSource.camera,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        rcImage = File(pickedFile.path);
-        // imagePath = File(pickedFile.path) ;
-        // filePath = imagePath!.path.toString();
-      });
-    }
-  }
-
-  Future<void> getRCFromGallery() async {
-    PickedFile? pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        rcImage = File(pickedFile.path);
-        // imagePath = File(pickedFile.path) ;
-        // filePath = imagePath!.path.toString();
-      });
-    }
-  }
-
-  uploadAadharFromCamOrGallary(BuildContext context) {
-    containerForSheet<String>(
-      context: context,
-      child: CupertinoActionSheet(
-        actions: <Widget>[
-          CupertinoActionSheetAction(
-            child: Text(
-              "Camera",
-              style: TextStyle(color: Colors.black, fontSize: 15),
-            ),
-            onPressed: () {
-              getAadharFromCamera();
-              Navigator.of(context, rootNavigator: true).pop("Discard");
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: Text(
-              "Photo & Video Library",
-              style: TextStyle(color: Colors.black, fontSize: 15),
-            ),
-            onPressed: () {
-              getAadharFromGallery();
-              Navigator.of(context, rootNavigator: true).pop("Discard");
-            },
-          ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          child: Text(
-            "Cancel",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-          isDefaultAction: true,
-          onPressed: () {
-            // Navigator.pop(context, 'Cancel');
-            Navigator.of(context, rootNavigator: true).pop("Discard");
-          },
-        ),
-      ),
-    );
-  }
-
-  Future<void> getAadharFromCamera() async {
-    PickedFile? pickedFile = await ImagePicker().getImage(
-      source: ImageSource.camera,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        aadharImage = File(pickedFile.path);
-        // imagePath = File(pickedFile.path) ;
-        // filePath = imagePath!.path.toString();
-      });
-    }
-  }
-
-  Future<void> getAadharFromGallery() async {
-    PickedFile? pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        aadharImage = File(pickedFile.path);
-        // imagePath = File(pickedFile.path) ;
-        // filePath = imagePath!.path.toString();
-      });
-    }
-  }
-
-  uploadPanFromCamOrGallary(BuildContext context) {
-    containerForSheet<String>(
-      context: context,
-      child: CupertinoActionSheet(
-        actions: <Widget>[
-          CupertinoActionSheetAction(
-            child: Text(
-              "Camera",
-              style: TextStyle(color: Colors.black, fontSize: 15),
-            ),
-            onPressed: () {
-              getPanFromCamera();
-              Navigator.of(context, rootNavigator: true).pop("Discard");
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: Text(
-              "Photo & Video Library",
-              style: TextStyle(color: Colors.black, fontSize: 15),
-            ),
-            onPressed: () {
-              getPanFromGallery();
-              Navigator.of(context, rootNavigator: true).pop("Discard");
-            },
-          ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          child: Text(
-            "Cancel",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-          isDefaultAction: true,
-          onPressed: () {
-            // Navigator.pop(context, 'Cancel');
-            Navigator.of(context, rootNavigator: true).pop("Discard");
-          },
-        ),
-      ),
-    );
-  }
-
-  Future<void> getPanFromCamera() async {
-    PickedFile? pickedFile = await ImagePicker().getImage(
-      source: ImageSource.camera,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        panImage = File(pickedFile.path);
-        // imagePath = File(pickedFile.path) ;
-        // filePath = imagePath!.path.toString();
-      });
-    }
-  }
-
-  Future<void> getPanFromGallery() async {
-    PickedFile? pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        panImage = File(pickedFile.path);
-        // imagePath = File(pickedFile.path) ;
-        // filePath = imagePath!.path.toString();
-      });
-    }
-  }
-
-
-  uploaddrivingFromCamOrGallary(BuildContext context) {
-    containerForSheet<String>(
-      context: context,
-      child: CupertinoActionSheet(
-        actions: <Widget>[
-          CupertinoActionSheetAction(
-            child: Text(
-              "Camera",
-              style: TextStyle(color: Colors.black, fontSize: 15),
-            ),
-            onPressed: () {
-              getdrivingFromCamera();
-              Navigator.of(context, rootNavigator: true).pop("Discard");
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: Text(
-              "Photo & Video Library",
-              style: TextStyle(color: Colors.black, fontSize: 15),
-            ),
-            onPressed: () {
-              getdrivingFromGallery();
-              Navigator.of(context, rootNavigator: true).pop("Discard");
-            },
-          ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          child: Text(
-            "Cancel",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-          isDefaultAction: true,
-          onPressed: () {
-            // Navigator.pop(context, 'Cancel');
-            Navigator.of(context, rootNavigator: true).pop("Discard");
-          },
-        ),
-      ),
-    );
-  }
-
-  Future<void> getdrivingFromCamera() async {
-    PickedFile? pickedFile = await ImagePicker().getImage(
-      source: ImageSource.camera,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        drivingImage = File(pickedFile.path);
-        // imagePath = File(pickedFile.path) ;
-        // filePath = imagePath!.path.toString();
-      });
-    }
-  }
-
-  Future<void> getdrivingFromGallery() async {
-    PickedFile? pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        drivingImage = File(pickedFile.path);
-        // imagePath = File(pickedFile.path) ;
-        // filePath = imagePath!.path.toString();
-      });
-    }
-  }
 
   Widget imageRC() {
     return Material(
@@ -373,7 +101,7 @@ class _EditNewProfileState extends State<EditNewProfile> {
         child: Center(
           child: Container(
             height: 100,
-            width: MediaQuery.of(context).size.width - 60,
+            width: MediaQuery.of(context).size.width/2 - 40,
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(15)),
@@ -383,13 +111,15 @@ class _EditNewProfileState extends State<EditNewProfile> {
               borderRadius: BorderRadius.circular(15),
               child: rcImage != null
                   ? Image.file(rcImage!, fit: BoxFit.cover)
-                  : Column(
+                  :  widget.model!.rcBook == "" || widget.model!.rcBook ==  null?
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Center(child: Icon(Icons.upload_file_outlined, size: 60)),
                   Text("Registration Card")
                 ],
-              ),
+              )
+              :   Image.network('${widget.model!.rcBook.toString()}', fit: BoxFit.cover)
             )
               //   : ClipRRect(
               // borderRadius: BorderRadius.circular(15),
@@ -403,6 +133,58 @@ class _EditNewProfileState extends State<EditNewProfile> {
               //     Text("Profile Image")
               //   ],
               // ),
+            // )
+            ,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget imageRCBack() {
+    return Material(
+      elevation: 2,
+      borderRadius: BorderRadius.circular(15),
+      child: InkWell(
+        onTap: () {
+          requestPermission(context, 7);
+          // uploadRCFromCamOrGallary(context);
+        },
+        child: Center(
+          child: Container(
+            height: 100,
+            width: MediaQuery.of(context).size.width/2 - 40,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(15)),
+            child:
+            // widget.model!.profileImage == null || widget.model!.profileImage == null ?
+            ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: rcImageBack != null
+                    ? Image.file(rcImageBack!, fit: BoxFit.cover)
+                    :  widget.model!.rcBookBack == "" || widget.model!.rcBookBack ==  null?
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(child: Icon(Icons.upload_file_outlined, size: 60)),
+                    Text("Registration Card")
+                  ],
+                )
+                    :   Image.network('${widget.model!.rcBookBack.toString()}', fit: BoxFit.cover)
+            )
+            //   : ClipRRect(
+            // borderRadius: BorderRadius.circular(15),
+            // child:
+            // // rcImage != null ?
+            // Image.network(widget.model!.profileImage.toString(), fit: BoxFit.cover)
+            //     : Column(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Center(child: Icon(Icons.person, size: 60)),
+            //     Text("Profile Image")
+            //   ],
+            // ),
             // )
             ,
           ),
@@ -429,18 +211,24 @@ class _EditNewProfileState extends State<EditNewProfile> {
                 borderRadius: BorderRadius.circular(15)),
             child:
             // widget.model!.profileImage == null || widget.model!.profileImage == "" ?
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: profileImage != null
-                  ? Image.file(profileImage!, fit: BoxFit.cover)
-                  : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(child: Icon(Icons.person, size: 60)),
-                  Text("Profile Image")
-                ],
-              ),
-            )
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: profileImage != null
+                      ? Image.file(profileImage!, fit: BoxFit.cover)
+                      : widget.model!.profileImage.toString() == '' || widget.model!.profileImage == null ?
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(child: Icon(Icons.person, size: 60)),
+                      Text("Profile Image")
+                    ],
+                  ) : ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child:
+                      Image.network('${widget.model!.profileImage.toString()}', fit: BoxFit.cover)
+                  ),
+                ),
+
             //   : ClipRRect(
             // borderRadius: BorderRadius.circular(15),
             // child:
@@ -454,7 +242,7 @@ class _EditNewProfileState extends State<EditNewProfile> {
             // //   ],
             // // ),
             // )
-            ,
+
           ),
         ),
       ),
@@ -465,43 +253,65 @@ class _EditNewProfileState extends State<EditNewProfile> {
     return Material(
       elevation: 2,
       borderRadius: BorderRadius.circular(15),
-      child:
-
-      InkWell(
+      child: InkWell(
         onTap: () {
+          // getImage(ImgSource.Both, context,1);
           requestPermission(context, 1);
-          // uploadAadharFromCamOrGallary(context);
+          //uploadAadharFromCamOrGallary(context);
         },
         child: Center(
           child: Container(
             height: 100,
-            width: MediaQuery.of(context).size.width - 60,
+            width: MediaQuery.of(context).size.width / 2 - 40,
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(15)),
-            child: widget.model!.adharCard == "" || widget.model!.adharCard ==  null?
-            ClipRRect(
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: aadharImage != null
                   ? Image.file(aadharImage!, fit: BoxFit.cover)
-                  : Column(
+                  : widget.model!.adharCard == "" || widget.model!.adharCard ==  null?
+              Column(
                 children: [
                   Center(child: Icon(Icons.upload_file_outlined, size: 60)),
                   Text("Aadhar card")
                 ],
-              ),
-            )
-            : ClipRRect(
+              ) :  Image.network('${widget.model!.adharCard.toString()}', fit: BoxFit.cover),
+          )
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget imageAadharBack() {
+    return Material(
+      elevation: 2,
+      borderRadius: BorderRadius.circular(15),
+      child: InkWell(
+        onTap: () {
+          requestPermission(context, 6);
+        },
+        child: Center(
+          child: Container(
+            height: 100,
+            width: MediaQuery.of(context).size.width / 2 - 40,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(15)),
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
-              child:
-              //aadharImage != null?
-                Image.network('${widget.model!.adharCard.toString()}', fit: BoxFit.cover)
-              //     : Column(
-              //   children: [
-              //     Center(child: Icon(Icons.upload_file_outlined, size: 60)),
-              //     Text("Aadhar card")
-              //   ],
-              // ),
+              child: aadharImageBack != null
+                  ? Image.file(aadharImageBack!, fit: BoxFit.cover)
+                  : widget.model!.adharBack == "" || widget.model!.adharBack ==  null?
+              Column(
+                children: [
+                  Center(
+                      child: Icon(Icons.upload_file_outlined, size: 60)),
+                  Text("Aadhar card back")
+                ],
+              )
+              : Image.network('${widget.model!.adharBack.toString()}', fit: BoxFit.cover),
             ),
           ),
         ),
@@ -526,30 +336,20 @@ class _EditNewProfileState extends State<EditNewProfile> {
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(15),
             ),
-            child: widget.model!.pancard == "" || widget.model!.pancard ==  null?
+            child:
             ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: panImage != null
                   ? Image.file(panImage!, fit: BoxFit.cover)
-                  : Column(
+                  : widget.model!.pancard == "" || widget.model!.pancard ==  null?
+              Column(
                 children: [
                   Center(child: Icon(Icons.upload_file_outlined, size: 60)),
                   Text("Pan Card")
                 ],
-              ),
+              ): Image.network('${widget.model!.pancard.toString()}', fit: BoxFit.cover),
             )
-            : ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child:
-              // anImage != null ?
-              Image.network('${widget.model!.pancard.toString()}', fit: BoxFit.cover)
-              //     : Column(
-              //   children: [
-              //     Center(child: Icon(Icons.upload_file_outlined, size: 60)),
-              //     Text("Pan Card")
-              //   ],
-              // ),
-            ),
+
           ),
         ),
       ),
@@ -568,7 +368,7 @@ class _EditNewProfileState extends State<EditNewProfile> {
         child: Center(
           child: Container(
             height: 100,
-            width: MediaQuery.of(context).size.width - 60,
+            width: MediaQuery.of(context).size.width/2 - 40,
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(15),
@@ -577,20 +377,60 @@ class _EditNewProfileState extends State<EditNewProfile> {
               borderRadius: BorderRadius.circular(15),
               child: drivingImage != null
                   ? Image.file(drivingImage!, fit: BoxFit.cover)
-                  : Column(
+                  :  widget.model!.drivingLicense == "" || widget.model!.drivingLicense ==  null?
+              Column(
                 children: const [
                   Center(child: Icon(Icons.upload_file_outlined, size: 60)),
-                  Text("Driving License"),
+                  Text("Driving License Front"),
                 ],
-              ),
+              )
+              :  Image.network('${widget.model!.drivingLicense.toString()}', fit: BoxFit.cover),
             ),
           ),
         ),
       ),
     );
   }
+
+  Widget imageDrivingBack() {
+    return Material(
+      elevation: 2,
+      borderRadius: BorderRadius.circular(15),
+      child: InkWell(
+        onTap: () {
+          requestPermission(context, 8);
+          // uploaddrivingFromCamOrGallary(context);
+        },
+        child: Center(
+          child: Container(
+            height: 100,
+            width: MediaQuery.of(context).size.width/2 - 40,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: drivingImageBack != null
+                  ? Image.file(drivingImageBack!, fit: BoxFit.cover)
+                  :  widget.model!.drivingLicenseBack == "" || widget.model!.drivingLicenseBack ==  null?
+              Column(
+                children: const [
+                  Center(child: Icon(Icons.upload_file_outlined, size: 60)),
+                  Text("Driving License"),
+                ],
+              )
+                  :  Image.network('${widget.model!.drivingLicenseBack.toString()}', fit: BoxFit.cover),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   String? pickLat;
   String? pickLong;
+
   // _getPickLocation() async {
   //   LocationResult result = await Navigator.of(context).push(MaterialPageRoute(
   //       builder: (context) => PlacePicker(
@@ -683,6 +523,7 @@ class _EditNewProfileState extends State<EditNewProfile> {
   //   // });
   //   print("this is picked LAT LONG $pickLat @@ $pickLong");
   // }
+
   UpdateRequest() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? uid = prefs.getString(TokenString.userid);
@@ -698,8 +539,8 @@ class _EditNewProfileState extends State<EditNewProfile> {
       'mobile': '${mobileController.text.toString()}',
       'email': '${emailController.text.toString()}',
       'address': '${addressController.text.toString()}',
-      'lat': '${pickLat.toString()}',
-      'lang': '${pickLong.toString()}',
+      'lat': pickLat == '' || pickLat == null ? widget.model!.latitude.toString() : '${pickLat.toString()}' ,
+      'lang': pickLong == '' || pickLong == null ? widget.model!.longitude.toString() : '${pickLong.toString()}',
       'gst_no': '${gstController.text.toString()}',
       'bank_upi':
       isUpi ?
@@ -720,10 +561,23 @@ class _EditNewProfileState extends State<EditNewProfile> {
     ///2wheeler
 
 
-   rcImage == null ? null :   request.files.add(
+   profileImage == null ? null :   request.files.add(
           await http.MultipartFile.fromPath('profile_image', profileImage!.path.toString()));
 
+    aadharImageBack == null ? null :   request.files.add(
+        await http.MultipartFile.fromPath('adhar_back', aadharImageBack!.path.toString()));
 
+    drivingImage == null ? null :   request.files.add(
+        await http.MultipartFile.fromPath('driving_front', drivingImage!.path.toString()));
+
+    drivingImageBack == null ? null :   request.files.add(
+        await http.MultipartFile.fromPath('driving_back', drivingImageBack!.path.toString()));
+
+    rcImage == null ? null :   request.files.add(
+        await http.MultipartFile.fromPath('rc_front', rcImage!.path.toString()));
+
+    rcImageBack == null ? null :   request.files.add(
+        await http.MultipartFile.fromPath('rc_back', rcImageBack!.path.toString()));
 
   // aadharImage == null ? null :  request.files.add(
   //       await http.MultipartFile.fromPath('adhar_card', aadharImage!.path.toString()));
@@ -746,10 +600,8 @@ class _EditNewProfileState extends State<EditNewProfile> {
 
     String str = await response.stream.bytesToString();
     print("this is response =========>>>> ${response.statusCode}");
-
     if (response.statusCode == 200) {
       print("this is respoinse @@ ${response.statusCode}");
-
       setState((){
         isLoading = false;
       });
@@ -768,6 +620,8 @@ class _EditNewProfileState extends State<EditNewProfile> {
       print(response.reasonPhrase);
     }
   }
+
+
   String? uid;
   void checkingLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -790,20 +644,6 @@ class _EditNewProfileState extends State<EditNewProfile> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              // enableCloseButton == true
-              //     ? GestureDetector(
-              //   onTap: () {
-              //     Navigator.pop(context);
-              //   },
-              //   child: Align(
-              //       alignment: Alignment.topRight,
-              //       child: closeIcon ??
-              //           Icon(
-              //             Icons.close,
-              //             size: 14,
-              //           )),
-              // )
-              //     : Container(),
               InkWell(
                 onTap: () async {
                   getFromGallery(i);
@@ -825,14 +665,6 @@ class _EditNewProfileState extends State<EditNewProfile> {
               InkWell(
                 onTap: () async {
                   getImage(ImgSource.Camera, context, i);
-                  //   ImagePicker()
-                  //       .getImage(
-                  //       source: ImageSource.camera,
-                  //       maxWidth: maxWidth,
-                  //       maxHeight: maxHeight)
-                  //       .then((image) {
-                  //     Navigator.pop(context, image);
-                  //   });
                 },
                 child: Container(
                   child: ListTile(
@@ -848,38 +680,6 @@ class _EditNewProfileState extends State<EditNewProfile> {
         );
       },
     );
-    // var status = await Permission.storage.request();
-    // final status = await Permission.photos.status;
-    // // final storage = await Permission.accessMediaLocation.status;
-    // if(status.isGranted){
-    //     getImage(ImgSource.Both, i);
-    // }
-    // else if(status.isPermanentlyDenied){
-    //   openAppSettings();
-    // }
-
-    ///
-//     if (await Permission.camera.isRestricted || await Permission.storage.isRestricted) {
-//       openAppSettings();
-//     }
-//     else{
-//       Map<Permission, PermissionStatus> statuses = await [
-//         Permission.camera,
-//         Permission.storage,
-//       ].request();
-// // You can request multiple permissions at once.
-//
-//       if(statuses[Permission.camera]==PermissionStatus.granted&&statuses[Permission.storage]==PermissionStatus.granted){
-//         getImage(ImgSource.Both, context,i);
-//
-//       }else{
-//         if (await Permission.camera.isDenied||await Permission.storage.isDenied) {
-//           openAppSettings();
-//         }else{
-//           setSnackbar("Oops you just denied the permission", context);
-//         }
-//       }
-//     }
 
   }
 
@@ -901,15 +701,15 @@ class _EditNewProfileState extends State<EditNewProfile> {
         } else if(i==5){
           profileImage = File(result.files.single.path.toString());
         }
-        // else if(i==5){
-        //   aadharImageBack = File(result.files.single.path.toString());
-        // }
-        // else if(i==6){
-        //   rcImageBack = File(result.files.single.path.toString());
-        // }
-        // else if(i==7){
-        //   drivingImageBack = File(result.files.single.path.toString());
-        // }
+        else if(i==6){
+          aadharImageBack = File(result.files.single.path.toString());
+        }
+        else if(i==7){
+          rcImageBack = File(result.files.single.path.toString());
+        }
+        else if(i==8){
+          drivingImageBack = File(result.files.single.path.toString());
+        }
         // else if(i==8){
         //   fssaiImage = File(result.files.single.path.toString());
         // }
@@ -918,17 +718,11 @@ class _EditNewProfileState extends State<EditNewProfile> {
         // }
       });
       Navigator.pop(context);
-      // setState(() {
-      //   isImages = true;
-      //   // servicePic = File(result.files.single.path.toString());
-      // });
-      // imagePathList = result.paths.toList();
-      // imagePathList.add(result.paths.toString()).toList();
-      // print("SERVICE PIC === ${imagePathList.length}");
     } else {
       // User canceled the picker
     }
   }
+
   Future getImage(ImgSource source, BuildContext context,int i) async {
     var image = await ImagePickerGC.pickImage(
       context: context,
@@ -941,6 +735,7 @@ class _EditNewProfileState extends State<EditNewProfile> {
 
     getCropImage(context, i, image);
   }
+
   void getCropImage(BuildContext context,int i,var image) async {
     CroppedFile? croppedFile = await ImageCropper.platform.cropImage(
       sourcePath: image.path,
@@ -965,17 +760,17 @@ class _EditNewProfileState extends State<EditNewProfile> {
         drivingImage = File(croppedFile!.path);
       } else if(i==5){
         profileImage = File(croppedFile!.path);
+      }  else if(i==6){
+        aadharImageBack = File(croppedFile!.path);
       }
-      // else if(i==6){
-      //   insuranceImage = File(croppedFile!.path);
-      // }
-      // else if(i==7){
-      //   bankImage = File(croppedFile!.path);
-      // }
-      // else{
-      //   _finalImage = File(croppedFile!.path);
-      // }
+      else if(i==7){
+        rcImageBack = File(croppedFile!.path);
+      }
+      else if(i==8){
+        drivingImageBack = File(croppedFile!.path);
+      }
     });
+    Navigator.pop(context);
   }
 
   @override
@@ -991,16 +786,38 @@ class _EditNewProfileState extends State<EditNewProfile> {
     addressController = TextEditingController(text: widget.model!.address.toString());
     storeNameController = TextEditingController(text: widget.model!.storeName.toString());
     storeDescriptionController = TextEditingController(text: widget.model!.storeDescription.toString());
-    if(widget.upi != null || widget.upi != ""){
-    upiController = TextEditingController(text: widget.upi.toString());
-    }
-    if(widget.bankName != null && widget.accNo != null && widget.accHolderName != null && widget.ifsc != null
-    || widget.bankName != "" && widget.accNo != "" && widget.accHolderName != "" && widget.ifsc != ""){
-      bankNameController = TextEditingController(text: widget.bankName.toString());
-      accountNoController = TextEditingController(text: widget.accNo.toString());
-      accountHolderController = TextEditingController(text: widget.accHolderName.toString());
-      ifscController = TextEditingController(text: widget.ifsc.toString());
-      accTypeValue = widget.accountType;
+    companyController = TextEditingController(text: widget.model!.companyName.toString());
+    print("this is 35456 ${widget.upi}");
+    if(widget.upi == null || widget.upi == ""){
+      if(widget.bankName != null && widget.accNo != null && widget.accHolderName != null && widget.ifsc != null
+          || widget.bankName != "" && widget.accNo != "" && widget.accHolderName != "" && widget.ifsc != ""){
+        bankNameController = TextEditingController(text: widget.bankName.toString());
+        accountNoController = TextEditingController(text: widget.accNo.toString());
+        confirmAccountNoController = TextEditingController(text: widget.accNo.toString());
+        accountHolderController = TextEditingController(text: widget.accHolderName.toString());
+        ifscController = TextEditingController(text: widget.ifsc.toString());
+        accTypeValue = widget.accountType;
+        print("tis is working here 2222");
+        setState(() {
+          _value = 2;
+          isUpi = true;
+        });
+      }
+
+    // }
+    } else{
+      print("tis is working here 1111");
+      upiController = TextEditingController(text: widget.upi.toString());
+      // if(upiController.text.isEmpty) {
+      //   setState(() {
+      //     _value = 2;
+      //     isUpi = true;
+      //   });
+      // }else{
+      setState(() {
+        _value = 1;
+        isUpi = false;
+      });
     }
     // bankNameController = TextEditingController(text: widget.model!.bandDetails.toString());
     checkingLogin();
@@ -1370,7 +1187,11 @@ class _EditNewProfileState extends State<EditNewProfile> {
                                           ),
                                         ),
                                       ),
-                                      imageAadhar(),
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [imageAadhar(), imageAadharBack()],
+                                      ),
                                     ],
                                   ),
                                   Column(
@@ -1389,44 +1210,62 @@ class _EditNewProfileState extends State<EditNewProfile> {
                                       imagePan(),
                                     ],
                                   ),
-                                  type == "2" || type == "3" || type == "4"?
-                                  Column(
+
+                                  type == "2" || type == "3" || type == "4"
+                                      ? Column(
                                     children: [
                                       Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                         children: [
-                                          const Padding(
-                                            padding: EdgeInsets.only(left: 5.0, top: 10, bottom: 10),
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 5.0, top: 10, bottom: 10),
                                             child: Text(
                                               "Registration Card",
                                               style: TextStyle(
-                                                fontSize: 15,
-                                                // color: AppColor().colorSecondary()
-                                              ),
+                                                  fontSize: 15,
+                                                  ),
                                             ),
                                           ),
-                                          imageRC(),
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              imageRC(),
+                                              imageRCBack(),
+                                            ],
+                                          ),
                                         ],
                                       ),
                                       Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                         children: [
-                                          const Padding(
-                                            padding: EdgeInsets.only(left: 5.0, top: 10, bottom: 10),
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 5.0, top: 10, bottom: 10),
                                             child: Text(
                                               "Driving License",
                                               style: TextStyle(
-                                                fontSize: 15,
-                                                // color: AppColor().colorSecondary()
-                                              ),
+                                                  fontSize: 15,
+                                                ),
                                             ),
                                           ),
-                                          imagedriving(),
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              imagedriving(),
+                                              imageDrivingBack()
+                                            ],
+                                          ),
                                         ],
                                       ),
                                     ],
                                   )
-                                      : SizedBox.shrink()
+                                      : SizedBox.shrink(),
+
                                 ],
                               ),
                             ),
@@ -1556,6 +1395,7 @@ class _EditNewProfileState extends State<EditNewProfile> {
                                   height: 50,
                                   child: TextFormField(
                                       controller: accountNoController,
+                                      keyboardType: TextInputType.number,
                                       // validator: (msg) {
                                       //   if (msg!.isEmpty) {
                                       //     return "Please Enter Account Number";
@@ -1583,6 +1423,7 @@ class _EditNewProfileState extends State<EditNewProfile> {
                                   height: 50,
                                   child: TextFormField(
                                       controller: confirmAccountNoController,
+                                      keyboardType: TextInputType.number,
                                       // validator: (msg) {
                                       //   if (msg!.isEmpty) {
                                       //     return "Please Enter Account Number";
@@ -1702,9 +1543,28 @@ class _EditNewProfileState extends State<EditNewProfile> {
                             InkWell(
                               onTap: (){
                                 setState((){
-                                  isLoading = false;
+                                  isLoading = true;
                                 });
-                             UpdateRequest();
+                                if(isUpi){
+                                  if(accountNoController.text.isEmpty && accountHolderController.text.isEmpty && bankNameController.text.isEmpty && ifscController.text.isEmpty){
+                                    Fluttertoast.showToast(msg: "Please enter valid bank details!");
+                                    setState(() {
+                                      isLoading =false;
+                                    });
+                                  }else{
+                                    UpdateRequest();
+                                  }
+                                }else{
+                                  if(upiController.text.isNotEmpty){
+                                    UpdateRequest();
+                                  }else{
+                                    setState(() {
+                                      isLoading =false;
+                                    });
+                                    Fluttertoast.showToast(msg: "Please enter valid UPI Id!");
+                                  }
+                                }
+
                               },
                               child: Container(
                                   height: 43,
@@ -1765,23 +1625,65 @@ class _EditNewProfileState extends State<EditNewProfile> {
             ),
 
             Positioned(
-              top:5,
+              top: 0,
               // left: MediaQuery.of(context).size.width * .38,
               child: Center(
-                child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    child:
-
-                    ClipRRect(
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  child:    ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: imageProfile()
-                    )
-
+                      child: Stack(
+                        children: [
+                          imageProfile(),
+                          Positioned(
+                              bottom: 0,
+                              right: -2,
+                              child: InkWell(
+                                onTap: (){
+                                  requestPermission(context, 5);
+                                },
+                                child: Card(
+                                    elevation: 4,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(40)
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Icon(Icons.edit),
+                                    )),
+                              ))
+                        ],
+                      )
+                  ),
                 ),
               ),
             ),
+
+
+            // Positioned(
+            //   top:5,
+            //   // left: MediaQuery.of(context).size.width * .38,
+            //   child: Center(
+            //     child: Container(
+            //         decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.circular(10)
+            //         ),
+            //         child:
+            //
+            //         Stack(
+            //           children: [
+            //             ClipRRect(
+            //               borderRadius: BorderRadius.circular(10),
+            //               child: imageProfile()
+            //             ),
+            //
+            //           ],
+            //         )
+            //
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

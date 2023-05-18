@@ -1,8 +1,8 @@
 /// response_code : "1"
 /// message : "Get Successfully"
 /// status : "success"
-/// data : [{"id":"29","email":"Karanevil.singhtomar@gmail.com","mobile":"8770496665","address":"Pithampur Industrial Area, Pithampur, Madhya Pradesh, India","description":"","category_id":null,"per_d_charge":null,"per_h_charge":null,"experience":null,"vehicle_number":null,"vehicle_type":null,"rc_book":null,"per_km_charge":null,"lat":"22.7469113","lang":"75.8980757","uname":"Karan","password":"d41d8cd98f00b204e9800998ecf8427e","profile_image":"https://sodindia.com//uploads/profile_pics/63c5424ca9d7e.jpg","device_token":"eEM-xhudR828rnus_Agqqs:APA91bFYYw7IZtFhXC_PVz7x11P8vvrrqoqgkLU5NK9Y6OWW2VPP4rz8dRB7bH70l-UYoAH7CKgF0_SS55WiQyOnwZGVkFQRkhBwQFxGLbrMphs_AcaE2JDdbIueYKAg7BrNf5eUbM7o","otp":"5045","status":"0","wallet":"10.00","balance":"0.00","last_login":null,"created_at":"2023-01-13 13:30:36","updated_at":"2023-01-19 13:54:19","roll":"1","adhar_card":"https://sodindia.com//uploads/profile_pics/63c15cfca4bb8.jpg","pancard":"https://sodindia.com//uploads/profile_pics/63c15cfca50b9.jpg","gst_no":"GST1655","fssai":"474737262","store_name":"Shruti Stores","band_details":{"UPI":"86643156@ybl"},"city_id":"0","vehicle_no":"","registarion_card":"","driving_license":"","categories_id":"","company_name":"","role_user":"","event":"","latitude":"null","longitude":"null","delivery_type":"","refferal_code":"9281","friend_code":"","online_status":"0","store_description":""}]
-/// image_path : "https://sodindia.com//uploads/profile_pics/"
+/// data : [{"id":"43","email":"karanfoodvndor@gmail.com","mobile":"7788991234","address":"Vijay Nagar, Indore, Madhya Pradesh 452010, India","description":"","category_id":null,"per_d_charge":null,"per_h_charge":null,"experience":null,"vehicle_number":null,"vehicle_type":null,"rc_book":null,"per_km_charge":null,"lat":"","lang":"","uname":"Karan","password":"25d55ad283aa400af464c76d713c07ad","profile_image":"https://alphawizzserver.com/sod_india/uploads/profile_pics/64636553e788b.png","device_token":"c3q09gOVTw6j8nAJ6bFdUq:APA91bH1uHCk62pu3fwRGdz9nbGPg6eWJwFf-nDZjpSXxP5cRZZxk_5xHVU5_0v2vuiVFrKjSmNi1uLl20F4310Mk3ICl7XTlO8K2PndKwGmO3Idc-Cyh1X7bHt7eQb1tw_l8SLHcoDQ","otp":"1309","status":"0","wallet":"600.00","balance":"0.00","last_login":null,"created_at":"2023-05-16 11:13:23","updated_at":"2023-05-18 06:12:47","roll":"1","adhar_card":"https://alphawizzserver.com/sod_india/uploads/profile_pics/646365539d507.png","pancard":"https://alphawizzserver.com/sod_india/uploads/profile_pics/64636553e3e58.png","gst_no":"5677543678","fssai":"76786298374907","store_name":"Karan Coffee Shop","band_details":{"UPI":"8770496666@ybl"},"city_id":"0","vehicle_no":"","registarion_card":"","driving_license":"","categories_id":"","company_name":"","role_user":"","event":"","latitude":"null","longitude":"null","delivery_type":"","refferal_code":"SOD603700","friend_code":"","online_status":"1","store_description":"This is coffee shop","commision":"","resto_type":"Both","gender":null,"cash_collection":"0","commision_amount_type":"","adhar_back":"64636553a04e5.png","rc_book_back":"","driving_license_back":"","fssai_image":"","gst_image":""}]
+/// image_path : "https://alphawizzserver.com/sod_india/uploads/profile_pics/"
 
 class GetProfileModel {
   GetProfileModel({
@@ -66,10 +66,10 @@ GetProfileModel copyWith({  String? responseCode,
 
 }
 
-/// id : "29"
-/// email : "Karanevil.singhtomar@gmail.com"
-/// mobile : "8770496665"
-/// address : "Pithampur Industrial Area, Pithampur, Madhya Pradesh, India"
+/// id : "43"
+/// email : "karanfoodvndor@gmail.com"
+/// mobile : "7788991234"
+/// address : "Vijay Nagar, Indore, Madhya Pradesh 452010, India"
 /// description : ""
 /// category_id : null
 /// per_d_charge : null
@@ -79,26 +79,26 @@ GetProfileModel copyWith({  String? responseCode,
 /// vehicle_type : null
 /// rc_book : null
 /// per_km_charge : null
-/// lat : "22.7469113"
-/// lang : "75.8980757"
+/// lat : ""
+/// lang : ""
 /// uname : "Karan"
-/// password : "d41d8cd98f00b204e9800998ecf8427e"
-/// profile_image : "https://sodindia.com//uploads/profile_pics/63c5424ca9d7e.jpg"
-/// device_token : "eEM-xhudR828rnus_Agqqs:APA91bFYYw7IZtFhXC_PVz7x11P8vvrrqoqgkLU5NK9Y6OWW2VPP4rz8dRB7bH70l-UYoAH7CKgF0_SS55WiQyOnwZGVkFQRkhBwQFxGLbrMphs_AcaE2JDdbIueYKAg7BrNf5eUbM7o"
-/// otp : "5045"
+/// password : "25d55ad283aa400af464c76d713c07ad"
+/// profile_image : "https://alphawizzserver.com/sod_india/uploads/profile_pics/64636553e788b.png"
+/// device_token : "c3q09gOVTw6j8nAJ6bFdUq:APA91bH1uHCk62pu3fwRGdz9nbGPg6eWJwFf-nDZjpSXxP5cRZZxk_5xHVU5_0v2vuiVFrKjSmNi1uLl20F4310Mk3ICl7XTlO8K2PndKwGmO3Idc-Cyh1X7bHt7eQb1tw_l8SLHcoDQ"
+/// otp : "1309"
 /// status : "0"
-/// wallet : "10.00"
+/// wallet : "600.00"
 /// balance : "0.00"
 /// last_login : null
-/// created_at : "2023-01-13 13:30:36"
-/// updated_at : "2023-01-19 13:54:19"
+/// created_at : "2023-05-16 11:13:23"
+/// updated_at : "2023-05-18 06:12:47"
 /// roll : "1"
-/// adhar_card : "https://sodindia.com//uploads/profile_pics/63c15cfca4bb8.jpg"
-/// pancard : "https://sodindia.com//uploads/profile_pics/63c15cfca50b9.jpg"
-/// gst_no : "GST1655"
-/// fssai : "474737262"
-/// store_name : "Shruti Stores"
-/// band_details : {"UPI":"86643156@ybl"}
+/// adhar_card : "https://alphawizzserver.com/sod_india/uploads/profile_pics/646365539d507.png"
+/// pancard : "https://alphawizzserver.com/sod_india/uploads/profile_pics/64636553e3e58.png"
+/// gst_no : "5677543678"
+/// fssai : "76786298374907"
+/// store_name : "Karan Coffee Shop"
+/// band_details : {"UPI":"8770496666@ybl"}
 /// city_id : "0"
 /// vehicle_no : ""
 /// registarion_card : ""
@@ -110,10 +110,20 @@ GetProfileModel copyWith({  String? responseCode,
 /// latitude : "null"
 /// longitude : "null"
 /// delivery_type : ""
-/// refferal_code : "9281"
+/// refferal_code : "SOD603700"
 /// friend_code : ""
-/// online_status : "0"
-/// store_description : ""
+/// online_status : "1"
+/// store_description : "This is coffee shop"
+/// commision : ""
+/// resto_type : "Both"
+/// gender : null
+/// cash_collection : "0"
+/// commision_amount_type : ""
+/// adhar_back : "64636553a04e5.png"
+/// rc_book_back : ""
+/// driving_license_back : ""
+/// fssai_image : ""
+/// gst_image : ""
 
 class Data {
   Data({
@@ -164,7 +174,17 @@ class Data {
       String? refferalCode, 
       String? friendCode, 
       String? onlineStatus, 
-      String? storeDescription,}){
+      String? storeDescription, 
+      String? commision, 
+      String? restoType, 
+      dynamic gender, 
+      String? cashCollection, 
+      String? commisionAmountType, 
+      String? adharBack, 
+      String? rcBookBack, 
+      String? drivingLicenseBack, 
+      String? fssaiImage, 
+      String? gstImage,}){
     _id = id;
     _email = email;
     _mobile = mobile;
@@ -213,6 +233,16 @@ class Data {
     _friendCode = friendCode;
     _onlineStatus = onlineStatus;
     _storeDescription = storeDescription;
+    _commision = commision;
+    _restoType = restoType;
+    _gender = gender;
+    _cashCollection = cashCollection;
+    _commisionAmountType = commisionAmountType;
+    _adharBack = adharBack;
+    _rcBookBack = rcBookBack;
+    _drivingLicenseBack = drivingLicenseBack;
+    _fssaiImage = fssaiImage;
+    _gstImage = gstImage;
 }
 
   Data.fromJson(dynamic json) {
@@ -264,6 +294,16 @@ class Data {
     _friendCode = json['friend_code'];
     _onlineStatus = json['online_status'];
     _storeDescription = json['store_description'];
+    _commision = json['commision'];
+    _restoType = json['resto_type'];
+    _gender = json['gender'];
+    _cashCollection = json['cash_collection'];
+    _commisionAmountType = json['commision_amount_type'];
+    _adharBack = json['adhar_back'];
+    _rcBookBack = json['rc_book_back'];
+    _drivingLicenseBack = json['driving_license_back'];
+    _fssaiImage = json['fssai_image'];
+    _gstImage = json['gst_image'];
   }
   String? _id;
   String? _email;
@@ -313,6 +353,16 @@ class Data {
   String? _friendCode;
   String? _onlineStatus;
   String? _storeDescription;
+  String? _commision;
+  String? _restoType;
+  dynamic _gender;
+  String? _cashCollection;
+  String? _commisionAmountType;
+  String? _adharBack;
+  String? _rcBookBack;
+  String? _drivingLicenseBack;
+  String? _fssaiImage;
+  String? _gstImage;
 Data copyWith({  String? id,
   String? email,
   String? mobile,
@@ -361,6 +411,16 @@ Data copyWith({  String? id,
   String? friendCode,
   String? onlineStatus,
   String? storeDescription,
+  String? commision,
+  String? restoType,
+  dynamic gender,
+  String? cashCollection,
+  String? commisionAmountType,
+  String? adharBack,
+  String? rcBookBack,
+  String? drivingLicenseBack,
+  String? fssaiImage,
+  String? gstImage,
 }) => Data(  id: id ?? _id,
   email: email ?? _email,
   mobile: mobile ?? _mobile,
@@ -409,6 +469,16 @@ Data copyWith({  String? id,
   friendCode: friendCode ?? _friendCode,
   onlineStatus: onlineStatus ?? _onlineStatus,
   storeDescription: storeDescription ?? _storeDescription,
+  commision: commision ?? _commision,
+  restoType: restoType ?? _restoType,
+  gender: gender ?? _gender,
+  cashCollection: cashCollection ?? _cashCollection,
+  commisionAmountType: commisionAmountType ?? _commisionAmountType,
+  adharBack: adharBack ?? _adharBack,
+  rcBookBack: rcBookBack ?? _rcBookBack,
+  drivingLicenseBack: drivingLicenseBack ?? _drivingLicenseBack,
+  fssaiImage: fssaiImage ?? _fssaiImage,
+  gstImage: gstImage ?? _gstImage,
 );
   String? get id => _id;
   String? get email => _email;
@@ -458,6 +528,16 @@ Data copyWith({  String? id,
   String? get friendCode => _friendCode;
   String? get onlineStatus => _onlineStatus;
   String? get storeDescription => _storeDescription;
+  String? get commision => _commision;
+  String? get restoType => _restoType;
+  dynamic get gender => _gender;
+  String? get cashCollection => _cashCollection;
+  String? get commisionAmountType => _commisionAmountType;
+  String? get adharBack => _adharBack;
+  String? get rcBookBack => _rcBookBack;
+  String? get drivingLicenseBack => _drivingLicenseBack;
+  String? get fssaiImage => _fssaiImage;
+  String? get gstImage => _gstImage;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -511,12 +591,22 @@ Data copyWith({  String? id,
     map['friend_code'] = _friendCode;
     map['online_status'] = _onlineStatus;
     map['store_description'] = _storeDescription;
+    map['commision'] = _commision;
+    map['resto_type'] = _restoType;
+    map['gender'] = _gender;
+    map['cash_collection'] = _cashCollection;
+    map['commision_amount_type'] = _commisionAmountType;
+    map['adhar_back'] = _adharBack;
+    map['rc_book_back'] = _rcBookBack;
+    map['driving_license_back'] = _drivingLicenseBack;
+    map['fssai_image'] = _fssaiImage;
+    map['gst_image'] = _gstImage;
     return map;
   }
 
 }
 
-/// UPI : "86643156@ybl"
+/// UPI : "8770496666@ybl"
 
 class BandDetails {
   BandDetails({

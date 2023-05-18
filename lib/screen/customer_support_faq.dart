@@ -256,9 +256,9 @@ class _CustomerSupportState extends State<CustomerSupport>
           BorderSide(color: Theme.of(context).colorScheme.fontColor),
           borderRadius: BorderRadius.circular(10.0),
         ),
-        enabledBorder: UnderlineInputBorder(
+        enabledBorder: OutlineInputBorder(
           borderSide:
-          BorderSide(color: Theme.of(context).colorScheme.lightWhite),
+          BorderSide(color: Theme.of(context).colorScheme.fontColor),
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),
@@ -449,9 +449,9 @@ class _CustomerSupportState extends State<CustomerSupport>
             BorderSide(color: Theme.of(context).colorScheme.fontColor),
             borderRadius: BorderRadius.circular(10.0),
           ),
-          enabledBorder: UnderlineInputBorder(
+          enabledBorder: OutlineInputBorder(
             borderSide:
-            BorderSide(color: Theme.of(context).colorScheme.lightWhite),
+            BorderSide(color: Theme.of(context).colorScheme.fontColor),
             borderRadius: BorderRadius.circular(10.0),
           ),
         ),

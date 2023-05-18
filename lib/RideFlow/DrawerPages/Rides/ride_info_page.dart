@@ -41,6 +41,9 @@ class RideInfoPage extends StatefulWidget {
 class _RideInfoPageState extends State<RideInfoPage> {
   DateTime? currentBackPressTime;
   bool condition = false;
+  TextEditingController otpController = TextEditingController();
+
+
   Future<bool> onWill() async {
     DateTime now = DateTime.now();
     if (widget.model.acceptReject != "1" ||
@@ -62,6 +65,15 @@ class _RideInfoPageState extends State<RideInfoPage> {
   bool isNetwork = false;
   bool acceptStatus = false;
   bool isStarted = false;
+
+  void _launchURL(Uri url) async {
+    if (await launchUrl(url)) {
+      //await launch(url);
+    } else {
+      Fluttertoast.showToast(msg: 'Could not launch ');
+      throw 'Could not launch $url';
+    }
+  }
 
   completeRide(String bookingId, status1) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -90,7 +102,7 @@ class _RideInfoPageState extends State<RideInfoPage> {
         if (response['response_code'] == '1') {
           setSnackbar(msg, context);
           Fluttertoast.showToast(msg: msg);
-          Navigator.pop(context);
+          Navigator.pop(context, true);
           // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> ("")), (route) => false);
         } else {}
       } on TimeoutException catch (_) {
@@ -113,23 +125,24 @@ class _RideInfoPageState extends State<RideInfoPage> {
           "driver_id": userId,
           "accept_reject": status1.toString(),
           "booking_id": bookingId,
+          "otp" : otpController.text.toString()
         };
         print("Start Ride ==== $data");
         // return;
         Map response = await apiBase.postAPICall(
             Uri.parse(Apipath.acceptRejectDeliveryStatus), data);
         print(response);
-        print(response);
         setState(() {
           acceptStatus = false;
         });
 
-        bool status = true;
         String msg = response['message'];
         setSnackbar(msg, context);
         if (response['status'] == "0") {
           setState(() {
             isStarted = true;
+            otpController.clear();
+
             // widget.model.acceptReject="2";
           });
         } else {}
@@ -139,6 +152,111 @@ class _RideInfoPageState extends State<RideInfoPage> {
     } else {
       setSnackbar("No Internet Connection", context);
     }
+  }
+
+  startRideDilaog(String bookingId, status1) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 200.0),
+            child: Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              // title: Text("Start Ride"),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Start Ride",
+                    style: TextStyle(
+                      fontSize: 24,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Text("Enter OTP given by user"),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 15, bottom: 15, left: 15.0, right: 15),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      maxLength: 6,
+                      decoration: InputDecoration(
+                          counterText: "",
+                          hintText: "OTP here",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                      controller: otpController,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // ElevatedButton(
+                        //   style: ElevatedButton.styleFrom(
+                        //       primary: Theme.of(context)
+                        //           .primaryColor),
+                        //   child: Text("Back",
+                        //     style: TextStyle(
+                        //         color: Colors.black
+                        //     ),),
+                        //   onPressed: () async{
+                        //     // setState((){
+                        //     //   acceptStatus = false;
+                        //     // });
+                        //    Navigator.pop(context);
+                        //   },
+                        // ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: AppColor().colorPrimary()),
+                          child: Text(
+                            "Submit",
+                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                          ),
+                          onPressed: () async {
+                            if (otpController.text.isNotEmpty &&
+                                otpController.text.length >= 4) {
+                              Navigator.pop(context);
+                              setState(() {
+                                acceptStatus = true;
+                              });
+                              startRide(bookingId, status1);
+                            } else {
+                              setState(() {
+                                acceptStatus = false;
+                              });
+                              Fluttertoast.showToast(msg: "OTP is required");
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              // actions: <Widget>[
+              //   ElevatedButton(
+              //     style: ElevatedButton.styleFrom(
+              //         primary: Theme.of(context)
+              //             .primaryColor
+              //     ),
+              //     child: Text("Submit"),
+              //     onPressed: () async{
+              //       startRideOtp(bookingId, status1);
+              //     },
+              //   ),
+              //
+              // ],
+            ),
+          );
+        });
   }
 
   cancelStatus(String bookingId, status1) async {
@@ -508,9 +626,10 @@ class _RideInfoPageState extends State<RideInfoPage> {
                                               acceptStatus = true;
                                             });
                                             if (widget.model.acceptReject ==
-                                                "1") {
-                                              startRide(
-                                                  widget.model.bookingId!, "2");
+                                                "1" && !isStarted) {
+                                              startRideDilaog( widget.model.bookingId!, "2");
+                                              // startRide(
+                                              //     widget.model.bookingId!, "2");
                                             } else {
                                               print("complete");
                                               completeRide(
@@ -518,7 +637,8 @@ class _RideInfoPageState extends State<RideInfoPage> {
                                             }
                                           },
                                           child: !acceptStatus
-                                              ? Container(
+                                              ?
+                                          Container(
                                                   width: 28.w,
                                                   height: 5.h,
                                                   decoration: boxDecoration(
@@ -538,8 +658,7 @@ class _RideInfoPageState extends State<RideInfoPage> {
                                                       ),
                                                       boxWidth(5),
                                                       text(
-                                                          widget.model.acceptReject ==
-                                                                  "1"
+                                                          !isStarted && widget.model.acceptReject == "1"
                                                               ? "Start"
                                                               : "Complete",
                                                           fontFamily:
@@ -1128,21 +1247,76 @@ class _RideInfoPageState extends State<RideInfoPage> {
                                       borderRadius: BorderRadius.circular(16)),
                                   child: Column(
                                     children: [
-                                      ListTile(
-                                        title: Text(
-                                          "Ride Info",
-                                          // getTranslated(context,"RIDE_INFO")!,
-                                          style: TextStyle(
-                                              color: AppColor().colorBg1(),
-                                              fontSize: 18),
-                                        ),
-                                        trailing: Text(
-                                          '${widget.model.km} km',
-                                          style: TextStyle(
-                                              color: AppColor().colorBg1(),
-                                              fontSize: 18),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 10.0, right: 10, top: 10, bottom: 10),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Ride Info",
+                                              // getTranslated(context,"RIDE_INFO")!,
+                                              style: TextStyle(
+                                                  color: AppColor().colorBg1(),
+                                                  fontSize: 18),
+                                            ),
+                                            ElevatedButton(
+                                                onPressed: (){
+                                              String pickLat =
+                                                  widget.model.latitude.toString() ?? '';//'22.7177'; //
+                                              String pickLong =
+                                                  widget.model.longitude.toString() ?? '';//'75.8545'; //
+                                              String dropLat =
+                                                  widget.model.dropLatitude.toString() ?? '';
+                                              String dropLong =
+                                                  widget.model.dropLongitude.toString() ?? '';
+
+                                              final Uri url = Uri.parse(
+                                                  'https://www.google.com/maps/dir/?api=1&origin=' +
+                                                      pickLat +
+                                                      ',' +
+                                                      pickLong +
+                                                      ' &destination=' +
+                                                      dropLat +
+                                                      ',' +
+                                                      dropLong +
+                                                      '&travelmode=driving&dir_action=navigate');
+
+                                              _launchURL(url);
+
+                                            },
+                                                style: ElevatedButton.styleFrom(primary: Colors.white),
+                                                child: Row(
+                                                  children: [
+                                                    Text("Track on Map", style: TextStyle(
+                                                        color: AppColor().colorPrimary()
+                                                    ),),
+                                                    Icon(Icons.location_on_outlined, color: AppColor().colorPrimary(),)
+                                                  ],
+                                                )),
+                                            Text(
+                                              '${widget.model.km} km',
+                                              style: TextStyle(
+                                                  color: AppColor().colorBg1(),
+                                                  fontSize: 18),
+                                            ),
+                                          ],
                                         ),
                                       ),
+                                      // ListTile(
+                                      //   title: Text(
+                                      //     "Ride Info",
+                                      //     // getTranslated(context,"RIDE_INFO")!,
+                                      //     style: TextStyle(
+                                      //         color: AppColor().colorBg1(),
+                                      //         fontSize: 18),
+                                      //   ),
+                                      //   trailing: Text(
+                                      //     '${widget.model.km} km',
+                                      //     style: TextStyle(
+                                      //         color: AppColor().colorBg1(),
+                                      //         fontSize: 18),
+                                      //   ),
+                                      // ),
                                       Padding(
                                         padding: const EdgeInsets.only(
                                             bottom: 10, left: 12),

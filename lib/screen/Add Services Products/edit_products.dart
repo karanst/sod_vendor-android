@@ -5,6 +5,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fixerking/RideFlow/utils/Session.dart';
 import 'package:fixerking/new%20model/getProductsModel.dart';
+import 'package:fixerking/screen/Add%20Services%20Products/DetailScreens/image_preview.dart';
 import 'package:fixerking/token/token_string.dart';
 import 'package:fixerking/utility_widget/customLoader.dart';
 import 'package:fixerking/utils/app_button.dart';
@@ -90,14 +91,19 @@ class _EditProductsState extends State<EditProducts> {
     // 'other_image[]': '${uploadImages.toString()}',
       'vid': '${uid}'
     });
-    for (var i = 0; i < imagePathList.length; i++) {
-      imagePathList == null
-          ? null
-          : request.files.add(await http.MultipartFile.fromPath(
-          'other_image[]', imagePathList[i].toString()));
+    if(imagePathList != null) {
+      for (var i = 0; i < imagePathList.length; i++) {
+        imagePathList != null
+            ? request.files.add(await http.MultipartFile.fromPath(
+            'other_images[]', imagePathList[i].toString()))
+            : null;
+      }
     }
-    request.files.add(await http.MultipartFile.fromPath(
-        'main_image', '${imagePathList[0].toString()}'));
+    imagePathList != null
+        ? request.files.add(await http.MultipartFile.fromPath(
+        'main_image', '${imagePathList[0].toString()}'))
+        : null;
+
 
     print("checking request of api here ${request.fields}");
     // productImage == null ? null :  request.files.add(await http.MultipartFile.fromPath('main_image', '${productImage!.path.toString()}'));
@@ -120,6 +126,7 @@ class _EditProductsState extends State<EditProducts> {
       print(response.reasonPhrase);
     }
   }
+
   final ImagePicker picker = ImagePicker();
 
   ///MULTI IMAGE PICKER
@@ -202,7 +209,35 @@ class _EditProductsState extends State<EditProducts> {
   ///MULTI IMAGE PICKER
   ///
   ///
-
+  Widget showGridView() {
+    return Container(
+      height: 180,
+      child: GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: widget.productsModel!.otherImage!.length,
+        gridDelegate:
+        SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        itemBuilder: (BuildContext context, int index) {
+          return InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> FullScreenImage(
+                imageUrl: widget.productsModel!.otherImage![index].toString(),
+              )));
+            },
+            child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15))
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  child: Image.network(widget.productsModel!.otherImage![index].toString(),
+                      fit: BoxFit.cover),
+                )),
+          );
+        },
+      ),
+    );
+  }
 
 
   String dropdownvalue = 'Palm';

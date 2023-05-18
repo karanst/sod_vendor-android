@@ -27,7 +27,7 @@ class _SignUpState extends State<SignUp> {
     '3 wheeler',
     '4 wheeler',
     'Mehendi Artist',
-    'Event Planner',
+    // 'Event Planner',
     'Handy Man Services',
   ];
   LocationPermission? permission;

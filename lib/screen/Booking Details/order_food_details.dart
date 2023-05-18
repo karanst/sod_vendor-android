@@ -37,7 +37,6 @@ class _OrderFoodDetailsState extends State<OrderFoodDetails> {
 
   var items = [
     'Preparing',
-    'Ready',
     'Picked up',
     'Delivered',
     'Cancel',
@@ -197,12 +196,11 @@ class _OrderFoodDetailsState extends State<OrderFoodDetails> {
             // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("Order Status",
+                  Text("Change Status",
                       style: TextStyle(
                         color: AppColor().colorPrimary(),
                         fontWeight: FontWeight.normal,
@@ -281,6 +279,87 @@ class _OrderFoodDetailsState extends State<OrderFoodDetails> {
                         ),
                       ),
                     ),
+                  )
+                  // Container(
+                  //   padding: EdgeInsets.all(12),
+                  //   height: 40,
+                  //   decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(10),
+                  //       color: widget.data.orderStatus == "0" ||
+                  //               widget.data.orderStatus == "1" ||
+                  //               widget.data.orderStatus == "2"
+                  //           ? colors.yellow
+                  //           : widget.data.orderStatus == "3"
+                  //               ? colors.green
+                  //               : colors.red),
+                  //   child: Text(
+                  //     widget.data.orderStatus == "0"
+                  //         ? "Pending"
+                  //         : widget.data.orderStatus == "1"
+                  //             ? "Processed"
+                  //             : widget.data.orderStatus == "2"
+                  //                 ? "Shipped"
+                  //                 : widget.data.orderStatus == "3"
+                  //                     ? "Delivered"
+                  //                     : "Cancelled",
+                  //     style: TextStyle(color:
+                  //     colors.whit),
+                  //   ),
+                  // ),
+
+
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text("Order Status",
+                      style: TextStyle(
+                        color: AppColor().colorPrimary(),
+                        fontWeight: FontWeight.normal,
+                      )),
+                  widget.data.orderStatus == "0" ?
+                  SizedBox.shrink():
+                  widget.data.orderStatus == "3" ?
+                  Container(
+                    width: 80,
+                    height: 30,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.green
+                    ),
+                    child: Center(child: Text("Completed",
+                      style: TextStyle(
+                          color: Colors.white
+                      ),)),
+                  ) :
+                  widget.data.orderStatus == "4" ?
+                  Container(
+                    width: 80,
+                    height: 30,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.red
+                    ),
+                    child: Center(child: Text("Cancelled",
+                      style: TextStyle(
+                          color: Colors.white
+                      ),)),
+                  )
+                      :
+                  Container(
+                    width: 80,
+                    height: 30,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.green
+                    ),
+                    child: Center(child: Text("Preparing",
+                      style: TextStyle(
+                          color: Colors.white
+                      ),)),
                   )
                   // Container(
                   //   padding: EdgeInsets.all(12),
@@ -788,8 +867,11 @@ class _OrderFoodDetailsState extends State<OrderFoodDetails> {
       stats = "3";
     }else if(status == "Cancel"){
       stats = "4";
-    }else{
+    }else if(status == "Picked up"){
       stats = "2";
+    }
+    else{
+      stats = "1";
     }
     var vendorId = await MyToken.getUserID();
     var headers = {
@@ -836,7 +918,7 @@ class _OrderFoodDetailsState extends State<OrderFoodDetails> {
     if(widget.data.orderStatus == "0"){
       dropdownvalue = 'Preparing';
     }else if(widget.data.orderStatus == "1"){
-      dropdownvalue = 'Ready';
+      dropdownvalue = 'Preparing';
     }
     else if(widget.data.orderStatus == "2"){
       dropdownvalue = 'Picked up';

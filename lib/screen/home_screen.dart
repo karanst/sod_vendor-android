@@ -185,6 +185,13 @@ class _HomeScreenState extends State<HomeScreen> {
       final str = await response.stream.bytesToString();
       var data = UpdateOrder.fromJson(json.decode(str));
       _refresh();
+      if(type == "2"){
+        setState(() {
+          deliveryModel = null;
+        });
+        await getDeliverRideBooking('');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ManageService(isIcon: true, index: 0,)));
+      }
       // await getDeliverRideBooking(deliveryModel!.id);
       Fluttertoast.showToast(msg: data.message.toString());
       return UpdateOrder.fromJson(json.decode(str));
@@ -2374,48 +2381,48 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
-              ListTile(
-                // leading: Icon(Icons.security),
-                leading: Image.asset(
-                  "images/icons/security.png",
-                  height: 25,
-                  width: 25,
-                ),
-                // leading: const ImageIcon(AssetImage("assets/Icons/Refferal.png")),
-                title: const Text('Security',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500)),
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   // MaterialPageRoute(builder: (context) => ChatPage( chatId: "1", title: "Karan")),
-                  //   MaterialPageRoute(builder: (context)=> refferral()),
-                  // );
-                },
-              ),
-              ListTile(
-                // leading: Icon(Icons.report),
-                leading: Image.asset(
-                  "images/icons/report.png",
-                  height: 25,
-                  width: 25,
-                ),
-                // leading: const ImageIcon(AssetImage("assets/Icons/Emergancy contect.png")),
-                title: const Text('Report',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500)),
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   // MaterialPageRoute(builder: (context) => ChatPage( chatId: "1", title: "Karan")),
-                  //   MaterialPageRoute(builder: (context)=> ArtistDetails()),
-                  // );
-                },
-              ),
+              // ListTile(
+              //   // leading: Icon(Icons.security),
+              //   leading: Image.asset(
+              //     "images/icons/security.png",
+              //     height: 25,
+              //     width: 25,
+              //   ),
+              //   // leading: const ImageIcon(AssetImage("assets/Icons/Refferal.png")),
+              //   title: const Text('Security',
+              //       style: TextStyle(
+              //           color: Colors.white,
+              //           fontSize: 18,
+              //           fontWeight: FontWeight.w500)),
+              //   onTap: () {
+              //     // Navigator.push(
+              //     //   context,
+              //     //   // MaterialPageRoute(builder: (context) => ChatPage( chatId: "1", title: "Karan")),
+              //     //   MaterialPageRoute(builder: (context)=> refferral()),
+              //     // );
+              //   },
+              // ),
+              // ListTile(
+              //   // leading: Icon(Icons.report),
+              //   leading: Image.asset(
+              //     "images/icons/report.png",
+              //     height: 25,
+              //     width: 25,
+              //   ),
+              //   // leading: const ImageIcon(AssetImage("assets/Icons/Emergancy contect.png")),
+              //   title: const Text('Report',
+              //       style: TextStyle(
+              //           color: Colors.white,
+              //           fontSize: 18,
+              //           fontWeight: FontWeight.w500)),
+              //   onTap: () {
+              //     // Navigator.push(
+              //     //   context,
+              //     //   // MaterialPageRoute(builder: (context) => ChatPage( chatId: "1", title: "Karan")),
+              //     //   MaterialPageRoute(builder: (context)=> ArtistDetails()),
+              //     // );
+              //   },
+              // ),
               ListTile(
                 // leading: Icon(Icons.support),
                 leading: Image.asset(
@@ -2997,6 +3004,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await getUserCurrentLocation();
     await _getAddressFromLatLng();
     await _buyVendorProduct();
+    // await getDeliverRideBooking('');
     // getFoodDeliveryBooking(foodDeliveryModel!.orderId);
     await getFoodOrders();
     await getVendorBooking();
@@ -3015,16 +3023,20 @@ class _HomeScreenState extends State<HomeScreen> {
     PushNotificationService notificationService = new PushNotificationService(
       context: context,
       onResult: (result) async {
-        print("boook " + result.toString());
+
         if (result != null) {
           var id = result;
+          setState(() {
+            bookingID = id;
+          });
+          print("boooking id is " + bookingID.toString());
           // deliveryType = result.type;
           await getFoodDeliveryBooking(id);
           await getDeliverRideBooking(id);
-          Future.delayed(Duration(seconds: 1), () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomeScreen()));
-          });
+          // Future.delayed(Duration(seconds: 1), () {
+          //   Navigator.push(
+          //       context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          // });
           // if(type =="Food"){
           //   setState((){
 

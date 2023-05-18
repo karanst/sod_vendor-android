@@ -15,6 +15,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OrderFoodDelivery extends StatefulWidget {
   FoodOrder? data;
@@ -77,6 +78,14 @@ class _OrderFoodDeliveryState extends State<OrderFoodDelivery> {
       return UpdateOrder.fromJson(json.decode(str));
     } else {
       return null;
+    }
+  }
+  void _launchURL(Uri url) async {
+    if (await launchUrl(url)) {
+      //await launch(url);
+    } else {
+      Fluttertoast.showToast(msg: 'Could not launch ');
+      throw 'Could not launch $url';
     }
   }
 
@@ -1013,6 +1022,43 @@ class _OrderFoodDeliveryState extends State<OrderFoodDelivery> {
                               ),
                             ),
                             customerDetails(),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(top: 5.0, right: 5),
+                            //   child: ElevatedButton(
+                            //       onPressed: (){
+                            //         String pickLat =
+                            //             widget.data!.latitude.toString() ?? '';//'22.7177'; //
+                            //         String pickLong =
+                            //             widget.data.longitude.toString() ?? '';//'75.8545'; //
+                            //         String dropLat =
+                            //             widget.data.dropLatitude.toString() ?? '';
+                            //         String dropLong =
+                            //             widget.data.dropLongitude.toString() ?? '';
+                            //
+                            //         final Uri url = Uri.parse(
+                            //             'https://www.google.com/maps/dir/?api=1&origin=' +
+                            //                 pickLat +
+                            //                 ',' +
+                            //                 pickLong +
+                            //                 ' &destination=' +
+                            //                 dropLat +
+                            //                 ',' +
+                            //                 dropLong +
+                            //                 '&travelmode=driving&dir_action=navigate');
+                            //
+                            //         _launchURL(url);
+                            //
+                            //       },
+                            //       style: ElevatedButton.styleFrom(primary: Colors.white),
+                            //       child: Row(
+                            //         children: [
+                            //           Text("Track on Map", style: TextStyle(
+                            //               color: AppColor().colorPrimary()
+                            //           ),),
+                            //           Icon(Icons.location_on_outlined, color: AppColor().colorPrimary(),)
+                            //         ],
+                            //       )),
+                            // ),
                             // bookDetailCard(),
                             Padding(
                               padding: const EdgeInsets.only(left: 8.0, top: 25, bottom: 5),

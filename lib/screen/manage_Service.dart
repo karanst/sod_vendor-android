@@ -123,7 +123,6 @@ class _ManageServiceState extends State<ManageService> {
     getProfile();
     _selectedIndex = widget.index!;
 
-
     // getProfile();
 
     // if (roleName == "Labour") {
@@ -223,7 +222,6 @@ class _ManageServiceState extends State<ManageService> {
       return null;
     }
   }
-
 
   String? uid;
 
@@ -1098,15 +1096,20 @@ class _ManageServiceState extends State<ManageService> {
 
   cardWidgetDelivery(DeliveryBookingModel model, int i) {
     return InkWell(
-      onTap: () {
+      onTap: () async{
         if(model.rides![i].bookingsType == "ride_booking"){
           // Navigator.push(
           //     context,
           //     MaterialPageRoute(
           //         builder: (context) =>
           //             OfflinePage('${model.rides![i].bookingId}')));
-          Navigator.push(context,
+         var result = await  Navigator.push(context,
               MaterialPageRoute(builder: (context) => RideInfoPage(model.rides![i])));
+         if(result != null ){
+           setState(() {
+             _selectedIndex = 1;
+           });
+         }
         }else {
           Navigator.push(
               context,
@@ -1335,7 +1338,7 @@ class _ManageServiceState extends State<ManageService> {
       onPressed: (){
         Navigator.pop(context);
       },
-      icon: Icon(Icons.arrow_back_ios),
+      icon: Icon(Icons.arrow_back_ios, color: AppColor().colorBg1(),),
     )
         : SizedBox.shrink(),
         // : SizedBox.shrink(),
@@ -1404,7 +1407,7 @@ class _ManageServiceState extends State<ManageService> {
                           }
                         },
                         child: Container(
-                          height: 25,
+                          height: 30,
                           decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(

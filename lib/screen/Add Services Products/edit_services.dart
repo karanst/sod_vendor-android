@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fixerking/RideFlow/utils/Session.dart';
+import 'package:fixerking/screen/Add%20Services%20Products/DetailScreens/image_preview.dart';
 import 'package:fixerking/token/token_string.dart';
 import 'package:fixerking/utility_widget/customLoader.dart';
 import 'package:flutter/material.dart';
@@ -423,20 +424,23 @@ class _EditServicesState extends State<EditServices> {
       'mrp_price': '${priceController.text}',
       'address': '${descriptionController.text}',
       'category_id': '${categoryValue.toString()}',
-      //'${categoryValue.toString()}',
       'sub_cat_id': '${subCategoryValue.toString()}',
       'special_price': '${sellingPriceController.text}',
-      'v_id': '${uid}',
-      // 'other_images[]': '${uploadImages.toString()}'
+      'v_id': '$uid',
     });
-    for (var i = 0; i < imagePathList.length; i++) {
-      imagePathList == null
-          ? null
-          : request.files.add(await http.MultipartFile.fromPath(
-          'other_images[]', imagePathList[i].toString()));
+
+    if(imagePathList != null) {
+      for (var i = 0; i < imagePathList.length; i++) {
+        imagePathList != null
+            ? request.files.add(await http.MultipartFile.fromPath(
+            'other_images[]', imagePathList[i].toString()))
+            : null;
+      }
     }
-    request.files.add(await http.MultipartFile.fromPath(
-        'services_image', '${imagePathList[0].toString()}'));
+    imagePathList != null
+        ? request.files.add(await http.MultipartFile.fromPath(
+        'services_image', '${imagePathList[0].toString()}'))
+        : null;
 
     print("checking request of api here ${request.fields}");
 
@@ -459,7 +463,7 @@ class _EditServicesState extends State<EditServices> {
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     checkingLogin();
     // _getCollection();
@@ -468,11 +472,10 @@ class _EditServicesState extends State<EditServices> {
     sellingPriceController.text =  widget.productsModel!.specialPrice.toString();
     descriptionController.text = widget.productsModel!.description.toString();
     prodImg = widget.productsModel!.profileImage.toString();
-    // categoryValue = widget.productsModel!.categoryId.toString();
-    descriptionController.text = widget.productsModel!.description.toString();
-    // subCategoryValue =  widget.productsModel!.subId.toString();
+     // categoryValue = widget.productsModel!.categoryId.toString();
+    descriptionController.text = widget.productsModel!.serDesc.toString();
+     // subCategoryValue =  widget.productsModel!.subId.toString();
   }
-
 
   _getCollection() async {
     var uri = Uri.parse('${Apipath.getCategoriesUrl}');
@@ -603,6 +606,36 @@ class _EditServicesState extends State<EditServices> {
   ///MULTI IMAGE PICKER
   ///
   ///
+  ///
+  Widget showGridView() {
+    return Container(
+      height: 180,
+      child: GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: widget.productsModel!.servicesImage!.length,
+        gridDelegate:
+        SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        itemBuilder: (BuildContext context, int index) {
+          return InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> FullScreenImage(
+                imageUrl: widget.productsModel!.servicesImage![index].toString(),
+              )));
+            },
+            child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15))
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  child: Image.network(widget.productsModel!.servicesImage![index].toString(),
+                      fit: BoxFit.cover),
+                )),
+          );
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -895,6 +928,8 @@ class _EditServicesState extends State<EditServices> {
                 //     )
                 // ),),
                 uploadMultiImage(),
+                const SizedBox(height: 15,),
+                showGridView(),
                 SizedBox(
                   height: 30,
                 ),

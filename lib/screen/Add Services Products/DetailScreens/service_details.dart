@@ -15,6 +15,7 @@ class ServiceDetails extends StatefulWidget {
 }
 
 class _ServiceDetailsState extends State<ServiceDetails> {
+
   Widget buildGridView() {
     return Expanded(
       // height: 165,

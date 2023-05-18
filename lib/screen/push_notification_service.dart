@@ -426,20 +426,20 @@ class PushNotificationService {
       // print(test);
       // var image = message.data['image'] ?? '';
       // print(image);
-      var type = message.data['type'] ?? '';
-      print("this is type -------->>>>$type");
+      notiType = message.data['type'] ?? '';
+      print("this is type -------->>>>$notiType");
       // id = message.data['type_id'] ?? '';
-      if(type == "3" || type == "2" || type == "4"){
+      if(notiType == "3" || notiType == "2" || notiType == "4"){
         print('this is booking ID =====> ${test['Booking_id']}');
         String bookingId = test['Booking_id'];
         // var notiData =  {
         //   'bookingId': bookingId,
         //   'type' : notiType
         // };
-        generateSimpleNotication(title, body, type, bookingId);
+        generateSimpleNotication(title, body, notiType, bookingId);
         onResult!(bookingId);
       }else{
-        generateSimpleNotication(title, body, type, '');
+        generateSimpleNotication(title, body, notiType, '');
       }
 
       // generateImageNotication(title, body, image, type, '');
@@ -486,14 +486,14 @@ class PushNotificationService {
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (String? payload) async {
           print("this is notification data ${payload.toString()}");
-          if(notiType == "Food") {
+          if(notiType == "2" || notiType == "3" || notiType == "4") {
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        BottomBar(
+                        BottomBarDelivery(
                           bookingId: payload.toString(),
-                          type: notiType.toString(),
+                          // type: notiType.toString(),
                         )),
                     (route) => false);
           }else{
@@ -501,11 +501,12 @@ class PushNotificationService {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        BottomBarDelivery(
+                        BottomBar(
                           bookingId: payload.toString(),
-                          type: notiType.toString(),
+                          // type: notiType.toString(),
                         )),
                     (route) => false);
+
           }
 
         });

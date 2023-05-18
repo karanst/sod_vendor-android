@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ParcelDetails extends StatefulWidget {
   Rides data;
@@ -37,7 +38,14 @@ class _ParcelDetailsState extends State<ParcelDetails> {
     'Delivered',
     'Cancel',
   ];
-
+  void _launchURL(Uri url) async {
+    if (await launchUrl(url)) {
+      //await launch(url);
+    } else {
+      Fluttertoast.showToast(msg: 'Could not launch ');
+      throw 'Could not launch $url';
+    }
+  }
   Widget customerDetails() {
     print(" checking date ${widget.data.dateAdded}");
     // var dateFormate =
@@ -639,7 +647,10 @@ class _ParcelDetailsState extends State<ParcelDetails> {
                         color: AppColor().colorPrimary(),
                         fontWeight: FontWeight.normal,
                       )),
-                  Text("₹ " + widget.data.amount!,
+                  Text(
+                      widget.data.amount == null || widget.data.amount == ''?
+                          "₹" + "0.00"
+                      : "₹ " + double.parse(widget.data.amount!.toString()).toStringAsFixed(2),
                       style: TextStyle(
                         color: AppColor().colorPrimary(),
                         fontWeight: FontWeight.normal,
@@ -660,7 +671,12 @@ class _ParcelDetailsState extends State<ParcelDetails> {
                         color: AppColor().colorPrimary(),
                         fontWeight: FontWeight.normal,
                       )),
-                  Text("₹ " + widget.data.gstAmount!,
+
+                  Text(
+                      widget.data.gstAmount == null || widget.data.gstAmount == ''?
+                      "₹ " + "0.00"
+                     : "₹ " + widget.data.gstAmount!,
+                      // : '',
                       style: TextStyle(
                         color: AppColor().colorPrimary(),
                         fontWeight: FontWeight.normal,
@@ -995,6 +1011,43 @@ class _ParcelDetailsState extends State<ParcelDetails> {
                               ),
                             ),
                             customerDetails(),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5.0, right: 5),
+                              child: ElevatedButton(
+                                  onPressed: (){
+                                    String pickLat =
+                                        widget.data.latitude.toString() ?? '';//'22.7177'; //
+                                    String pickLong =
+                                        widget.data.longitude.toString() ?? '';//'75.8545'; //
+                                    String dropLat =
+                                        widget.data.dropLatitude.toString() ?? '';
+                                    String dropLong =
+                                        widget.data.dropLongitude.toString() ?? '';
+
+                                    final Uri url = Uri.parse(
+                                        'https://www.google.com/maps/dir/?api=1&origin=' +
+                                            pickLat +
+                                            ',' +
+                                            pickLong +
+                                            ' &destination=' +
+                                            dropLat +
+                                            ',' +
+                                            dropLong +
+                                            '&travelmode=driving&dir_action=navigate');
+
+                                    _launchURL(url);
+
+                                  },
+                                  style: ElevatedButton.styleFrom(primary: Colors.white),
+                                  child: Row(
+                                    children: [
+                                      Text("Track on Map", style: TextStyle(
+                                          color: AppColor().colorPrimary()
+                                      ),),
+                                      Icon(Icons.location_on_outlined, color: AppColor().colorPrimary(),)
+                                    ],
+                                  )),
+                            ),
                             // bookDetailCard(),
                             Padding(
                               padding: const EdgeInsets.only(top: 10.0, right: 15, left: 10, bottom: 7),

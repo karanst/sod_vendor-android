@@ -536,41 +536,6 @@ class _VendorRegisterationState extends State<VendorRegisteration> {
     );
   }
 
-  // Widget imageBackAadhar() {
-  //   return Material(
-  //     elevation: 2,
-  //     borderRadius: BorderRadius.circular(15),
-  //     child: InkWell(
-  //       onTap: () {
-  //         // getImage(ImgSource.Both, context,1);
-  //         requestPermission(context, 5);
-  //         //uploadAadharFromCamOrGallary(context);
-  //       },
-  //       child: Center(
-  //         child: Container(
-  //           height: 100,
-  //           width: MediaQuery.of(context).size.width/2 - 30,
-  //           decoration: BoxDecoration(
-  //               border: Border.all(color: Colors.grey),
-  //               borderRadius: BorderRadius.circular(15)),
-  //           child: ClipRRect(
-  //             borderRadius: BorderRadius.circular(15),
-  //             child: aadharImageBack != null
-  //                 ? Image.file(aadharImageBack!, fit: BoxFit.cover)
-  //                 : Column(
-  //               children: [
-  //                 Center(
-  //                     child: Icon(Icons.upload_file_outlined, size: 60)),
-  //                 Text("Aadhar card Back")
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget imageAadharBack() {
     return Material(
       elevation: 2,
@@ -1140,167 +1105,11 @@ class _VendorRegisterationState extends State<VendorRegisteration> {
       } else if (i == 9) {
         gstImage = File(croppedFile!.path);
       }
-      // else if(i==6){
-      //   insuranceImage = File(croppedFile!.path);
-      // }
-      // else if(i==7){
-      //   bankImage = File(croppedFile!.path);
-      // }
-      // else{
-      //   _finalImage = File(croppedFile!.path);
-      // }
     });
-    //Navigator.pop(context);
+    Navigator.pop(context);
   }
 
 
-  //   void requestPermission(BuildContext context, int i) async {
-//     // return await showDialog<void>(
-//     //   context: context,
-//     //   // barrierDismissible: barrierDismissible, // user must tap button!
-//     //   builder: (BuildContext context) {
-//     //     return AlertDialog(
-//     //       backgroundColor: Colors.white,
-//     //       shape: RoundedRectangleBorder(
-//     //           borderRadius: BorderRadius.all(Radius.circular(6))),
-//     //       content: Column(
-//     //         mainAxisSize: MainAxisSize.min,
-//     //         children: <Widget>[
-//     //           // enableCloseButton == true
-//     //           //     ? GestureDetector(
-//     //           //   onTap: () {
-//     //           //     Navigator.pop(context);
-//     //           //   },
-//     //           //   child: Align(
-//     //           //       alignment: Alignment.topRight,
-//     //           //       child: closeIcon ??
-//     //           //           Icon(
-//     //           //             Icons.close,
-//     //           //             size: 14,
-//     //           //           )),
-//     //           // )
-//     //           //     : Container(),
-//     //           InkWell(
-//     //             onTap: () async {
-//     //               getFromGallery(i);
-//     //             },
-//     //             child: Container(
-//     //               child: ListTile(
-//     //                   title:  Text("Gallery"),
-//     //                   leading: Icon(
-//     //                     Icons.image,
-//     //                     color: colors.primary,
-//     //                   )),
-//     //             ),
-//     //           ),
-//     //           Container(
-//     //             width: 200,
-//     //             height: 1,
-//     //             color: Colors.black12,
-//     //           ),
-//     //           InkWell(
-//     //             onTap: () async {
-//     //               getImage(ImgSource.Camera, context, i);
-//     //             //   ImagePicker()
-//     //             //       .getImage(
-//     //             //       source: ImageSource.camera,
-//     //             //       maxWidth: maxWidth,
-//     //             //       maxHeight: maxHeight)
-//     //             //       .then((image) {
-//     //             //     Navigator.pop(context, image);
-//     //             //   });
-//     //             },
-//     //             child: Container(
-//     //               child: ListTile(
-//     //                   title:  Text("Camera"),
-//     //                   leading: Icon(
-//     //                     Icons.camera,
-//     //                     color: colors.primary,
-//     //                   )),
-//     //             ),
-//     //           ),
-//     //         ],
-//     //       ),
-//     //     );
-//     //   },
-//     // );
-//     var status = await Permission.storage.request();
-//     // final status = await Permission.photos.status;
-//     // final storage = await Permission.accessMediaLocation.status;
-//     if (status.isGranted) {
-//       getImage(ImgSource.Both, context, i);
-//     } else if (status.isPermanentlyDenied) {
-//       openAppSettings();
-//     }
-//
-//     ///
-// //     if (await Permission.camera.isRestricted || await Permission.storage.isRestricted) {
-// //       openAppSettings();
-// //     }
-// //     else{
-// //       Map<Permission, PermissionStatus> statuses = await [
-// //         Permission.camera,
-// //         Permission.storage,
-// //       ].request();
-// // // You can request multiple permissions at once.
-// //
-// //       if(statuses[Permission.camera]==PermissionStatus.granted&&statuses[Permission.storage]==PermissionStatus.granted){
-// //         getImage(ImgSource.Both, context,i);
-// //
-// //       }else{
-// //         if (await Permission.camera.isDenied||await Permission.storage.isDenied) {
-// //           openAppSettings();
-// //         }else{
-// //           setSnackbar("Oops you just denied the permission", context);
-// //         }
-// //       }
-// //     }
-//   }
-  // Future<void> getFromGallery(int i) async {
-  //   var result = await FilePicker.platform.pickFiles(
-  //     type: FileType.image,
-  //     allowMultiple: false,
-  //   );
-  //   if (result != null) {
-  //     setState(() {
-  //       if(i==1){
-  //         aadharImage = File(result.files.single.path.toString());
-  //       }else  if(i==2){
-  //         panImage = File(result.files.single.path.toString());
-  //       }else  if(i==4){
-  //         drivingImage = File(result.files.single.path.toString());
-  //       }else if(i==3){
-  //         rcImage = File(result.files.single.path.toString());
-  //       }
-  //       else if(i==5){
-  //         aadharImageBack = File(result.files.single.path.toString());
-  //       }
-  //       else if(i==6){
-  //         rcImageBack = File(result.files.single.path.toString());
-  //       }
-  //       else if(i==7){
-  //         drivingImageBack = File(result.files.single.path.toString());
-  //       }
-  //       else if(i==8){
-  //         fssaiImage = File(result.files.single.path.toString());
-  //       }
-  //       else if(i==9){
-  //         gstImage = File(result.files.single.path.toString());
-  //       }
-  //     });
-  //     Navigator.pop(context);
-  //     // setState(() {
-  //     //   isImages = true;
-  //     //   // servicePic = File(result.files.single.path.toString());
-  //     // });
-  //     // imagePathList = result.paths.toList();
-  //     // imagePathList.add(result.paths.toString()).toList();
-  //     // print("SERVICE PIC === ${imagePathList.length}");
-  //   } else {
-  //     // User canceled the picker
-  //   }
-  // }
-  // File? _image,_finalImage,panImage,vehicleImage,adharImage,insuranceImage,bankImage;
 
   manageRole() {
     if (widget.role == "Restaurants / Hotels / Cafes") {
@@ -1328,12 +1137,14 @@ class _VendorRegisterationState extends State<VendorRegisteration> {
         type = "5";
         appBarTitle = "Mehendi Artist";
       });
-    } else if (widget.role == "Event Planner") {
-      setState(() {
-        type = "6";
-        appBarTitle = "Event";
-      });
-    } else if (widget.role == "Handy Man Services") {
+    }
+    // else if (widget.role == "Event Planner") {
+    //   setState(() {
+    //     type = "6";
+    //     appBarTitle = "Event";
+    //   });
+    // }
+    else if (widget.role == "Handy Man Services") {
       setState(() {
         type = "7";
         appBarTitle = "Handy Man";

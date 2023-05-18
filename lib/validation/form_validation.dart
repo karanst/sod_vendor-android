@@ -24,10 +24,10 @@ class FormValidation {
       if (lveleded == true) {
         return null;
       } else {
-        return 'Please enter a valid email';
+        return 'Please Enter Valid Email!';
       }
     } else {
-      return 'Please enter a valid email';
+      return 'Please Enter Valid Email!';
     }
   }
 
