@@ -96,15 +96,15 @@ class _ProductsServicesScreenState extends State<ProductsServicesScreen> {
       var jsonResponse = await response.stream.bytesToString();
       final finalResult = json.decode(jsonResponse);
       print("final result here ${finalResult}");
-      if(finalResult['status'] == "0") {
+      if (finalResult['status'] == "0") {
         Fluttertoast.showToast(msg: "${finalResult['message']}");
         Navigator.pop(context, true);
-        Future.delayed(Duration(seconds: 1), (){
-          setState((){
+        Future.delayed(Duration(seconds: 1), () {
+          setState(() {
             getProducts();
           });
         });
-      }else{
+      } else {
         Fluttertoast.showToast(msg: "${finalResult['message']}");
       }
     } else {
@@ -148,69 +148,50 @@ class _ProductsServicesScreenState extends State<ProductsServicesScreen> {
     // addProducts();
   }
 
-  Widget productCardWidget(model , int index){
+  Widget productCardWidget(model, int index) {
     return InkWell(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>
-            ProductDetails(model: model.products![index],)));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ProductDetails(
+                      model: model.products![index],
+                    )));
       },
       child: Padding(
-        padding: const EdgeInsets.only(
-            left: 15,
-            right: 15,
-            bottom: 10.0),
+        padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10.0),
         child: Stack(
           children: [
             Card(
               elevation: 0,
               shape: RoundedRectangleBorder(
-                  borderRadius:
-                  BorderRadius.circular(
-                      15)),
+                  borderRadius: BorderRadius.circular(15)),
               child: Container(
-                padding:
-                const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 // only(left: 85, right: 20),
                 height: 90,
-                width: MediaQuery.of(context)
-                    .size
-                    .width,
+                width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                     border: Border.all(color: AppColor().colorPrimary()),
-                    borderRadius:
-                    BorderRadius.circular(
-                        15)),
+                    borderRadius: BorderRadius.circular(15)),
                 child: Row(
-                  mainAxisAlignment:
-                  MainAxisAlignment
-                      .spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment
-                            .spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
                             height: 60,
                             width: 60,
-                            decoration:
-                            BoxDecoration(
-                              borderRadius:
-                              BorderRadius
-                                  .circular(
-                                  10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             child: ClipRRect(
-                              borderRadius:
-                              BorderRadius
-                                  .circular(
-                                  6),
-                              child: Image
-                                  .network(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Image.network(
                                 "${model.products![index].otherImage![0].toString()}",
-                                fit: BoxFit
-                                    .fill,
+                                fit: BoxFit.fill,
                               ),
                             ),
                           ),
@@ -218,31 +199,23 @@ class _ProductsServicesScreenState extends State<ProductsServicesScreen> {
                             width: 10,
                           ),
                           Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment
-                                .start,
-                            mainAxisAlignment:
-                            MainAxisAlignment
-                                .center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 "${model.products![index].productName}",
-                                style:
-                                TextStyle(
-                                  color: Colors
-                                      .black,
-                                  fontSize:
-                                  14,
-                                  fontWeight:
-                                  FontWeight
-                                      .bold,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(
-                                  height: 5),
+                              SizedBox(height: 5),
                               Row(
                                 children: [
-                                  Text("\u{20B9}" + " ${model.products![index].productPrice}",
+                                  Text(
+                                    "\u{20B9}" +
+                                        " ${model.products![index].productPrice}",
                                     style: TextStyle(
                                       decoration: TextDecoration.lineThrough,
                                       fontSize: 12,
@@ -255,21 +228,31 @@ class _ProductsServicesScreenState extends State<ProductsServicesScreen> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       color: AppColor.PrimaryDark,
-                                    ),),
+                                    ),
+                                  ),
                                 ],
                               ),
-                              Text(model.products![index].productStatus.toString() == "0"?
-                              "Pending"
-                                  : model.products![index].productStatus.toString() == "1"?
-                              "Approved"
-                                  : "Disapproved",
+                              Text(
+                                model.products![index].productStatus
+                                            .toString() ==
+                                        "0"
+                                    ? "Pending"
+                                    : model.products![index].productStatus
+                                                .toString() ==
+                                            "1"
+                                        ? "Approved"
+                                        : "Disapproved",
                                 style: TextStyle(
-                                    color: model.products![index].productStatus.toString() == "0"?
-                                    Colors.yellow
-                                        : model.products![index].productStatus.toString() == "1"?
-                                    Colors.green
-                                        : Colors.red
-                                ),)
+                                    color: model.products![index].productStatus
+                                                .toString() ==
+                                            "0"
+                                        ? Colors.yellow
+                                        : model.products![index].productStatus
+                                                    .toString() ==
+                                                "1"
+                                            ? Colors.green
+                                            : Colors.red),
+                              )
                             ],
                           ),
                         ],
@@ -281,52 +264,49 @@ class _ProductsServicesScreenState extends State<ProductsServicesScreen> {
                         Card(
                           elevation: 2,
                           child: InkWell(
-                              onTap: () async{
+                              onTap: () async {
                                 var result = await Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => EditProducts(
-                                          productsModel: model.products![index],
-                                        )));
-                                if(result = true){
-                                  setState((){
+                                              productsModel:
+                                                  model.products![index],
+                                            )));
+                                if (result = true) {
+                                  setState(() {
                                     getProducts();
                                   });
-
                                 }
-
                               },
                               child: Icon(
                                 Icons.edit,
-                                color: AppColor
-                                    .PrimaryDark,
+                                color: AppColor.PrimaryDark,
                               )),
                         ),
                         SizedBox(
                           width: 6,
                         ),
                         InkWell(
-                          onTap: () async{
+                          onTap: () async {
                             var newResult = await showDialog(
                                 context: context,
                                 barrierDismissible: false,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     title: Text("Delete Product?"),
-                                    content: Text("Are you sure you want to delete this product?"),
+                                    content: Text(
+                                        "Are you sure you want to delete this product?"),
                                     actions: <Widget>[
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            primary: AppColor().colorPrimary()
-                                        ),
+                                            primary: AppColor().colorPrimary()),
                                         child: Text("YES"),
-                                        onPressed: () async{
+                                        onPressed: () async {
                                           await deleteProduct(model
-                                              .products![
-                                          index]
-                                              .productId
+                                              .products![index].productId
                                               .toString());
-                                          Future.delayed(Duration(milliseconds: 500), (){
+                                          Future.delayed(
+                                              Duration(milliseconds: 500), () {
                                             Navigator.pop(context, true);
                                           });
                                           // Navigator.pop(context);
@@ -334,8 +314,7 @@ class _ProductsServicesScreenState extends State<ProductsServicesScreen> {
                                       ),
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            primary: AppColor().colorPrimary()
-                                        ),
+                                            primary: AppColor().colorPrimary()),
                                         child: Text("NO"),
                                         onPressed: () {
                                           Navigator.of(context).pop();
@@ -343,22 +322,18 @@ class _ProductsServicesScreenState extends State<ProductsServicesScreen> {
                                       )
                                     ],
                                   );
-                                }
-                            );
+                                });
                             print("this is result ====> ${newResult}");
 
-                            if(newResult == true){
+                            if (newResult == true) {
                               await getProducts();
                             }
-
                           },
                           child: Card(
                             elevation: 2,
                             child: Icon(
-                              Icons
-                                  .delete_forever_rounded,
-                              color:
-                              Colors.red,
+                              Icons.delete_forever_rounded,
+                              color: Colors.red,
                             ),
                           ),
                         ),
@@ -404,143 +379,112 @@ class _ProductsServicesScreenState extends State<ProductsServicesScreen> {
     );
   }
 
-  Widget serviceCardWidget(model, index){
+  Widget serviceCardWidget(model, index) {
     return InkWell(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> ServiceDetails(
-          model: model.products![index],
-        )));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ServiceDetails(
+                      model: model.products![index],
+                    )));
       },
       child: Padding(
-        padding: const EdgeInsets.only(
-            left: 15,
-            right: 15,
-            bottom: 10.0),
+        padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10.0),
         child: Stack(
           children: [
             Card(
               elevation: 0,
               shape: RoundedRectangleBorder(
-                  borderRadius:
-                  BorderRadius.circular(
-                      15)),
+                  borderRadius: BorderRadius.circular(15)),
               child: Container(
-                padding:
-                const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 // only(left: 85, right: 20),
                 height: 90,
-                width: MediaQuery.of(context)
-                    .size
-                    .width,
+                width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                     border: Border.all(color: AppColor().colorPrimary()),
-                    borderRadius:
-                    BorderRadius.circular(
-                        15)),
+                    borderRadius: BorderRadius.circular(15)),
                 child: Row(
-                  mainAxisAlignment:
-                  MainAxisAlignment
-                      .spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment
-                            .spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           model.products![index].serviceImg == null ||
-                              model.products![index].serviceImg == ""?
-                          Container(
-                            height: 60,
-                            width: 60,
-                            decoration:
-                            BoxDecoration(
-                              borderRadius:
-                              BorderRadius
-                                  .circular(
-                                  10),
-                            ),
-                            child: ClipRRect(
-                              borderRadius:
-                              BorderRadius
-                                  .circular(
-                                  6),
-                              child:
-                              Icon(
-                                Icons.image,
-                                size: 50,
-                              ),
-                            ),
-                          )
+                                  model.products![index].serviceImg == ""
+                              ? Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(6),
+                                    child: Icon(
+                                      Icons.image,
+                                      size: 50,
+                                    ),
+                                  ),
+                                )
                               : Container(
-                            height: 60,
-                            width: 60,
-                            decoration:
-                            BoxDecoration(
-                              borderRadius:
-                              BorderRadius
-                                  .circular(
-                                  10),
-                            ),
-                            child: ClipRRect(
-                              borderRadius:
-                              BorderRadius
-                                  .circular(
-                                  6),
-                              child:
-                              Image
-                                  .network(
-                                "${model.products![index].serviceImg.toString()}",
-                                fit: BoxFit
-                                    .fill,
-                              ),
-                            ),
-                          ),
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(6),
+                                    child: Image.network(
+                                      "${model.products![index].serviceImg.toString()}",
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
                           SizedBox(
                             width: 10,
                           ),
                           Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment
-                                .start,
-                            mainAxisAlignment:
-                            MainAxisAlignment
-                                .center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                 width: 150,
                                 child: Text(
                                   "${model.products![index].artistName}",
-                                  style:
-                                  TextStyle(
-                                    color: Colors
-                                        .black,
-                                    fontSize:
-                                    14,
-                                    fontWeight:
-                                    FontWeight
-                                        .bold,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                  height: 5),
+                              SizedBox(height: 5),
                               Text(
                                   "\u{20B9} ${model.products![index].specialPrice}"),
-                              SizedBox(
-                                  height: 5),
-                              Text(model.products![index].serviceStatus.toString() == "0"?
-                              "Pending"
-                                  : model.products![index].serviceStatus.toString() == "1"?
-                              "Approved"
-                                  : "Disapproved",
+                              SizedBox(height: 5),
+                              Text(
+                                model.products![index].serviceStatus
+                                            .toString() ==
+                                        "0"
+                                    ? "Pending"
+                                    : model.products![index].serviceStatus
+                                                .toString() ==
+                                            "1"
+                                        ? "Approved"
+                                        : "Disapproved",
                                 style: TextStyle(
-                                    color: model.products![index].serviceStatus.toString() == "0"?
-                                    Colors.yellow
-                                        : model.products![index].serviceStatus.toString() == "1"?
-                                    Colors.green
-                                        : Colors.red
-                                ),)
+                                    color: model.products![index].serviceStatus
+                                                .toString() ==
+                                            "0"
+                                        ? Colors.yellow
+                                        : model.products![index].serviceStatus
+                                                    .toString() ==
+                                                "1"
+                                            ? Colors.green
+                                            : Colors.red),
+                              )
                               // Text("\u{20B9}" + serviceList[i]['price'],
                               //   style: TextStyle(
                               //     fontSize: 12,
@@ -558,42 +502,49 @@ class _ProductsServicesScreenState extends State<ProductsServicesScreen> {
                         Card(
                           elevation: 2,
                           child: InkWell(
-                              onTap: () {
-                                Navigator.push(
+                              onTap: () async{
+                                var result = await Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => EditServices(
-                                          productsModel: model.products![index],
-                                        )));
+                                              productsModel:
+                                                  model.products![index],
+                                            )));
+                                if (result != null) {
+                                 setState(() {
+                                   getServices();
+                                 });
+                                }
                               },
                               child: Icon(
                                 Icons.edit,
-                                color: AppColor
-                                    .PrimaryDark,
+                                color: AppColor.PrimaryDark,
                               )),
                         ),
                         SizedBox(
                           width: 6,
                         ),
                         InkWell(
-                          onTap: () async{
+                          onTap: () async {
                             var newResult = await showDialog(
                                 context: context,
                                 barrierDismissible: false,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     title: Text("Delete Services?"),
-                                    content: Text("Are you sure you want to delete this service?"),
+                                    content: Text(
+                                        "Are you sure you want to delete this service?"),
                                     actions: <Widget>[
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            primary: AppColor().colorPrimary()
-                                        ),
+                                            primary: AppColor().colorPrimary()),
                                         child: Text("YES"),
-                                        onPressed: () async{
+                                        onPressed: () async {
                                           await deleteServices(model
-                                              .products![index].serviceId.toString());
-                                          Future.delayed(Duration(milliseconds: 500), (){
+                                              .products![index].serviceId
+                                              .toString());
+                                          Future.delayed(
+                                              Duration(milliseconds: 500), () {
                                             Navigator.pop(context, true);
                                           });
                                           // Navigator.pop(context);
@@ -601,8 +552,7 @@ class _ProductsServicesScreenState extends State<ProductsServicesScreen> {
                                       ),
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            primary: AppColor().colorPrimary()
-                                        ),
+                                            primary: AppColor().colorPrimary()),
                                         child: Text("NO"),
                                         onPressed: () {
                                           Navigator.of(context).pop();
@@ -610,23 +560,18 @@ class _ProductsServicesScreenState extends State<ProductsServicesScreen> {
                                       )
                                     ],
                                   );
-                                }
-                            );
+                                });
                             print("this is result ====> ${newResult}");
 
-                            if(newResult == true){
+                            if (newResult == true) {
                               await getServices();
                             }
-
-
                           },
                           child: Card(
                             elevation: 2,
                             child: Icon(
-                              Icons
-                                  .delete_forever_rounded,
-                              color:
-                              Colors.red,
+                              Icons.delete_forever_rounded,
+                              color: Colors.red,
                             ),
                           ),
                         ),
@@ -671,27 +616,27 @@ class _ProductsServicesScreenState extends State<ProductsServicesScreen> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     changeStatusBarColor(AppColor().colorBg2());
     return Scaffold(
         backgroundColor: AppColor().colorPrimary(),
         floatingActionButton: FloatingActionButton(
-          onPressed: () async{
+          onPressed: () async {
             // if (type == "1") {
-             var isSuccess = await Navigator.push(context,
-                  MaterialPageRoute(builder: (context) =>
-                  type == "1" ?
-                      AddProducts()
-                  : AddServices()
-                  ));
-             print("this is success result $isSuccess");
-             if(isSuccess = true){
-             setState((){
+            var isSuccess = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        type == "1" ? AddProducts() : AddServices()));
+            print("this is success result $isSuccess");
+            if (isSuccess = true) {
+              setState(() {
                 getProducts();
                 getServices();
-             });
-             }
+              });
+            }
             // } else {
             //   Navigator.push(context,
             //       MaterialPageRoute(builder: (context) => AddServices()));
@@ -708,9 +653,7 @@ class _ProductsServicesScreenState extends State<ProductsServicesScreen> {
           centerTitle: true,
           backgroundColor: AppColor().colorPrimary(),
           title: Text(
-            type == "1" ?
-            "Products"
-            : "Services",
+            type == "1" ? "Products" : "Services",
             style: TextStyle(
               color: AppColor().colorBg1(),
             ),
@@ -726,13 +669,14 @@ class _ProductsServicesScreenState extends State<ProductsServicesScreen> {
                 topRight: Radius.circular(45),
               )),
           child: Container(
-            padding: EdgeInsets.only(top: 30),
+              padding: EdgeInsets.only(top: 30),
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  color: AppColor().colorBg2(),
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(45), topRight: Radius.circular(45)),
-
+                color: AppColor().colorBg2(),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(45),
+                    topRight: Radius.circular(45)),
               ),
               // decoration: BoxDecoration(
               //     color: AppColor().colorBg1(),
@@ -782,21 +726,20 @@ class _ProductsServicesScreenState extends State<ProductsServicesScreen> {
                         // print("this is moddel ==========>>>>> ${model!.products![0].productPrice.toString()}");
                         if (snapshot.hasData) {
                           return
-                            // model!.status == "1"
-                            //   ?
-                          Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: AlwaysScrollableScrollPhysics(),
-                                      itemCount: model!.products!.length,
-                                      itemBuilder: (context, index) {
-                                        return serviceCardWidget(model, index);
-                                        //cardWidget(model, i
-                                      }),
-                                );
-
+                              // model!.status == "1"
+                              //   ?
+                              Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20)),
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: AlwaysScrollableScrollPhysics(),
+                                itemCount: model!.products!.length,
+                                itemBuilder: (context, index) {
+                                  return serviceCardWidget(model, index);
+                                  //cardWidget(model, i
+                                }),
+                          );
                         } else if (snapshot.hasError) {
                           return Icon(Icons.error_outline);
                         } else {

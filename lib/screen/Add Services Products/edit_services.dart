@@ -129,7 +129,8 @@ class _EditServicesState extends State<EditServices> {
       //'${categoryValue.toString()}',
       'sub_cat_id': '${subCategoryValue.toString()}',
       'selling_price': '${sellingPriceController.text}',
-      'vid': '${uid}'
+      'vid': '${uid}',
+
     });
     if(type == "7"){
       request.fields.addAll({
@@ -427,6 +428,7 @@ class _EditServicesState extends State<EditServices> {
       'sub_cat_id': '${subCategoryValue.toString()}',
       'special_price': '${sellingPriceController.text}',
       'v_id': '$uid',
+      'services_id': widget.productsModel!.serviceId.toString()
     });
 
     if(imagePathList != null) {

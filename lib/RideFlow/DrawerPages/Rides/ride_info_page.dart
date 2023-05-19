@@ -102,7 +102,7 @@ class _RideInfoPageState extends State<RideInfoPage> {
         if (response['response_code'] == '1') {
           setSnackbar(msg, context);
           Fluttertoast.showToast(msg: msg);
-          Navigator.pop(context, true);
+          Navigator.pop(context, '1');
           // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> ("")), (route) => false);
         } else {}
       } on TimeoutException catch (_) {
@@ -142,9 +142,10 @@ class _RideInfoPageState extends State<RideInfoPage> {
           setState(() {
             isStarted = true;
             otpController.clear();
-
-            // widget.model.acceptReject="2";
           });
+        if(status1 == "4"){
+          Navigator.pop(context, '4');
+        }
         } else {}
       } on TimeoutException catch (_) {
         setSnackbar("Something Went Wrong", context);
@@ -584,8 +585,7 @@ class _RideInfoPageState extends State<RideInfoPage> {
                                         boxWidth(10),
                                         InkWell(
                                           onTap: () {
-                                            startRide(
-                                                widget.model.bookingId!, "4");
+                                            startRide(widget.model.bookingId!, "4");
                                             // cancelStatus(widget.model.bookingId!, "4");
                                             // showBottom1();
                                           },

@@ -239,7 +239,7 @@ class _AddServicesState extends State<AddServices> {
       'mrp_price': '${priceController.text}',
       'ser_desc': '${descriptionController.text}',
       'category_id': '${categoryValue.toString()}',
-      'sub_cat_id': '${subCategoryValue.toString()}',
+      'sub_cat_id': subCategoryValue == null ? '' : '${subCategoryValue.toString()}',
       'special_price': '${sellingPriceController.text}',
       'roll': '${type.toString()}',
       'v_id': '${uid.toString()}',
@@ -256,7 +256,9 @@ class _AddServicesState extends State<AddServices> {
           : request.files.add(await http.MultipartFile.fromPath(
           'other_images[]', imagePathList[i].toString()));
     }
-    request.files.add(await http.MultipartFile.fromPath(
+    imagePathList == null
+        ? null
+        : request.files.add(await http.MultipartFile.fromPath(
         'services_image', '${imagePathList[0].toString()}'));
     print("checking request of api here ${request.fields} aand ${request.files.toString()}");
 
@@ -266,12 +268,12 @@ class _AddServicesState extends State<AddServices> {
       var finalResponse = await response.stream.bytesToString();
       final jsonResponse = json.decode(finalResponse);
       print("checking result ${jsonResponse}");
-      if(jsonResponse['status'] == "success") {
+      // if(jsonResponse['status'] == "success") {
         setState(() {
           Fluttertoast.showToast(msg: "Added successfully");
         });
         Navigator.pop(context, true);
-      }
+      // }
     }
     else {
       print(response.reasonPhrase);

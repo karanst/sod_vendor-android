@@ -775,15 +775,16 @@ class _EventServiceDetailsState extends State<EventServiceDetails> {
 
       var finalResult = await response.stream.bytesToString();
       final jsonResponse = PostStatusModel.fromJson(json.decode(finalResult));
-      print("final result here ${jsonResponse.message}");
-      if (jsonResponse.responseCode == "1") {
-        Navigator.pop(context);
+      print("final result here ${jsonResponse.message} and ${jsonResponse.responseCode}");
+      // if (jsonResponse.responseCode == "1") {
+      //   Navigator.pop(context);
+        Navigator.pop(context, true);
         Fluttertoast.showToast(msg: "${jsonResponse.message}");
         // isStatus = true;
         // updateRequestFunction('${id}', '${value}');
-      } else {
-        Fluttertoast.showToast(msg: "${jsonResponse.message}");
-      }
+      // } else {
+      //   Fluttertoast.showToast(msg: "${jsonResponse.message}");
+      // }
     } else {
       print(response.reasonPhrase);
     }

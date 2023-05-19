@@ -612,8 +612,7 @@ class _ProfileState extends State<Profile> {
                                                           context) =>
                                                           EditNewProfile(
                                                             model: profileModel!
-                                                                .data![
-                                                            0],
+                                                                .data![0],
                                                             upi:
                                                             bankDetails['UPI'] == ""|| bankDetails['UPI'] == null ?
                                                                 "" :bankDetails['UPI']

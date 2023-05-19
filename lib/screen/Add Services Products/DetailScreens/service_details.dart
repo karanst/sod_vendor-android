@@ -106,7 +106,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                             child: Container(
                               // padding: const EdgeInsets.all(10),
                               // only(left: 85, right: 20),
-                              height: 190,
+                              height: 150,
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25)),
@@ -156,7 +156,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                         SizedBox(
                           height: 8,
                         ),
-                        Text("${widget.model!.description!.toString()}",
+                        Text("${widget.model!.serDesc!.toString()}",
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                           ),),

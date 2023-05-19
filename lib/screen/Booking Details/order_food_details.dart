@@ -196,7 +196,13 @@ class _OrderFoodDetailsState extends State<OrderFoodDetails> {
             // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              widget.data.orderStatus == "0" ?
+              SizedBox.shrink():
+              widget.data.orderStatus == "3" ?
+             SizedBox.shrink() :
+              widget.data.orderStatus == "4" ?
+              SizedBox.shrink()
+              : Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -205,35 +211,34 @@ class _OrderFoodDetailsState extends State<OrderFoodDetails> {
                         color: AppColor().colorPrimary(),
                         fontWeight: FontWeight.normal,
                       )),
-                  widget.data.orderStatus == "0" ?
-                      SizedBox.shrink():
-                  widget.data.orderStatus == "3" ?
-                      Container(
-                        width: 80,
-                        height: 30,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          color: Colors.green
-                        ),
-                        child: Center(child: Text("Completed",
-                        style: TextStyle(
-                          color: Colors.white
-                        ),)),
-                      ) :
-                  widget.data.orderStatus == "4" ?
-                  Container(
-                    width: 80,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                        color: Colors.red
-                    ),
-                    child: Center(child: Text("Cancelled",
-                      style: TextStyle(
-                          color: Colors.white
-                      ),)),
-                  )
-                  :
+                  // widget.data.orderStatus == "0" ?
+                  //     SizedBox.shrink():
+                  // widget.data.orderStatus == "3" ?
+                  //     Container(
+                  //       width: 80,
+                  //       height: 30,
+                  //       decoration: BoxDecoration(
+                  //           borderRadius: BorderRadius.circular(10),
+                  //         color: Colors.green
+                  //       ),
+                  //       child: Center(child: Text("Completed",
+                  //       style: TextStyle(
+                  //         color: Colors.white
+                  //       ),)),
+                  //     ) :
+                  // widget.data.orderStatus == "4" ?
+                  // Container(
+                  //   width: 80,
+                  //   height: 30,
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.circular(10),
+                  //       color: Colors.red
+                  //   ),
+                  //   child: Center(child: Text("Cancelled",
+                  //     style: TextStyle(
+                  //         color: Colors.white
+                  //     ),)),
+                  // ) :
                   Padding(
                     padding: const EdgeInsets.only(  ),
                     child: Container(
@@ -396,7 +401,8 @@ class _OrderFoodDetailsState extends State<OrderFoodDetails> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Order Id",
+                  Text(
+                      "Order Id",
                       style: TextStyle(
                         color: AppColor().colorPrimary(),
                         fontWeight: FontWeight.normal,
@@ -906,6 +912,7 @@ class _OrderFoodDetailsState extends State<OrderFoodDetails> {
       } else {
         Fluttertoast.showToast(msg: "${jsonResponse.message}");
       }
+      Navigator.pop(context, true);
     } else {
       print(response.reasonPhrase);
     }

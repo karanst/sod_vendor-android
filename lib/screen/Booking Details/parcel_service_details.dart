@@ -122,6 +122,7 @@ class _ParcelDetailsState extends State<ParcelDetails> {
       ),
     );
   }
+
   updateDeliveryStatus(String id, String status) async {
     String stats;
     if(status == "Delivered"){
@@ -158,6 +159,12 @@ class _ParcelDetailsState extends State<ParcelDetails> {
       var finalResult = await response.stream.bytesToString();
       final jsonResponse = PostStatusModel.fromJson(json.decode(finalResult));
       print("final result here ${jsonResponse.message}");
+      if(stats == "3"){
+        Navigator.pop(context, "3");
+      }else{
+        Navigator.pop(context, "1");
+      }
+
       if (jsonResponse.responseCode == "1") {
         Fluttertoast.showToast(msg: "${jsonResponse.message}");
         // isStatus = true;

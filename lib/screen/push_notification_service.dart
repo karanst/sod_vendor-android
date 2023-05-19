@@ -439,6 +439,7 @@ class PushNotificationService {
         generateSimpleNotication(title, body, notiType, bookingId);
         onResult!(bookingId);
       }else{
+        onResult!('');
         generateSimpleNotication(title, body, notiType, '');
       }
 

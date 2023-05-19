@@ -1012,7 +1012,7 @@ class _EditNewProfileState extends State<EditNewProfile> {
                                   height: 50,
                                   child: TextFormField(
                                       keyboardType: TextInputType.name,
-                                      controller: storeNameController,
+                                      controller:  type == "1" ? storeNameController : companyController,
                                       validator: (msg) {
                                         if (msg!.isEmpty) {
                                           return "Please Enter Company ";

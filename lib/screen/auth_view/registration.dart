@@ -1345,76 +1345,73 @@ class _VendorRegisterationState extends State<VendorRegisteration> {
               )
             : SizedBox.shrink(),
         type == "2"
-            ? Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15),
-                child: Container(
-                    padding: EdgeInsets.only(
-                      right: 12,
-                      left: 12,
+            ? Container(
+                padding: EdgeInsets.only(
+                  right: 12,
+                  left: 12,
+                ),
+                // height: 50,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: AppColor().colorBg1(),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: AppColor().colorSecondary(),
+                  ),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    dropdownColor: AppColor().colorBg1(),
+                    value: deliveryTypeValue,
+                    icon: Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      color: AppColor().colorPrimary(),
                     ),
-                    // height: 50,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
+                    elevation: 16,
+                    style: TextStyle(
+                        color: AppColor().colorPrimary(),
+                        fontWeight: FontWeight.bold),
+                    underline: Container(
+                      // height: 2,
                       color: AppColor().colorBg1(),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: AppColor().colorSecondary(),
-                      ),
                     ),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        dropdownColor: AppColor().colorBg1(),
-                        value: deliveryTypeValue,
-                        icon: Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          color: AppColor().colorPrimary(),
-                        ),
-                        elevation: 16,
-                        style: TextStyle(
-                            color: AppColor().colorPrimary(),
-                            fontWeight: FontWeight.bold),
-                        underline: Container(
-                          // height: 2,
-                          color: AppColor().colorBg1(),
-                        ),
-                        onChanged: (String? value) {
-                          // This is called when the user selects an item.
-                          setState(() {
-                            deliveryTypeValue = value!;
-                          });
-                        },
-                        items: deliveryType
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    )
+                    onChanged: (String? value) {
+                      // This is called when the user selects an item.
+                      setState(() {
+                        deliveryTypeValue = value!;
+                      });
+                    },
+                    items: deliveryType
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                )
 
-                    // DropdownButtonHideUnderline(
-                    //   child: DropdownButton(
-                    //     // isExpanded: true,
-                    //     value: dropdownvalue,
-                    //     icon: const Icon(Icons.keyboard_arrow_down,size: 35,),
-                    //     elevation: 10,
-                    //     onChanged: (String? value) {
-                    //       setState(() {
-                    //         dropdownvalue = value!;
-                    //       });
-                    //       print("this is dropdown value ==========>$value");
-                    //     },
-                    //     items: items.map<DropdownMenuItem<String>>((String value) {
-                    //       return DropdownMenuItem<String>(
-                    //         value: value,
-                    //         child: Text(value),
-                    //       );
-                    //     }).toList(),
-                    //   ),
-                    // ),
-                    ),
-              )
+                // DropdownButtonHideUnderline(
+                //   child: DropdownButton(
+                //     // isExpanded: true,
+                //     value: dropdownvalue,
+                //     icon: const Icon(Icons.keyboard_arrow_down,size: 35,),
+                //     elevation: 10,
+                //     onChanged: (String? value) {
+                //       setState(() {
+                //         dropdownvalue = value!;
+                //       });
+                //       print("this is dropdown value ==========>$value");
+                //     },
+                //     items: items.map<DropdownMenuItem<String>>((String value) {
+                //       return DropdownMenuItem<String>(
+                //         value: value,
+                //         child: Text(value),
+                //       );
+                //     }).toList(),
+                //   ),
+                // ),
+                )
             : SizedBox.shrink(),
         Padding(
           padding: EdgeInsets.only(left: 10, top: 20, bottom: 0),

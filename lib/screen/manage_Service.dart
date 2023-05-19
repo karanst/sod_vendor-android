@@ -1105,13 +1105,19 @@ class _ManageServiceState extends State<ManageService> {
           //             OfflinePage('${model.rides![i].bookingId}')));
          var result = await  Navigator.push(context,
               MaterialPageRoute(builder: (context) => RideInfoPage(model.rides![i])));
-         if(result != null ){
+         print("this is new result $result");
+         if(result == '4' ){
+           setState(() {
+             _selectedIndex = 2;
+           });
+         }else{
            setState(() {
              _selectedIndex = 1;
            });
          }
-        }else {
-          Navigator.push(
+        }
+        else {
+         var result = await Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) =>
@@ -1119,6 +1125,11 @@ class _ManageServiceState extends State<ManageService> {
                         data: model.rides![i],
                         type : type.toString()
                       )));
+         if(result == '3'){
+           setState(() {
+             _selectedIndex = 1;
+           });
+         }
         }
       },
       child: Padding(

@@ -390,8 +390,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget cardWidget(GetVendorOrderModel model, int i) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
+      onTap: () async{
+       var result =  Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => OrderFoodDetails(
@@ -399,6 +399,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       type: type.toString(),
                       uid: uid.toString(),
                     )));
+       if(result != null){
+         getFoodOrders();
+       }
       },
       child: Padding(
         padding: const EdgeInsets.all(4.0),
@@ -771,13 +774,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   cardWidget1(VendorBookingModel model, int i) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
+      onTap: () async{
+       var result = await  Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => EventServiceDetails(
                       data: model.data![i],
                     )));
+       if(result != null){
+         setState(() {
+            getVendorBooking();
+         });
+       }
       },
       child: Padding(
         padding: const EdgeInsets.all(4.0),
@@ -2970,6 +2978,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   getFoodDeliveryBooking(String? id) async {
+    print("initiated");
     var headers = {
       'Cookie': 'ci_session=3ab2e0bfe4c2535c351d13c7ca58f780dce6aa8f'
     };
@@ -3018,21 +3027,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     PushNotificationService notificationService = new PushNotificationService(
       context: context,
       onResult: (result) async {
-
-        if (result != null) {
+        if (result != null || result != '') {
           var id = result;
           setState(() {
             bookingID = id;
           });
           print("boooking id is " + bookingID.toString());
-          // deliveryType = result.type;
-          await getFoodDeliveryBooking(id);
-          await getDeliverRideBooking(id);
+          await getFoodDeliveryBooking(bookingID);
+          await getFoodDeliveryBooking(bookingID);
+          await getDeliverRideBooking(bookingID);
+
           // Future.delayed(Duration(seconds: 1), () {
           //   Navigator.push(
           //       context, MaterialPageRoute(builder: (context) => HomeScreen()));
@@ -3057,7 +3065,10 @@ class _HomeScreenState extends State<HomeScreen> {
           //   else {
           //     // getDeliverRideBooking(result);
           //   }
+        }else{
+          await getVendorBooking();
         }
+
       },
       // type: type
     );
@@ -4062,360 +4073,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       })
                                   : type == "2" || type == "3" || type == "4"
                                       ? deliveryType == "Food"
-                                          ? foodDeliveryModel != null
-                                              ? InkWell(
-                                                  onTap: () {
-                                                    // model.rides![i].type
-                                                    // if(model.order![i].bookingsType == "ride_booking") {
-                                                    //   Navigator.push(context, MaterialPageRoute(builder: (context)=>  OfflinePage("")));
-                                                    // } else{
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                OrderFoodDelivery(
-                                                                  data:
-                                                                      foodDeliveryModel,
-                                                                )));
-                                                    // }
-                                                  },
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            4.0),
-                                                    child: Card(
-                                                      elevation: 5,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          15)),
-                                                      child: Container(
-                                                        // padding: EdgeInsets.all(12),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          border: Border.all(
-                                                              color: AppColor
-                                                                  .PrimaryDark),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(15),
-                                                        ),
-                                                        child: Column(
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      top: 12.0,
-                                                                      left: 15,
-                                                                      right:
-                                                                          15),
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Text(
-                                                                    "Name",
-                                                                    style: TextStyle(
-                                                                        color: AppColor()
-                                                                            .colorPrimary(),
-                                                                        fontWeight:
-                                                                            FontWeight.normal),
-                                                                  ),
-                                                                  Text(
-                                                                    "${foodDeliveryModel!.username}",
-                                                                    style: TextStyle(
-                                                                        color: AppColor()
-                                                                            .colorPrimary(),
-                                                                        fontWeight:
-                                                                            FontWeight.w600),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      top: 4.0,
-                                                                      bottom: 4,
-                                                                      left: 15,
-                                                                      right:
-                                                                          15),
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Text(
-                                                                    "Date & Time",
-                                                                    style: TextStyle(
-                                                                        color: AppColor()
-                                                                            .colorPrimary(),
-                                                                        fontWeight:
-                                                                            FontWeight.normal),
-                                                                  ),
-                                                                  Text(
-                                                                    "${foodDeliveryModel!.date}",
-                                                                    style: TextStyle(
-                                                                        color: AppColor()
-                                                                            .colorPrimary(),
-                                                                        fontWeight:
-                                                                            FontWeight.w600),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      top: 4.0,
-                                                                      bottom: 4,
-                                                                      left: 15,
-                                                                      right:
-                                                                          15),
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Text(
-                                                                    "Address",
-                                                                    style: TextStyle(
-                                                                        color: AppColor()
-                                                                            .colorPrimary(),
-                                                                        fontWeight:
-                                                                            FontWeight.normal),
-                                                                  ),
-                                                                  Container(
-                                                                    width: 180,
-                                                                    child: Text(
-                                                                      "${foodDeliveryModel!.deliveryAddress}",
-                                                                      maxLines:
-                                                                          2,
-                                                                      style: TextStyle(
-                                                                          color: AppColor()
-                                                                              .colorPrimary(),
-                                                                          fontWeight: FontWeight
-                                                                              .w600,
-                                                                          overflow:
-                                                                              TextOverflow.ellipsis),
-                                                                    ),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      top: 4.0,
-                                                                      bottom: 4,
-                                                                      left: 15,
-                                                                      right:
-                                                                          15),
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Text(
-                                                                    "Amount",
-                                                                    style: TextStyle(
-                                                                        color: AppColor()
-                                                                            .colorPrimary(),
-                                                                        fontWeight:
-                                                                            FontWeight.normal),
-                                                                  ),
-                                                                  Text(
-                                                                    "₹ ${foodDeliveryModel!.total}",
-                                                                    style: TextStyle(
-                                                                        color: AppColor()
-                                                                            .colorPrimary(),
-                                                                        fontWeight:
-                                                                            FontWeight.w600),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            // Padding(
-                                                            //   padding: const EdgeInsets.only(top: 8.0, bottom: 8),
-                                                            //   child: DottedLine(
-                                                            //     // direction: Axis.horizontal,
-                                                            //     lineLength: 320,
-                                                            //     lineThickness: 1.0,
-                                                            //     dashLength: 4.0,
-                                                            //     dashColor: AppColor().colorPrimary(),
-                                                            //     // dashGradient: [Colors.red, Colors.blue],
-                                                            //     dashRadius: 0.0,
-                                                            //     dashGapLength: 4.0,
-                                                            //     dashGapColor: Colors.transparent,
-                                                            //     // dashGapGradient: [Colors.red, Colors.blue],
-                                                            //     dashGapRadius: 0.0,
-                                                            //   ),
-                                                            // ),
-                                                            Container(
-                                                              height: 60,
-                                                              width:
-                                                                  MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width,
-                                                              decoration: BoxDecoration(
-                                                                  color: AppColor()
-                                                                      .colorPrimary(),
-                                                                  borderRadius: BorderRadius.only(
-                                                                      bottomLeft:
-                                                                          Radius.circular(
-                                                                              12),
-                                                                      bottomRight:
-                                                                          Radius.circular(
-                                                                              12))),
-                                                              child: Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  foodDeliveryModel!
-                                                                              .orderStatus ==
-                                                                          "3"
-                                                                      ? Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.only(top: 7.0),
-                                                                          child:
-                                                                              Center(
-                                                                            child: ElevatedButton(
-                                                                                onPressed: () {
-                                                                                  //updateFoodOrderStatus("${model.orders![i].orderId.toString()}","1" );
-                                                                                },
-                                                                                style: ElevatedButton.styleFrom(
-                                                                                    primary: Colors.green,
-                                                                                    fixedSize: Size(140, 35),
-                                                                                    shape: RoundedRectangleBorder(
-                                                                                      borderRadius: BorderRadius.circular(10),
-                                                                                    )),
-                                                                                child: Text(
-                                                                                  "Delivered",
-                                                                                  style: TextStyle(fontWeight: FontWeight.w400),
-                                                                                )),
-                                                                          ),
-                                                                        )
-                                                                      : foodDeliveryModel!.orderStatus ==
-                                                                              "5"
-                                                                          ? Padding(
-                                                                              padding: const EdgeInsets.only(top: 7.0),
-                                                                              child: Center(
-                                                                                child: ElevatedButton(
-                                                                                    onPressed: () {
-                                                                                      //updateFoodOrderStatus("${model.orders![i].orderId.toString()}","1" );
-                                                                                    },
-                                                                                    style: ElevatedButton.styleFrom(
-                                                                                        primary: Colors.green,
-                                                                                        fixedSize: Size(140, 35),
-                                                                                        shape: RoundedRectangleBorder(
-                                                                                          borderRadius: BorderRadius.circular(10),
-                                                                                        )),
-                                                                                    child: Text(
-                                                                                      "Accepted",
-                                                                                      style: TextStyle(fontWeight: FontWeight.w400),
-                                                                                    )),
-                                                                              ),
-                                                                            )
-                                                                          : foodDeliveryModel!.orderStatus == "6"
-                                                                              ? Padding(
-                                                                                  padding: const EdgeInsets.only(top: 7.0),
-                                                                                  child: ElevatedButton(
-                                                                                      onPressed: () {
-                                                                                        // updateFoodOrderStatus(
-                                                                                        //     "${foodDeliveryModel!.orderId}", "4");
-                                                                                        // if(type =="1"){
-                                                                                        //   getFoodOrders();
-                                                                                        // }else{
-                                                                                        //   getVendorBooking();
-                                                                                        // }
-                                                                                      },
-                                                                                      style: ElevatedButton.styleFrom(
-                                                                                          primary: Colors.red,
-                                                                                          fixedSize: Size(140, 35),
-                                                                                          shape: RoundedRectangleBorder(
-                                                                                            borderRadius: BorderRadius.circular(10),
-                                                                                          )),
-                                                                                      child: Text(
-                                                                                        "Declined",
-                                                                                        style: TextStyle(fontWeight: FontWeight.w400),
-                                                                                      )),
-                                                                                )
-                                                                              : Row(
-                                                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                                                  children: [
-                                                                                    ElevatedButton(
-                                                                                        onPressed: () {
-                                                                                          updateFoodDeliveryStatus("${foodDeliveryModel!.orderId}", "5");
-
-                                                                                          // if(type =="1"){
-                                                                                          //   getFoodOrders();
-                                                                                          // }else{
-                                                                                          //   getVendorBooking();
-                                                                                          // }
-                                                                                        },
-                                                                                        style: ElevatedButton.styleFrom(
-                                                                                            primary: Colors.green,
-                                                                                            fixedSize: Size(140, 35),
-                                                                                            shape: RoundedRectangleBorder(
-                                                                                              borderRadius: BorderRadius.circular(10),
-                                                                                            )),
-                                                                                        child: Text(
-                                                                                          "Accept",
-                                                                                          style: TextStyle(fontWeight: FontWeight.w400),
-                                                                                        )),
-                                                                                    const SizedBox(
-                                                                                      width: 15,
-                                                                                    ),
-                                                                                    ElevatedButton(
-                                                                                        onPressed: () {
-                                                                                          updateFoodDeliveryStatus("${foodDeliveryModel!.orderId}", "6");
-                                                                                          // Future.delayed(Duration(seconds: 1), (){
-                                                                                          //   getFoodDeliveryBooking("");
-                                                                                          // });
-                                                                                          // if(type =="1"){
-                                                                                          //   getFoodOrders();
-                                                                                          // }else{
-                                                                                          //   getVendorBooking();
-                                                                                          // }
-                                                                                        },
-                                                                                        style: ElevatedButton.styleFrom(
-                                                                                            primary: Colors.red,
-                                                                                            fixedSize: Size(140, 35),
-                                                                                            shape: RoundedRectangleBorder(
-                                                                                              borderRadius: BorderRadius.circular(10),
-                                                                                            )),
-                                                                                        child: Text(
-                                                                                          "Decline",
-                                                                                          style: TextStyle(fontWeight: FontWeight.w400),
-                                                                                        ))
-                                                                                  ],
-                                                                                ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )
-                                              : Container(
+                                          ? foodDeliveryModel == null
+                                              ? Container(
                                                   height: MediaQuery.of(context)
                                                           .size
                                                           .height /
@@ -4424,6 +4083,358 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       child: Text(
                                                           "No Bookings found!")),
                                                 )
+                          : InkWell(
+                            onTap: () {
+                              // model.rides![i].type
+                              // if(model.order![i].bookingsType == "ride_booking") {
+                              //   Navigator.push(context, MaterialPageRoute(builder: (context)=>  OfflinePage("")));
+                              // } else{
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          OrderFoodDelivery(
+                                            data:
+                                            foodDeliveryModel,
+                                          )));
+                              // }
+                            },
+                            child: Padding(
+                              padding:
+                              const EdgeInsets.all(
+                                  4.0),
+                              child: Card(
+                                elevation: 5,
+                                shape:
+                                RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius
+                                        .circular(
+                                        15)),
+                                child: Container(
+                                  // padding: EdgeInsets.all(12),
+                                  decoration:
+                                  BoxDecoration(
+                                    border: Border.all(
+                                        color: AppColor
+                                            .PrimaryDark),
+                                    borderRadius:
+                                    BorderRadius
+                                        .circular(15),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets
+                                            .only(
+                                            top: 12.0,
+                                            left: 15,
+                                            right:
+                                            15),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment
+                                              .spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Name",
+                                              style: TextStyle(
+                                                  color: AppColor()
+                                                      .colorPrimary(),
+                                                  fontWeight:
+                                                  FontWeight.normal),
+                                            ),
+                                            Text(
+                                              "${foodDeliveryModel!.username}",
+                                              style: TextStyle(
+                                                  color: AppColor()
+                                                      .colorPrimary(),
+                                                  fontWeight:
+                                                  FontWeight.w600),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets
+                                            .only(
+                                            top: 4.0,
+                                            bottom: 4,
+                                            left: 15,
+                                            right:
+                                            15),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment
+                                              .spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Date & Time",
+                                              style: TextStyle(
+                                                  color: AppColor()
+                                                      .colorPrimary(),
+                                                  fontWeight:
+                                                  FontWeight.normal),
+                                            ),
+                                            Text(
+                                              "${foodDeliveryModel!.date}",
+                                              style: TextStyle(
+                                                  color: AppColor()
+                                                      .colorPrimary(),
+                                                  fontWeight:
+                                                  FontWeight.w600),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets
+                                            .only(
+                                            top: 4.0,
+                                            bottom: 4,
+                                            left: 15,
+                                            right:
+                                            15),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment
+                                              .spaceBetween,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment
+                                              .start,
+                                          children: [
+                                            Text(
+                                              "Address",
+                                              style: TextStyle(
+                                                  color: AppColor()
+                                                      .colorPrimary(),
+                                                  fontWeight:
+                                                  FontWeight.normal),
+                                            ),
+                                            Container(
+                                              width: 180,
+                                              child: Text(
+                                                "${foodDeliveryModel!.deliveryAddress}",
+                                                maxLines:
+                                                2,
+                                                style: TextStyle(
+                                                    color: AppColor()
+                                                        .colorPrimary(),
+                                                    fontWeight: FontWeight
+                                                        .w600,
+                                                    overflow:
+                                                    TextOverflow.ellipsis),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets
+                                            .only(
+                                            top: 4.0,
+                                            bottom: 4,
+                                            left: 15,
+                                            right:
+                                            15),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment
+                                              .spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Amount",
+                                              style: TextStyle(
+                                                  color: AppColor()
+                                                      .colorPrimary(),
+                                                  fontWeight:
+                                                  FontWeight.normal),
+                                            ),
+                                            Text(
+                                              "₹ ${foodDeliveryModel!.total}",
+                                              style: TextStyle(
+                                                  color: AppColor()
+                                                      .colorPrimary(),
+                                                  fontWeight:
+                                                  FontWeight.w600),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      // Padding(
+                                      //   padding: const EdgeInsets.only(top: 8.0, bottom: 8),
+                                      //   child: DottedLine(
+                                      //     // direction: Axis.horizontal,
+                                      //     lineLength: 320,
+                                      //     lineThickness: 1.0,
+                                      //     dashLength: 4.0,
+                                      //     dashColor: AppColor().colorPrimary(),
+                                      //     // dashGradient: [Colors.red, Colors.blue],
+                                      //     dashRadius: 0.0,
+                                      //     dashGapLength: 4.0,
+                                      //     dashGapColor: Colors.transparent,
+                                      //     // dashGapGradient: [Colors.red, Colors.blue],
+                                      //     dashGapRadius: 0.0,
+                                      //   ),
+                                      // ),
+                                      Container(
+                                        height: 60,
+                                        width:
+                                        MediaQuery.of(
+                                            context)
+                                            .size
+                                            .width,
+                                        decoration: BoxDecoration(
+                                            color: AppColor()
+                                                .colorPrimary(),
+                                            borderRadius: BorderRadius.only(
+                                                bottomLeft:
+                                                Radius.circular(
+                                                    12),
+                                                bottomRight:
+                                                Radius.circular(
+                                                    12))),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment
+                                              .center,
+                                          children: [
+                                            foodDeliveryModel!
+                                                .orderStatus ==
+                                                "3"
+                                                ? Padding(
+                                              padding:
+                                              const EdgeInsets.only(top: 7.0),
+                                              child:
+                                              Center(
+                                                child: ElevatedButton(
+                                                    onPressed: () {
+                                                      //updateFoodOrderStatus("${model.orders![i].orderId.toString()}","1" );
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        primary: Colors.green,
+                                                        fixedSize: Size(140, 35),
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(10),
+                                                        )),
+                                                    child: Text(
+                                                      "Delivered",
+                                                      style: TextStyle(fontWeight: FontWeight.w400),
+                                                    )),
+                                              ),
+                                            )
+                                                : foodDeliveryModel!.orderStatus ==
+                                                "5"
+                                                ? Padding(
+                                              padding: const EdgeInsets.only(top: 7.0),
+                                              child: Center(
+                                                child: ElevatedButton(
+                                                    onPressed: () {
+                                                      //updateFoodOrderStatus("${model.orders![i].orderId.toString()}","1" );
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        primary: Colors.green,
+                                                        fixedSize: Size(140, 35),
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(10),
+                                                        )),
+                                                    child: Text(
+                                                      "Accepted",
+                                                      style: TextStyle(fontWeight: FontWeight.w400),
+                                                    )),
+                                              ),
+                                            )
+                                                : foodDeliveryModel!.orderStatus == "6"
+                                                ? Padding(
+                                              padding: const EdgeInsets.only(top: 7.0),
+                                              child: ElevatedButton(
+                                                  onPressed: () {
+                                                    // updateFoodOrderStatus(
+                                                    //     "${foodDeliveryModel!.orderId}", "4");
+                                                    // if(type =="1"){
+                                                    //   getFoodOrders();
+                                                    // }else{
+                                                    //   getVendorBooking();
+                                                    // }
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                      primary: Colors.red,
+                                                      fixedSize: Size(140, 35),
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                      )),
+                                                  child: Text(
+                                                    "Declined",
+                                                    style: TextStyle(fontWeight: FontWeight.w400),
+                                                  )),
+                                            )
+                                                : Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                ElevatedButton(
+                                                    onPressed: () {
+                                                      updateFoodDeliveryStatus("${foodDeliveryModel!.orderId}", "5");
+
+                                                      // if(type =="1"){
+                                                      //   getFoodOrders();
+                                                      // }else{
+                                                      //   getVendorBooking();
+                                                      // }
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        primary: Colors.green,
+                                                        fixedSize: Size(140, 35),
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(10),
+                                                        )),
+                                                    child: Text(
+                                                      "Accept",
+                                                      style: TextStyle(fontWeight: FontWeight.w400),
+                                                    )),
+                                                const SizedBox(
+                                                  width: 15,
+                                                ),
+                                                ElevatedButton(
+                                                    onPressed: () {
+                                                      updateFoodDeliveryStatus("${foodDeliveryModel!.orderId}", "6");
+                                                      // Future.delayed(Duration(seconds: 1), (){
+                                                      //   getFoodDeliveryBooking("");
+                                                      // });
+                                                      // if(type =="1"){
+                                                      //   getFoodOrders();
+                                                      // }else{
+                                                      //   getVendorBooking();
+                                                      // }
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        primary: Colors.red,
+                                                        fixedSize: Size(140, 35),
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(10),
+                                                        )),
+                                                    child: Text(
+                                                      "Decline",
+                                                      style: TextStyle(fontWeight: FontWeight.w400),
+                                                    ))
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
                                           : deliveryModel == null
                                               ? Container(
                                                   height: 100,
