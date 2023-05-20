@@ -60,16 +60,15 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
     }
   }
 
-  Future getRefferal() async {
+  Future getRefferal(String level) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString(TokenString.userid);
 
     var request = http.MultipartRequest(
-        'POST', Uri.parse('${Apipath.getWalletHistory}'));
+        'POST', Uri.parse('${Apipath.referralListApi}'));
     request.fields.addAll({
-      'user_id': '6',
-      //'${userId.toString()}',
-      'type': selectedLevel.toString()
+      'user_id': '${userId.toString()}',
+      'booking_type': level.toString()
       // '${userId.toString()}'
     });
     print("this is request !! ${request.fields}");
@@ -101,7 +100,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
   void initState() {
     super.initState();
     checkingLogin();
-    getRefferal();
+    getRefferal('level 1');
     // Future.delayed(Duration(milliseconds: 500), () {
     //   return getprofile();
     // });
@@ -260,7 +259,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                       _selectedIndex = 0;
                                        selectedLevel = "level 1";
                                     });
-                                    getRefferal();
+                                    getRefferal('level 1');
                                     // if(type =="1"){
                                     //   await  getFoodOrders();
                                     // }
@@ -308,7 +307,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                       _selectedIndex = 1;
                                       selectedLevel = "level 2";
                                     });
-                                    getRefferal();
+                                    getRefferal('level 2');
 
                                     // if(type =="1"){
                                     //   await  getFoodOrders();
@@ -351,12 +350,12 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                           ),
                         ),
                         FutureBuilder(
-                            future: getRefferal(),
+                            future: getRefferal(selectedLevel),
                             builder: (BuildContext context, AsyncSnapshot snapshot) {
                               RefferalListModel? model = snapshot.data;
                               // print("this is moddel ==========>>>>> ${model!.products![0].productPrice.toString()}");
                               if (snapshot.hasData) {
-                                return model!.responseCode == "1"
+                                return model!.status == true
                                     ? Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20)),
@@ -364,8 +363,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                   ListView.builder(
                                       shrinkWrap: true,
                                       physics: ScrollPhysics(),
-                                      itemCount: 8,
-                                      //model.products!.length,
+                                      itemCount: model.data!.length,
                                       itemBuilder: (context, index) {
                                         return Padding(
                                           padding: const EdgeInsets.only(

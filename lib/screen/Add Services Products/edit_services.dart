@@ -424,7 +424,7 @@ class _EditServicesState extends State<EditServices> {
       'name': '${artistNameController.text}',
       'mrp_price': '${priceController.text}',
       'address': '${descriptionController.text}',
-      'category_id': '${categoryValue.toString()}',
+      'category_id': categoryValue == null || categoryValue == ''? widget.productsModel!.categoryId.toString() :'${categoryValue.toString()}',
       'sub_cat_id': '${subCategoryValue.toString()}',
       'special_price': '${sellingPriceController.text}',
       'v_id': '$uid',
@@ -474,7 +474,8 @@ class _EditServicesState extends State<EditServices> {
     sellingPriceController.text =  widget.productsModel!.specialPrice.toString();
     descriptionController.text = widget.productsModel!.description.toString();
     prodImg = widget.productsModel!.profileImage.toString();
-     // categoryValue = widget.productsModel!.categoryId.toString();
+    // print("this is categopry is ${widget.productsModel!.categoryId.toString()}");
+      categoryValue = widget.productsModel!.categoryId.toString();
     descriptionController.text = widget.productsModel!.serDesc.toString();
      // subCategoryValue =  widget.productsModel!.subId.toString();
   }

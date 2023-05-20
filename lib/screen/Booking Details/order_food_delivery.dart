@@ -278,7 +278,7 @@ class _OrderFoodDeliveryState extends State<OrderFoodDelivery> {
                                     barrierDismissible: false,
                                     builder: (BuildContext context) {
                                       return Padding(
-                                        padding: const EdgeInsets.only(top: 170.0, bottom: 100),
+                                        padding: const EdgeInsets.only(top: 100.0, bottom: 100),
                                         child: Dialog(
                                           child: Padding(
                                             padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8, bottom: 8),
@@ -927,7 +927,7 @@ class _OrderFoodDeliveryState extends State<OrderFoodDelivery> {
       print("final result here ${jsonResponse.message}");
       if (jsonResponse.responseCode == "1") {
         Fluttertoast.showToast(msg: "${jsonResponse.message}");
-        Navigator.pop(context);
+        Navigator.pop(context, true);
         // isStatus = true;
         // updateRequestFunction('${id}', '${value}');
       } else {

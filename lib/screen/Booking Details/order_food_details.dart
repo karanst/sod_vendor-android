@@ -340,6 +340,19 @@ class _OrderFoodDetailsState extends State<OrderFoodDetails> {
                           color: Colors.white
                       ),)),
                   ) :
+                  widget.data.orderStatus == "2" ?
+                  Container(
+                    width: 80,
+                    height: 30,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.green
+                    ),
+                    child: Center(child: Text("Picked Up",
+                      style: TextStyle(
+                          color: Colors.white
+                      ),)),
+                  ) :
                   widget.data.orderStatus == "4" ?
                   Container(
                     width: 80,

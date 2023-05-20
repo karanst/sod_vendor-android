@@ -1293,8 +1293,10 @@ class _RideInfoPageState extends State<RideInfoPage> {
                                                     Icon(Icons.location_on_outlined, color: AppColor().colorPrimary(),)
                                                   ],
                                                 )),
+                                            widget.model.km == null || widget.model.km == '' ?
+                                            SizedBox.shrink() :
                                             Text(
-                                              '${widget.model.km} km',
+                                              '${double.parse(widget.model.km.toString()).toStringAsFixed(2)} km',
                                               style: TextStyle(
                                                   color: AppColor().colorBg1(),
                                                   fontSize: 18),

@@ -90,12 +90,11 @@ class _HomeScreenState extends State<HomeScreen> {
     request.fields
         .addAll({'roll': '${type.toString()}', 'user_id': '${uid.toString()}'});
     request.headers.addAll(headers);
-
+    print("this is booking request ${Apipath.getServiceBookingUrl} and ${request.fields}");
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       var finalResponse = await response.stream.bytesToString();
-      final jsonResponse =
-          VendorBookingModel.fromJson(json.decode(finalResponse));
+      final jsonResponse = VendorBookingModel.fromJson(json.decode(finalResponse));
       print(
           "oooooooooo ${jsonResponse} and ${jsonResponse.responseCode} and ${jsonResponse.data}");
       return VendorBookingModel.fromJson(json.decode(finalResponse));
@@ -229,6 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
       var data = UpdateOrder.fromJson(json.decode(str));
       // if(data.status == "0"){}
       await getFoodDeliveryBooking(foodDeliveryModel!.orderId);
+      _refresh();
       // getFoodDeliveryBooking("");
       Navigator.push(
           context,
@@ -1089,315 +1089,315 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  cardWidgetDelivery(ParcelModel model) {
-    return InkWell(
-      onTap: () {
-        // model.rides![i].type
-        // if(model.order![i].bookingsType == "ride_booking") {
-        //   Navigator.push(context, MaterialPageRoute(builder: (context)=>  OfflinePage("")));
-        // } else{
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DeliveryDetails(
-                      data: model,
-                    )));
-        // }
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Card(
-          elevation: 5,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          child: Container(
-            // padding: EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColor.PrimaryDark),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 12.0, left: 15, right: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Name",
-                        style: TextStyle(
-                            color: AppColor().colorPrimary(),
-                            fontWeight: FontWeight.normal),
-                      ),
-                      Text(
-                        "${model.username}",
-                        style: TextStyle(
-                            color: AppColor().colorPrimary(),
-                            fontWeight: FontWeight.w600),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 4.0, bottom: 4, left: 15, right: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Date & Time",
-                        style: TextStyle(
-                            color: AppColor().colorPrimary(),
-                            fontWeight: FontWeight.normal),
-                      ),
-                      Text(
-                        "${model.dateAdded}",
-                        style: TextStyle(
-                            color: AppColor().colorPrimary(),
-                            fontWeight: FontWeight.w600),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 4.0, bottom: 4, left: 15, right: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Pick Up Location",
-                        style: TextStyle(
-                            color: AppColor().colorPrimary(),
-                            fontWeight: FontWeight.normal),
-                      ),
-                      Container(
-                        width: 180,
-                        child: Text(
-                          "${model.pickupAddress}",
-                          maxLines: 2,
-                          style: TextStyle(
-                              color: AppColor().colorPrimary(),
-                              fontWeight: FontWeight.w600,
-                              overflow: TextOverflow.ellipsis),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 4.0, bottom: 4, left: 15, right: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Drop Location",
-                        style: TextStyle(
-                            color: AppColor().colorPrimary(),
-                            fontWeight: FontWeight.normal),
-                      ),
-                      Container(
-                        width: 180,
-                        child: Text(
-                          "${model.dropAddress}",
-                          maxLines: 2,
-                          style: TextStyle(
-                              color: AppColor().colorPrimary(),
-                              fontWeight: FontWeight.w600,
-                              overflow: TextOverflow.ellipsis),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 4.0, bottom: 4, left: 15, right: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Amount",
-                        style: TextStyle(
-                            color: AppColor().colorPrimary(),
-                            fontWeight: FontWeight.normal),
-                      ),
-                      Text(
-                        "₹ ${model.amount}",
-                        style: TextStyle(
-                            color: AppColor().colorPrimary(),
-                            fontWeight: FontWeight.w600),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 8.0, bottom: 8),
-                //   child: DottedLine(
-                //     // direction: Axis.horizontal,
-                //     lineLength: 320,
-                //     lineThickness: 1.0,
-                //     dashLength: 4.0,
-                //     dashColor: AppColor().colorPrimary(),
-                //     // dashGradient: [Colors.red, Colors.blue],
-                //     dashRadius: 0.0,
-                //     dashGapLength: 4.0,
-                //     dashGapColor: Colors.transparent,
-                //     // dashGapGradient: [Colors.red, Colors.blue],
-                //     dashGapRadius: 0.0,
-                //   ),
-                // ),
-                Container(
-                  height: 60,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      color: AppColor().colorPrimary(),
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(12),
-                          bottomRight: Radius.circular(12))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      model.status == "1"
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 7.0),
-                              child: Center(
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      //updateFoodOrderStatus("${model.orders![i].orderId.toString()}","1" );
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                        primary: Colors.green,
-                                        fixedSize: Size(140, 35),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        )),
-                                    child: Text(
-                                      "Accepted",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w400),
-                                    )),
-                              ),
-                            )
-                          : model.status == "4"
-                              ? Padding(
-                                  padding: const EdgeInsets.only(top: 7.0),
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        updateFoodOrderStatus(
-                                            "${model.status}", "4");
-                                        if (type == "1") {
-                                          getFoodOrders();
-                                        } else {
-                                          getVendorBooking();
-                                        }
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          primary: Colors.red,
-                                          fixedSize: Size(140, 35),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          )),
-                                      child: Text(
-                                        "Declined",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400),
-                                      )),
-                                )
-                              : Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          updateFoodOrderStatus(
-                                              "${model.id}", "1");
-                                          Future.delayed(Duration(seconds: 4),
-                                              () {
-                                            if (type == "3" || type == "4") {
-                                              // getDeliverRideBooking();
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          DeliveryDetails(
-                                                              data: model)));
-                                            }
-                                            if (type == "1") {
-                                              getFoodOrders();
-                                            } else {
-                                              getVendorBooking();
-                                            }
-                                          });
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                            primary: Colors.green,
-                                            fixedSize: Size(140, 35),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            )),
-                                        child: Text(
-                                          "Accept",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400),
-                                        )),
-                                    const SizedBox(
-                                      width: 15,
-                                    ),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          updateFoodOrderStatus(
-                                              "${model.id}", "4");
-                                          Future.delayed(Duration(seconds: 1),
-                                              () {
-                                            if (type == "3" || type == "4") {
-                                              // getDeliverRideBooking();
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          DeliveryDetails(
-                                                              data: model)));
-                                            }
-                                            if (type == "1") {
-                                              getFoodOrders();
-                                            } else {
-                                              getVendorBooking();
-                                            }
-                                          });
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                            primary: Colors.red,
-                                            fixedSize: Size(140, 35),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            )),
-                                        child: Text(
-                                          "Decline",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400),
-                                        ))
-                                  ],
-                                ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  // cardWidgetDelivery(ParcelModel model) {
+  //   return InkWell(
+  //     onTap: () {
+  //       // model.rides![i].type
+  //       // if(model.order![i].bookingsType == "ride_booking") {
+  //       //   Navigator.push(context, MaterialPageRoute(builder: (context)=>  OfflinePage("")));
+  //       // } else{
+  //       Navigator.push(
+  //           context,
+  //           MaterialPageRoute(
+  //               builder: (context) => DeliveryDetails(
+  //                     data: model,
+  //                   )));
+  //       // }
+  //     },
+  //     child: Padding(
+  //       padding: const EdgeInsets.all(4.0),
+  //       child: Card(
+  //         elevation: 5,
+  //         shape:
+  //             RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+  //         child: Container(
+  //           // padding: EdgeInsets.all(12),
+  //           decoration: BoxDecoration(
+  //             border: Border.all(color: AppColor.PrimaryDark),
+  //             borderRadius: BorderRadius.circular(15),
+  //           ),
+  //           child: Column(
+  //             children: [
+  //               Padding(
+  //                 padding:
+  //                     const EdgeInsets.only(top: 12.0, left: 15, right: 15),
+  //                 child: Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     Text(
+  //                       "Name",
+  //                       style: TextStyle(
+  //                           color: AppColor().colorPrimary(),
+  //                           fontWeight: FontWeight.normal),
+  //                     ),
+  //                     Text(
+  //                       "${model.username}",
+  //                       style: TextStyle(
+  //                           color: AppColor().colorPrimary(),
+  //                           fontWeight: FontWeight.w600),
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //               Padding(
+  //                 padding: const EdgeInsets.only(
+  //                     top: 4.0, bottom: 4, left: 15, right: 15),
+  //                 child: Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     Text(
+  //                       "Date & Time",
+  //                       style: TextStyle(
+  //                           color: AppColor().colorPrimary(),
+  //                           fontWeight: FontWeight.normal),
+  //                     ),
+  //                     Text(
+  //                       "${model.dateAdded}",
+  //                       style: TextStyle(
+  //                           color: AppColor().colorPrimary(),
+  //                           fontWeight: FontWeight.w600),
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //               Padding(
+  //                 padding: const EdgeInsets.only(
+  //                     top: 4.0, bottom: 4, left: 15, right: 15),
+  //                 child: Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     Text(
+  //                       "Pick Up Location",
+  //                       style: TextStyle(
+  //                           color: AppColor().colorPrimary(),
+  //                           fontWeight: FontWeight.normal),
+  //                     ),
+  //                     Container(
+  //                       width: 180,
+  //                       child: Text(
+  //                         "${model.pickupAddress}",
+  //                         maxLines: 2,
+  //                         style: TextStyle(
+  //                             color: AppColor().colorPrimary(),
+  //                             fontWeight: FontWeight.w600,
+  //                             overflow: TextOverflow.ellipsis),
+  //                       ),
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //               Padding(
+  //                 padding: const EdgeInsets.only(
+  //                     top: 4.0, bottom: 4, left: 15, right: 15),
+  //                 child: Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     Text(
+  //                       "Drop Location",
+  //                       style: TextStyle(
+  //                           color: AppColor().colorPrimary(),
+  //                           fontWeight: FontWeight.normal),
+  //                     ),
+  //                     Container(
+  //                       width: 180,
+  //                       child: Text(
+  //                         "${model.dropAddress}",
+  //                         maxLines: 2,
+  //                         style: TextStyle(
+  //                             color: AppColor().colorPrimary(),
+  //                             fontWeight: FontWeight.w600,
+  //                             overflow: TextOverflow.ellipsis),
+  //                       ),
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //               Padding(
+  //                 padding: const EdgeInsets.only(
+  //                     top: 4.0, bottom: 4, left: 15, right: 15),
+  //                 child: Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     Text(
+  //                       "Amount",
+  //                       style: TextStyle(
+  //                           color: AppColor().colorPrimary(),
+  //                           fontWeight: FontWeight.normal),
+  //                     ),
+  //                     Text(
+  //                       "₹ ${model.amount}",
+  //                       style: TextStyle(
+  //                           color: AppColor().colorPrimary(),
+  //                           fontWeight: FontWeight.w600),
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //               SizedBox(
+  //                 height: 10,
+  //               ),
+  //               // Padding(
+  //               //   padding: const EdgeInsets.only(top: 8.0, bottom: 8),
+  //               //   child: DottedLine(
+  //               //     // direction: Axis.horizontal,
+  //               //     lineLength: 320,
+  //               //     lineThickness: 1.0,
+  //               //     dashLength: 4.0,
+  //               //     dashColor: AppColor().colorPrimary(),
+  //               //     // dashGradient: [Colors.red, Colors.blue],
+  //               //     dashRadius: 0.0,
+  //               //     dashGapLength: 4.0,
+  //               //     dashGapColor: Colors.transparent,
+  //               //     // dashGapGradient: [Colors.red, Colors.blue],
+  //               //     dashGapRadius: 0.0,
+  //               //   ),
+  //               // ),
+  //               Container(
+  //                 height: 60,
+  //                 width: MediaQuery.of(context).size.width,
+  //                 decoration: BoxDecoration(
+  //                     color: AppColor().colorPrimary(),
+  //                     borderRadius: BorderRadius.only(
+  //                         bottomLeft: Radius.circular(12),
+  //                         bottomRight: Radius.circular(12))),
+  //                 child: Column(
+  //                   crossAxisAlignment: CrossAxisAlignment.center,
+  //                   children: [
+  //                     model.status == "1"
+  //                         ? Padding(
+  //                             padding: const EdgeInsets.only(top: 7.0),
+  //                             child: Center(
+  //                               child: ElevatedButton(
+  //                                   onPressed: () {
+  //                                     //updateFoodOrderStatus("${model.orders![i].orderId.toString()}","1" );
+  //                                   },
+  //                                   style: ElevatedButton.styleFrom(
+  //                                       primary: Colors.green,
+  //                                       fixedSize: Size(140, 35),
+  //                                       shape: RoundedRectangleBorder(
+  //                                         borderRadius:
+  //                                             BorderRadius.circular(10),
+  //                                       )),
+  //                                   child: Text(
+  //                                     "Accepted",
+  //                                     style: TextStyle(
+  //                                         fontWeight: FontWeight.w400),
+  //                                   )),
+  //                             ),
+  //                           )
+  //                         : model.status == "4"
+  //                             ? Padding(
+  //                                 padding: const EdgeInsets.only(top: 7.0),
+  //                                 child: ElevatedButton(
+  //                                     onPressed: () {
+  //                                       updateFoodOrderStatus(
+  //                                           "${model.status}", "4");
+  //                                       if (type == "1") {
+  //                                         getFoodOrders();
+  //                                       } else {
+  //                                         getVendorBooking();
+  //                                       }
+  //                                     },
+  //                                     style: ElevatedButton.styleFrom(
+  //                                         primary: Colors.red,
+  //                                         fixedSize: Size(140, 35),
+  //                                         shape: RoundedRectangleBorder(
+  //                                           borderRadius:
+  //                                               BorderRadius.circular(10),
+  //                                         )),
+  //                                     child: Text(
+  //                                       "Declined",
+  //                                       style: TextStyle(
+  //                                           fontWeight: FontWeight.w400),
+  //                                     )),
+  //                               )
+  //                             : Row(
+  //                                 mainAxisAlignment: MainAxisAlignment.center,
+  //                                 crossAxisAlignment: CrossAxisAlignment.center,
+  //                                 children: [
+  //                                   ElevatedButton(
+  //                                       onPressed: () {
+  //                                         updateFoodOrderStatus(
+  //                                             "${model.id}", "1");
+  //                                         Future.delayed(Duration(seconds: 4),
+  //                                             () {
+  //                                           if (type == "3" || type == "4") {
+  //                                             // getDeliverRideBooking();
+  //                                             Navigator.push(
+  //                                                 context,
+  //                                                 MaterialPageRoute(
+  //                                                     builder: (context) =>
+  //                                                         DeliveryDetails(
+  //                                                             data: model)));
+  //                                           }
+  //                                           if (type == "1") {
+  //                                             getFoodOrders();
+  //                                           } else {
+  //                                             getVendorBooking();
+  //                                           }
+  //                                         });
+  //                                       },
+  //                                       style: ElevatedButton.styleFrom(
+  //                                           primary: Colors.green,
+  //                                           fixedSize: Size(140, 35),
+  //                                           shape: RoundedRectangleBorder(
+  //                                             borderRadius:
+  //                                                 BorderRadius.circular(10),
+  //                                           )),
+  //                                       child: Text(
+  //                                         "Accept",
+  //                                         style: TextStyle(
+  //                                             fontWeight: FontWeight.w400),
+  //                                       )),
+  //                                   const SizedBox(
+  //                                     width: 15,
+  //                                   ),
+  //                                   ElevatedButton(
+  //                                       onPressed: () {
+  //                                         updateFoodOrderStatus(
+  //                                             "${model.id}", "4");
+  //                                         Future.delayed(Duration(seconds: 1),
+  //                                             () {
+  //                                           if (type == "3" || type == "4") {
+  //                                             // getDeliverRideBooking();
+  //                                             Navigator.push(
+  //                                                 context,
+  //                                                 MaterialPageRoute(
+  //                                                     builder: (context) =>
+  //                                                         DeliveryDetails(
+  //                                                             data: model)));
+  //                                           }
+  //                                           if (type == "1") {
+  //                                             getFoodOrders();
+  //                                           } else {
+  //                                             getVendorBooking();
+  //                                           }
+  //                                         });
+  //                                       },
+  //                                       style: ElevatedButton.styleFrom(
+  //                                           primary: Colors.red,
+  //                                           fixedSize: Size(140, 35),
+  //                                           shape: RoundedRectangleBorder(
+  //                                             borderRadius:
+  //                                                 BorderRadius.circular(10),
+  //                                           )),
+  //                                       child: Text(
+  //                                         "Decline",
+  //                                         style: TextStyle(
+  //                                             fontWeight: FontWeight.w400),
+  //                                       ))
+  //                                 ],
+  //                               ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   // deliveryWidget(){
   //  if( deliveryType == "Food") {
@@ -2995,7 +2995,11 @@ class _HomeScreenState extends State<HomeScreen> {
     if (response.statusCode == 200) {
       final str = await response.stream.bytesToString();
       var result = FoodDeliveryModel.fromJson(json.decode(str));
-      foodDeliveryModel = result.orders;
+      setState(() {
+        foodDeliveryModel = result.orders;
+        deliveryType = "Food";
+      });
+      print("this is food delivery response ${foodDeliveryModel!.username}");
     } else {
       return null;
     }
@@ -3028,43 +3032,25 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    callApi();
     PushNotificationService notificationService = new PushNotificationService(
       context: context,
       onResult: (result) async {
         if (result != null || result != '') {
-          var id = result;
+          var id = result['bookingId'];
+          // var bookingType = result['type'];
           setState(() {
             bookingID = id;
           });
-          print("boooking id is " + bookingID.toString());
-          await getFoodDeliveryBooking(bookingID);
-          await getFoodDeliveryBooking(bookingID);
           await getDeliverRideBooking(bookingID);
-
-          // Future.delayed(Duration(seconds: 1), () {
-          //   Navigator.push(
-          //       context, MaterialPageRoute(builder: (context) => HomeScreen()));
-          // });
-          // if(type =="Food"){
-          //   setState((){
-
-          // Future.delayed(Duration(
-          //   seconds: 2
-          // ),(){
-          //   _refresh();
-          // });
-          // });
-          // }
-          // else {
-          //   // getDeliverRideBooking(id, type);
-          // }
-          // if(result != null){
-          //   if (result == "yes") {
-          //     // registerToken();
-          //   }
-          //   else {
-          //     // getDeliverRideBooking(result);
-          //   }
+         if(type == "2"){
+          if(roles == "Food"){
+            await getFoodDeliveryBooking(bookingID);
+          }else{
+            await getDeliverRideBooking(bookingID);
+          }
+         }
+          print("boooking id is " + bookingID.toString());
         }else{
           await getVendorBooking();
         }
@@ -3074,7 +3060,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
     notificationService.initialise();
     _getSettings();
-    callApi();
+
     getUserCurrentLocation();
     _getAddressFromLatLng();
     _buyVendorProduct();
@@ -3644,11 +3630,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         deliveryType = result.type;
                       });
                       print(
-                          "this is delivery type ---->> =====>>> ${bookingID.toString()}");
+                          "this is delivery type ---->> =====>>> ${bookingID.toString()} ${deliveryType}");
                       // if (type == "1") {
                       //   await getFoodDeliveryBooking(bookingID);
                       // } else if (type == "2") {
-                      await getFoodDeliveryBooking(bookingID);
+                      //  await getFoodDeliveryBooking(bookingID);
 
                       await getDeliverRideBooking(bookingID);
                       // }
@@ -4056,7 +4042,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           : "No Orders Found!!")),
                                                 );
                                         } else if (snapshot.hasError) {
-                                          return Icon(Icons.error_outline);
+                                          return Container(
+                                            height: 100,
+                                            child: Center(
+                                                child: Text( "No Jobs Found!!")),
+                                          );
                                         } else {
                                           return Container(
                                               height: MediaQuery.of(context)
@@ -4084,12 +4074,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           "No Bookings found!")),
                                                 )
                           : InkWell(
-                            onTap: () {
+                            onTap: () async {
                               // model.rides![i].type
                               // if(model.order![i].bookingsType == "ride_booking") {
                               //   Navigator.push(context, MaterialPageRoute(builder: (context)=>  OfflinePage("")));
                               // } else{
-                              Navigator.push(
+                            var result = await  Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
@@ -4097,6 +4087,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             data:
                                             foodDeliveryModel,
                                           )));
+                            if(result != null){
+                              getFoodDeliveryBooking(foodDeliveryModel!.orderId);
+                            }
                               // }
                             },
                             child: Padding(
@@ -4445,20 +4438,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           : "No Orders Found!!")),
                                                 )
                                               : InkWell(
-                                                  onTap: () {
+                                                  onTap: () async {
                                                     Future.delayed(
                                                         Duration(seconds: 4),
-                                                        () {
+                                                        () async{
                                                       if (type == "3" ||
                                                           type == "4") {
                                                         // getDeliverRideBooking();
-                                                        Navigator.push(
+                                                       var result = await Navigator.push(
                                                             context,
                                                             MaterialPageRoute(
                                                                 builder: (context) =>
                                                                     DeliveryDetails(
                                                                         data:
                                                                             deliveryModel!)));
+                                                       if(result != null){
+                                                         setState(() {
+                                                           getDeliverRideBooking(bookingID);
+                                                         });
+                                                       }
                                                       }
                                                     });
                                                     // Navigator.push(context,
@@ -4774,11 +4772,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                                 ElevatedButton(
                                                                                     onPressed: () {
                                                                                       updateFoodOrderStatus("$bookingID", "1");
-                                                                                      Future.delayed(Duration(seconds: 4), () {
+                                                                                      Future.delayed(Duration(seconds: 2), () async{
                                                                                         if (type == "3" || type == "4") {
                                                                                           // getDeliverRideBooking();
-                                                                                          Navigator.push(context, MaterialPageRoute(builder: (context) => DeliveryDetails(data: deliveryModel!)));
+                                                                                        var result = await  Navigator.push(context, MaterialPageRoute(builder: (context) => DeliveryDetails(data: deliveryModel!)));
+                                                                                        if(result != null){
+                                                                                          setState(() {
+                                                                                            getDeliverRideBooking(bookingID);
+                                                                                          });
                                                                                         }
+                                                                                        }
+
                                                                                         if (type == "1") {
                                                                                           getFoodOrders();
                                                                                         } else {
@@ -4802,10 +4806,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                                 ElevatedButton(
                                                                                     onPressed: () {
                                                                                       updateFoodOrderStatus("$bookingID", "4");
-                                                                                      Future.delayed(Duration(seconds: 1), () {
+                                                                                      Future.delayed(Duration(seconds: 1), () async {
                                                                                         if (type == "3" || type == "4") {
                                                                                           // getDeliverRideBooking();
-                                                                                          Navigator.push(context, MaterialPageRoute(builder: (context) => DeliveryDetails(data: deliveryModel!)));
+                                                                                          var result = await Navigator.push(context, MaterialPageRoute(builder: (context) => DeliveryDetails(data: deliveryModel!)));
+                                                                                          if(result != null){
+                                                                                            setState(() {
+                                                                                               getDeliverRideBooking(bookingID);
+                                                                                            });
+                                                                                          }
                                                                                         }
                                                                                         if (type == "1") {
                                                                                           getFoodOrders();

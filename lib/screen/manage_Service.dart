@@ -1254,7 +1254,7 @@ class _ManageServiceState extends State<ManageService> {
                             fontWeight: FontWeight.normal),
                       ),
                       Text(
-                        "₹ ${model.rides![i].amount}",
+                        "₹ ${double.parse(model.rides![i].amount.toString()).toStringAsFixed(2)}",
                         style: TextStyle(
                             color: AppColor().colorPrimary(),
                             fontWeight: FontWeight.w600),

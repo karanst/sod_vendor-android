@@ -109,6 +109,7 @@ class Apipath {
   static const String getSettings = BASH_URL + 'general_setting';
 
   static const String getWalletHistory = BASH_URL + 'withdrawl_list';
+  static const String referralListApi = BASH_URL + 'referral_list';
   static const String withdrawRequestUrl = BASH_URL + 'withdrawl_request';
 
   static const String forgetPassUrl = BASH_URL + 'forgot_pass_vendor';

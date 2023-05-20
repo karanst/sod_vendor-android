@@ -118,6 +118,107 @@ class _DeliveryDetailsState extends State<DeliveryDetails> {
       ),
     );
   }
+  Widget newTab1() {
+    return Card(
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+            border: Border.all(color: AppColor.PrimaryDark),
+            borderRadius: BorderRadius.circular(15)),
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Row(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    height: 10,
+                    width: 10,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.red
+                    ),
+                  ),
+                  Container(
+                    height: 40,
+                    child: VerticalDivider(
+
+                      color: AppColor.PrimaryDark,
+                    ),
+                  ),
+                  Container(
+                    height: 10,
+                    width: 10,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.green
+                    ),
+                  )
+
+                ],
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              Column(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Pickup Floor',
+                      style: TextStyle(
+                        color: AppColor().colorPrimary(),
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Container(
+                    width: MediaQuery.of(context).size.width/2.5,
+                    child: Text(
+                        "${widget.data.pickupFloor}",
+                        maxLines: 2,
+                        style: TextStyle(
+                          color: AppColor().colorPrimary(),
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.normal,
+                        )),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text('Drop Floor',
+                      style: TextStyle(
+                        color: AppColor().colorPrimary(),
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Container(
+                    width: MediaQuery.of(context).size.width/2.5,
+                    child: Text(
+                        "${widget.data.dropFloor}",
+                        maxLines: 2,
+                        style: TextStyle(
+                          color: AppColor().colorPrimary(),
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.normal,
+                        )),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Text("Number of units",
+                      style: TextStyle(
+                        color: AppColor().colorPrimary(),
+                        fontWeight: FontWeight.bold,
+                      )),
+                  // Text("${widget.data.toString()}")
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
   updateDeliveryStatus(String id, String status) async {
     String stats;
     if(status == "Delivered"){
@@ -155,6 +256,7 @@ class _DeliveryDetailsState extends State<DeliveryDetails> {
       var finalResult = await response.stream.bytesToString();
       final jsonResponse = PostStatusModel.fromJson(json.decode(finalResult));
       print("final result here ${jsonResponse.message}");
+      Navigator.pop(context, false);
       if (jsonResponse.responseCode == "1") {
         Fluttertoast.showToast(msg: "${jsonResponse.message}");
         // isStatus = true;
@@ -196,11 +298,8 @@ class _DeliveryDetailsState extends State<DeliveryDetails> {
                         color: AppColor().colorPrimary(),
                         fontWeight: FontWeight.normal,
                       )),
-                  widget.data.status == "0" ?
-                  SizedBox.shrink()
-                      :widget.data.status == "1" ?
-                  SizedBox.shrink()
-                  : widget.data.status == "3" ?
+
+                  widget.data.status == "3" ?
                   Container(
                     width: 80,
                     height: 30,
@@ -905,6 +1004,7 @@ class _DeliveryDetailsState extends State<DeliveryDetails> {
                               height: 30,
                             ),
                             newsev(),
+                            newTab1(),
                             Padding(
                               padding: const EdgeInsets.only(top: 10.0, right: 15, left: 10, bottom: 7),
                               child: Text(

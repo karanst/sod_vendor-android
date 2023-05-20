@@ -427,17 +427,18 @@ class PushNotificationService {
       // var image = message.data['image'] ?? '';
       // print(image);
       notiType = message.data['type'] ?? '';
+      // var bookingType = message.data['booking_type'];
       print("this is type -------->>>>$notiType");
       // id = message.data['type_id'] ?? '';
       if(notiType == "3" || notiType == "2" || notiType == "4"){
         print('this is booking ID =====> ${test['Booking_id']}');
         String bookingId = test['Booking_id'];
-        // var notiData =  {
-        //   'bookingId': bookingId,
-        //   'type' : notiType
-        // };
+        var notiData =  {
+          'bookingId': bookingId,
+          'type' : notiType
+        };
         generateSimpleNotication(title, body, notiType, bookingId);
-        onResult!(bookingId);
+        onResult!(notiData);
       }else{
         onResult!('');
         generateSimpleNotication(title, body, notiType, '');
