@@ -521,7 +521,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                                       ],
                                                     ),
                                                   ),
-                                                  Text("₹ 50",
+                                                  Text("₹ ${model.data![index].amount.toString()}",
                                                   style: TextStyle(
                                                     fontSize: 26
                                                   ),)

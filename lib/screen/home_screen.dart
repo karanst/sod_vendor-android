@@ -2843,6 +2843,7 @@ class _HomeScreenState extends State<HomeScreen> {
     uid = prefs.getString(TokenString.userid);
     type = prefs.getString(TokenString.type);
     roles = prefs.getString(TokenString.roles);
+    print("this is type and role $roles");
     userName = prefs.getString(TokenString.userName);
     userPic = prefs.getString(TokenString.userPic);
     // wallet = prefs.getString(TokenString.walletBalance);
@@ -3038,19 +3039,22 @@ class _HomeScreenState extends State<HomeScreen> {
       onResult: (result) async {
         if (result != null || result != '') {
           var id = result['bookingId'];
+          var deliveryType = result['type'];
           // var bookingType = result['type'];
           setState(() {
             bookingID = id;
           });
-          await getDeliverRideBooking(bookingID);
-         if(type == "2"){
-          if(roles == "Food"){
-            await getFoodDeliveryBooking(bookingID);
-          }else{
-            await getDeliverRideBooking(bookingID);
-          }
-         }
           print("boooking id is " + bookingID.toString());
+         if(type == "2"){
+           if(deliveryType != null) {
+             if (deliveryType == "food") {
+               await getFoodDeliveryBooking(bookingID);
+             } else {
+               await getDeliverRideBooking(bookingID);
+             }
+           }
+         }
+
         }else{
           await getVendorBooking();
         }
@@ -4666,7 +4670,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                             FontWeight.normal),
                                                                   ),
                                                                   Text(
-                                                                    "₹ ${deliveryModel!.amount}",
+                                                                    "₹ ${double.parse(deliveryModel!.amount.toString()).toStringAsFixed(2)}",
                                                                     style: TextStyle(
                                                                         color: AppColor()
                                                                             .colorPrimary(),

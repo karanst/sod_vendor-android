@@ -439,7 +439,16 @@ class PushNotificationService {
         };
         generateSimpleNotication(title, body, notiType, bookingId);
         onResult!(notiData);
-      }else{
+      } else if(notiType == "food"){
+        String bookingId = test['Booking_id'];
+        var notiData =  {
+          'bookingId': bookingId,
+          'type' : notiType
+        };
+        generateSimpleNotication(title, body, notiType, bookingId);
+        onResult!(notiData);
+      }
+      else{
         onResult!('');
         generateSimpleNotication(title, body, notiType, '');
       }

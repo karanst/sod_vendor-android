@@ -1414,7 +1414,7 @@ class _RideInfoPageState extends State<RideInfoPage> {
                                       RowItem(
                                           "Ride Fare",
                                           // getTranslated(context,"RIDE_FARE"),
-                                          '\u{20B9} ${widget.model.amount}',
+                                          '\u{20B9} ${double.parse(widget.model.amount.toString()).toStringAsFixed(2)}',
                                           Icons.account_balance_wallet),
                                       // Spacer(),
                                       RowItem(
@@ -1443,8 +1443,8 @@ class _RideInfoPageState extends State<RideInfoPage> {
                                                     textColor: Colors.black),
                                                 text(
                                                     "₹" +
-                                                        widget.model.amount
-                                                            .toString(),
+                                                        double.parse(widget.model.amount.toString())
+                                                            .toStringAsFixed(2),
                                                     fontSize: 10.sp,
                                                     fontFamily: fontMedium,
                                                     textColor: Colors.black),

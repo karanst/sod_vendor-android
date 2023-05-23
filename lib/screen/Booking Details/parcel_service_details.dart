@@ -206,9 +206,9 @@ class _ParcelDetailsState extends State<ParcelDetails> {
                         color: AppColor().colorPrimary(),
                         fontWeight: FontWeight.normal,
                       )),
-                  widget.data.status == "0" ?
+                  widget.data.acceptReject == "0" ?
                   SizedBox.shrink()
-                      : widget.data.status == "3" ?
+                      : widget.data.acceptReject == "3" ?
                   Container(
                     width: 80,
                     height: 30,
@@ -221,7 +221,7 @@ class _ParcelDetailsState extends State<ParcelDetails> {
                           color: Colors.white
                       ),)),
                   ) :
-                  widget.data.status == "4" ?
+                  widget.data.acceptReject == "4" ?
                   Container(
                     width: 80,
                     height: 30,

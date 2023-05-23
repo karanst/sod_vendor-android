@@ -114,8 +114,6 @@ class Apipath {
 
   static const String forgetPassUrl = BASH_URL + 'forgot_pass_vendor';
 
-
-
 }
 
 const String ID = 'id';
