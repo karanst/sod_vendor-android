@@ -230,12 +230,15 @@ class _HomeScreenState extends State<HomeScreen> {
       await getFoodDeliveryBooking(foodDeliveryModel!.orderId);
       _refresh();
       // getFoodDeliveryBooking("");
-      Navigator.push(
+      var result = await Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => OrderFoodDelivery(
                     data: foodDeliveryModel,
                   )));
+      if(result != null){
+        _refresh();
+      }
       Fluttertoast.showToast(msg: data.message.toString());
       return UpdateOrder.fromJson(json.decode(str));
     } else {
